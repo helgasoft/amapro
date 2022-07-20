@@ -134,6 +134,10 @@ am.control <- function(id, ctype=NULL, ...) {
 #' @return A map widget to plot, or to save and expand with more features
 #'
 #' @details  To add an item like Marker, Text or Polyline to the map
+#' @examples
+#' if (interactive()) {
+#'   am.init() |> am.item('Marker', position=c(116.6, 40))
+#' }
 #' @seealso  [am.init] code example
 #'
 #' @export
@@ -160,6 +164,12 @@ am.item <- function(id, itype, ...) {
 #' AMap built-in objects have predefined set of commands listed in the API.
 #' Commands can modify an object (setZoom), but also get data from it (getCenter).\cr
 #' \emph{amapro} introduces its own commands like \emph{set}, \emph{addTo} or \emph{code}, described in the [Introduction].
+#' 
+#' @examples
+#' if (interactive()) {
+#'   am.init() |> 
+#'   am.cmd('set', 'InfoWindow', position=c(116.6, 40), content='Beijing')
+#' }
 #' @seealso  [am.init] code example and [Introduction]
 #'
 #' @export
@@ -207,7 +217,6 @@ am.cmd <- function(id, cmd=NULL, target=NULL, ...) {
 #' @seealso Shiny demo in demo(am.shiny)
 #'
 #' @importFrom htmlwidgets shinyWidgetOutput
-#'
 #' @export
 am.output <- function(outputId, width = '100%', height = '400px') {
   htmlwidgets::shinyWidgetOutput(outputId, 'amapro', width, height, package='amapro')

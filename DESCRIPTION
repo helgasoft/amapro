@@ -1,12 +1,12 @@
 Package: amapro
 Type: Package
-Title: Thin R Wrapper for Mapping Library 'AMap' by 'AutoNavi'
-Date: 2022-07-15
+Title: Thin Wrapper for Mapping Library 'AMap' by 'AutoNavi'
+Date: 2022-07-20
 Version: 0.1.0
 Authors@R: c( person("Larry", "Helgason", email= "larry@helgasoft.com", role= c("aut", "cre", "cph")) )
 Author: Larry Helgason [aut, cre, cph]
 Maintainer: Larry Helgason <larry@helgasoft.com>
-Description: Build and control interactive 2D/3D maps with R/Shiny.  Lean set of powerful commands wrapping native calls to 'AMap' ('AutoNavi').
+Description: Build and control interactive 2D and 3D maps with 'R/Shiny'.  Lean set of powerful commands wrapping native calls to 'AMap' <https://lbs.amap.com/api/jsapi-v2/summary/>.
     Deliver rich mapping functionality with minimal overhead.
 URL: https://github.com/helgasoft/amapro/
 BugReports: https://github.com/helgasoft/amapro/issues/

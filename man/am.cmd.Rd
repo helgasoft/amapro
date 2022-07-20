@@ -28,6 +28,12 @@ AMap built-in objects have predefined set of commands listed in the API.
 Commands can modify an object (setZoom), but also get data from it (getCenter).\cr
 \emph{amapro} introduces its own commands like \emph{set}, \emph{addTo} or \emph{code}, described in the \link{Introduction}.
 }
+\examples{
+if (interactive()) {
+  am.init() |> 
+  am.cmd('set', 'InfoWindow', position=c(116.6, 40), content='Beijing')
+}
+}
 \seealso{
 \link{am.init} code example and \link{Introduction}
 }

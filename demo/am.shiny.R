@@ -21,20 +21,20 @@ cntxtMenu <- paste("<div class='context-menu-content'><ul class='context_menu'>"
    "<li onclick=\"window.navigator.clipboard.writeText('c('+contextMenuPositon.lng+','+contextMenuPositon.lat+'),');\">lng/lat copy</li>",
    "<li onclick='var marker= new AMap.Marker({ map:m$jmap, position:contextMenuPositon, icon:\"",pin,"\", offset:[-10, -28] });'>+marker</li></ul></div>")
 pcenter <- c(2.296404,48.857024)  # Paris
-#hsr <- list(c(2.294173,48.853812),c( 2.296211,48.853219),c( 2.298314,48.852782),c( 2.296833,48.853756),c( 2.295310,48.854702))
-hsr <- list(c(2.295470,48.854681),c(2.292999,48.856290),c(2.293539,48.856656),c(2.296094,48.855058),c(2.296413,48.854864), c(2.297666,48.855747)) #c(2.295647,48.854753))
-hjs <-'['; lapply(hsr, function(x) { hjs <<- paste0(hjs,'[',x[1],',',x[2],'],') }); hjs <- sub(',$', '];', hjs);
+hsr <- list(c(2.295470,48.854681),c(2.292999,48.856290),c(2.293539,48.856656),c(2.296094,48.855058),c(2.296413,48.854864), c(2.297666,48.855747))
+tmp <- lapply(hsr, function(x) { paste0('[',x[1],',',x[2],']') })
+hjs <- paste('[', paste(unlist(tmp), collapse=','), '];')
 carAnim <- paste("var loopy=null, flag = false;  // track playback
-  var lineArr= ",hjs, 
-  "window.carAnimation = function carAnimation() {
+  var lineArr=",hjs, 
+  "window.m$carAnimation = function m$carAnimation() {
       aniMarker.moveAlong(lineArr, { duration: 3000 });
       lineArr= lineArr.reverse();
   };
-  window.togglePlay = function () {
+  window.m$togglePlay = function () {
     if (flag) aniMarker.stopMove();
     else {
       if (!aniMarker.markerAnimation || aniMarker.markerAnimation.getClips().length==0) 
-        carAnimation();
+        m$carAnimation();
   	  else
     		aniMarker.resumeMove();
   	}
@@ -54,7 +54,7 @@ for(j in 1:length(plu)) {
   )) }
 pfl <- list(type= "FeatureCollection", features= pfl)
 
-# pfc <- list()
+# pfc <- list()  # for pulsating Loca.ScatterLayer
 # for(i in 1:length(glnglat)) 
 #   pfc <- append(pfc, list(list(type= "Feature", geometry= list(type= "Point", 
 #                       coordinates= c(glnglat[[i]][1], glnglat[[i]][2]))) 
@@ -134,11 +134,13 @@ ui = fluidPage(
 # ------ server ------
 server = function(input, output, session){
   
-  doneHito <- doneWMS <- isLoaded <- FALSE
-  bbCaller <- NULL
+  rv <- reactiveValues(isLoaded=FALSE, doneHito=FALSE, doneWMS=FALSE,
+                       bbCaller=NULL)         # per CRAN requirements
+  # doneHito <- doneWMS <- isLoaded <- FALSE  # easy way
+  # bbCaller <- NULL
   observe({ toggleState("btnFly", input$isLoLay) })
-  onclick("isCar", function() { runjs('togglePlay()') })
-  observeEvent(input$mapLoaded, { isLoaded <<- input$mapLoaded; })
+  onclick("isCar", function() { runjs('m$togglePlay()') })
+  observeEvent(input$mapLoaded, { rv$isLoaded <- input$mapLoaded; })
   
   output$plot <- am.render({
     am.init(
@@ -221,7 +223,7 @@ server = function(input, output, session){
   })
   
   observeEvent(input$isMarks, {
-    if (!isLoaded) return()
+    if (isolate(!rv$isLoaded)) return()
     p <- am.proxy("plot")
     
     if (input$isMarks) {
@@ -335,19 +337,18 @@ server = function(input, output, session){
   
   observeEvent(input$isOver, {
     p <- am.proxy("plot")
-    if (isLoaded) {
-      if (input$isOver) {
-        bbCaller <<- 'overlay'
-        am.cmd(p, 'getBounds', 'map', r='cbounds')
-      } else
-        am.cmd(p, 'remove', 'map', 'myOvrlay')
-    }
+    if (isolate(!rv$isLoaded)) return()
+    if (input$isOver) {
+      rv$bbCaller <- 'overlay'
+      am.cmd(p, 'getBounds', 'map', r='cbounds')
+    } else
+      am.cmd(p, 'remove', 'map', 'myOvrlay')
   })
   
   observeEvent(input$isCircles, {    # proxy append demo
     p <- am.proxy("plot")
     am.cmd(p, 'circle', 'MouseTool', strokeWeight= 5, strokeColor= 'magenta')
-    bbCaller <<- 'circle'
+    rv$bbCaller <- 'circle'
     am.cmd(p, 'getBounds', 'map', r='cbounds')
   })
   observeEvent(input$cbounds, {
@@ -363,11 +364,11 @@ server = function(input, output, session){
       ctr <- c(bb[2], bb[3])   # bb[1] is zoom
       
       # execute callback commands after center is found
-      if (bbCaller == 'circle') {
+      if (isolate(rv$bbCaller) == 'circle') {
         am.cmd(p, 'set', 'Circle', name='m$circ1', center= ctr, radius= 100, fillOpacity=0.3)
         am.cmd(p, 'addTo', 'm$vector', 'm$circ1')
       } 
-      else if (bbCaller == 'overlay') {
+      else if (isolate(rv$bbCaller) == 'overlay') {
         cctr <- ctr -c(-0.002, 0.003)   # relative distance to center
         pbnd <- list(cctr +c(0.002511, -0.001468), cctr +c(0.000729, -0.000903))
         am.cmd(p, 'set', 'Circle', name='myCir1', center= cctr,
@@ -388,7 +389,7 @@ server = function(input, output, session){
   
   observeEvent(input$isIcon, {   # proxy update demo
     p <- am.proxy("plot")
-    if (!isLoaded) return()
+    if (isolate(!rv$isLoaded)) return()
     if (input$isIcon)  
       am.cmd(p, 'setIcon', 'labMark', image= bfish, size= c(64, 64))
     else
@@ -397,7 +398,7 @@ server = function(input, output, session){
   
   observeEvent(input$isTile, {
     p <- am.proxy("plot")
-    if (!isLoaded) return()
+    if (isolate(!rv$isLoaded)) return()
     if (input$isTile)
       am.cmd(p, 'setTileUrl', 'tileLay', tile2)
     else 
@@ -407,37 +408,37 @@ server = function(input, output, session){
   observeEvent(input$isHeat, {
     p <- am.proxy("plot")
     if (input$isHeat) {
-      if (doneHito) {
+      if (isolate(rv$doneHito)) {
         am.cmd(p, 'show', 'hito'); return()
       }
-      doneHito <<- TRUE
+      rv$doneHito <- TRUE
       pnts <- list()
       for(i in 1:length(glnglat)) {
-        pnts <- append(pnts, list(list(lng=glnglat[[i]][1], lat=glnglat[[i]][2],
-                                       count=sample(1:100, 1)) )) # max=100
+        pnts <- append(pnts, list(list(lng= glnglat[[i]][1], lat= glnglat[[i]][2],
+                                       count= sample(1:100, 1)) ))
       }
       
       am.cmd(p, 'set', 'HeatMap', name= 'hito', 
              radius= 25, opacity= c(0 ,0.8),
-             ddd= list( gridSize= 2), # heightBezier= c(0.4, 0.2, 0.4, 0.8), 
+             ddd= list( gridSize= 2), # AMap native is '3d' but R dislikes it, so 'ddd'
              pnts = pnts
       )
       am.cmd(p, 'show', 'hito');
 
-    } else if (doneHito)
+    } else if (isolate(rv$doneHito))
       am.cmd(p, 'hide', 'hito')
   })
   
   observeEvent(input$isWms, {
     p <- am.proxy("plot")
     if (input$isWms) {
-      doneWMS <<- TRUE
+      rv$doneWMS <- TRUE
       am.cmd(p, 'set', 'WMTS', name='myWMS',
         blend= FALSE, tileSize= 256,
         url= 'https://wxs.ign.fr/an7nvfzojv5wa96dsga5nk8w/geoportail/wmts',
         params= list(layer= 'CADASTRALPARCELS.PARCELLAIRE_EXPRESS', style= 'PCI vecteur', tilematrixset= 'PM', Version= '1.0.0')
       )
-    } else if (doneWMS)
+    } else if (isolate(rv$doneWMS))
       am.cmd(p, 'remove', 'map', 'myWMS')
   })
   
@@ -459,7 +460,7 @@ server = function(input, output, session){
   })
   
   observeEvent(input$isLoLay, {
-    if (!isLoaded) return()
+    if (isolate(!rv$isLoaded)) return()
     if (input$isLoLay) {
       p <- am.proxy("plot")
       am.cmd(p, 'setOpacity', 'm$lpl', 1)
@@ -470,7 +471,7 @@ server = function(input, output, session){
   })
   
   observeEvent(input$btnFly, {
-    if (!isLoaded) return()
+    if (isolate(!rv$isLoaded)) return()
     p <- am.proxy("plot")
     am.cmd(p, 'getRotation', 'map', r='gRot')
     am.cmd(p, 'getZoom', 'map', r='gZum')

@@ -22,6 +22,11 @@ Add an item to a map
 \details{
 To add an item like Marker, Text or Polyline to the map
 }
+\examples{
+if (interactive()) {
+  am.init() |> am.item('Marker', position=c(116.6, 40))
+}
+}
 \seealso{
 \link{am.init} code example
 }
