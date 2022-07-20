@@ -28,12 +28,12 @@ if (interactive()) {
   tu <- paste0('http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/',
                    'MapServer/tile/[z]/[y]/[x]')
   am.init( center= ctr, zoom= 10, pitch= 60, viewMode= '3D') |>
-  am.control(ctype= 'ControlBar', position= list(right='10px', top='10px')) |>
+  am.control(ctype= 'ControlBar', position= 'RT') |>
   am.item('TileLayer', tileUrl= tu) |>
   am.item('Marker', position= ctr,
       icon= 'https://upload.wikimedia.org/wikipedia/commons/9/9d/Ancient_Greek_helmet.png'
   ) |>
-  am.cmd('set', 'InfoWindow', name='iwin', content='This is Sparta', anchor='bottom-center') |>
+  am.cmd('set', 'InfoWindow', name='iwin', content='This is Sparta') |>
   am.cmd('open', 'iwin', 'm$jmap', ctr)   # m$jmap is the map name in JavaScript
 }
 

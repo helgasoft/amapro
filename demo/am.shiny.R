@@ -12,10 +12,8 @@ bfish <- 'https://upload.wikimedia.org/wikipedia/commons/3/34/BlueFish3.png'
 mark1 <- 'https://upload.wikimedia.org/wikipedia/commons/3/3c/Map_marker_icon_%E2%80%93_Nicolas_Mollet_%E2%80%93_Parking_Bicycle_%E2%80%93_Transportation_%E2%80%93_Default.png'    
 mark2 <- 'https://upload.wikimedia.org/wikipedia/commons/2/2e/Map_marker_icon_%E2%80%93_Nicolas_Mollet_%E2%80%93_Bike_rising_%E2%80%93_Sports_%E2%80%93_Default.png'
 pin <- 'https://upload.wikimedia.org/wikipedia/commons/3/37/Icon_location.png'
-ycar <- 'https://raw.githubusercontent.com/helgasoft/amapro/inst/figures/ycar.png'
-geoJson3D <- 'https://raw.githubusercontent.com/helgasoft/amapro/inst/figures/paris3geo.json'
-# https://raw.githubusercontent.com/helgasoft/echarty/main/man/figs/logo.png
-# https://raw.githubusercontent.com/helgasoft/amapro/inst/figures/logo.png
+ycar <- 'https://raw.githubusercontent.com/helgasoft/amapro/master/inst/figures/ycar.png'
+geoJson3D <- 'https://raw.githubusercontent.com/helgasoft/amapro/master/inst/figures/paris3geo.json'
 
 cntxtMenu <- paste("<div class='context-menu-content'><ul class='context_menu'>",
    "<li onclick='m$jmap.zoomOut()'>Zoom Out</li>",

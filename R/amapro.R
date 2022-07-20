@@ -51,7 +51,7 @@ am.init <- function(..., width=NULL, height=NULL) {
     key <- .prompt()
     if (is.null(key)) return()
     if (tolower(key)=='demo')
-      key <- scan('https://raw.githubusercontent.com/helgasoft/amapro/inst/figures/demo.txt', what='character')
+      key <- scan('https://raw.githubusercontent.com/helgasoft/amapro/master/inst/figures/demo.txt', what='character')
     cont[2] <- sub('xxxxxxxxxxxxxx', key, cont[2], fixed= TRUE)
     writeLines(cont, ffull)
     detach("package:amapro", unload= TRUE)
