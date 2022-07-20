@@ -24,10 +24,10 @@ Execute a command on a target element
 \details{
 \emph{am.cmd} provides interaction with the map.\cr
 Commands are sent to the map itself, or to objects inside or outside it.\cr
-AMap-defined objects have predefined set of commands listed in the API.
+AMap built-in objects have predefined set of commands listed in the API.
 Commands can modify an object (setZoom), but also get data from it (getCenter).\cr
-amapro introduces three own commands - set, addTo, code, described in the \link{Introduction}.
+\emph{amapro} introduces its own commands like \emph{set}, \emph{addTo} or \emph{code}, described in the \link{Introduction}.
 }
 \seealso{
-\link{am.init} code example and \link{-- Introduction --}
+\link{am.init} code example and \link{Introduction}
 }

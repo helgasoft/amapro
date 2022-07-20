@@ -1,5 +1,6 @@
 ---
 title: "Introduction to amapro"
+date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 description: >
   Start here if this is your first time using amapro. You'll also find information about JavaScript libraries AMap and Loca.
@@ -109,10 +110,10 @@ Function _Shiny.setInputValue()_ can be used in JavaScript to send data back to 
 - Loca supported items are GeoJSONSource, PolygonLayer, ScatterLayer, LinkLayer, PulseLinkLayer. Loca events are not supported yet.
 - most **built-in** AMap tile layers (Satellite, Traffic, Roads) are limited to China only. However, with command _am.item('TileLayer')_, one can use any [Leaflet provider](https://leaflet-extras.github.io/leaflet-providers/preview/) for worldwide coverage.
 - AMap built-in [map layers](https://lbs.amap.com/api/jsapi-v2/guide/layers/official-layers) are [GCJ-02 coded](https://en.wikipedia.org/wiki/Restrictions_on_geographic_data_in_China) and coordinates collected on them will display incorrectly in Leaflet or other WGS-84 based maps, and vice-versa. They need to be [converted](https://lbs.amap.com/api/jsapi-v2/guide/transform/convertfrom). Conversion is available through function [convertFrom](https://lbs.amap.com/api/jsapi-v2/documentation#convertfrom).
-- AMap's ecosystem is vast, some unsupported features include:
-  BesizerCurve, MarkerCluster, HawkEye,   [IndoorMap](https://lbs.amap.com/demo/javascript-api/example/indoormap/indoormap/), 
-    [CustomLayer](https://lbs.amap.com/demo/javascript-api/example/selflayer/cus-svg),  GLCustomLayer, DistrictLayer, LayerGroup,
- all editors like 'PolygonEditor', Webservice, Search(AMap.Autocomplete, AMap.PlaceSearch), Geocoding(AMap.Geocoder), Route planning, other services(weather, districts, etc), positioning, utilities.
+- AMap ecosystem is vast, some unsupported features include:
+  'BesizerCurve', 'MarkerCluster', 'HawkEye',   [IndoorMap](https://lbs.amap.com/demo/javascript-api/example/indoormap/indoormap/), 
+    [CustomLayer](https://lbs.amap.com/demo/javascript-api/example/selflayer/cus-svg),  'GLCustomLayer', 'DistrictLayer', 'LayerGroup',
+ all editors like 'PolygonEditor','Webservice', 'Search(AMap.Autocomplete, AMap.PlaceSearch)', 'Geocoding(AMap.Geocoder)', Route planning, other services(weather, districts, etc.), positioning, utilities.
 
 	
 # Tips
@@ -127,6 +128,6 @@ Function _Shiny.setInputValue()_ can be used in JavaScript to send data back to 
 
 - _amapro_ silent errors are collected in the browser Console. Press key **F12** to open the dev.environment, then open tab "Console" to view them.
 
-- Chrome/Firefox extensions may interfere with map presentation (like uBlock)
+- Chrome/Firefox extensions may interfere with map presentation (like 'uBlock')
   
   

@@ -64,7 +64,7 @@ am.init <- function(..., width=NULL, height=NULL) {
   
   opts <- list(...)
   elementId <- if (is.null(opts$elementId)) NULL else opts$elementId
-  # debug - to display JS objects info in browser console.
+  # debug - to display JS objects info in browser console and map mesh
   debug <- if (is.null(opts$debug)) FALSE else opts$debug
   loca <- if (is.null(opts$loca)) FALSE else opts$loca
   deps <- NULL
@@ -77,8 +77,6 @@ am.init <- function(..., width=NULL, height=NULL) {
     height = height,
     debug = debug,
     loca = loca
-    #events = list(),
-    #buttons = list()
   )
 
   # create widget
@@ -105,24 +103,23 @@ am.init <- function(..., width=NULL, height=NULL) {
 #'
 #' Add a Control to a map.
 #'
-#' @param id amapro id or a \code{amapro} widget from [am.init]
-#' @param ctype A string for name of control, like 'Scale','ControlBar','ToolBar','HawkEye'.
+#' @param id \code{amapro} id or widget from [am.init]
+#' @param ctype A string for name of control, like 'Scale','ControlBar','ToolBar'.
 #' @param ... A named list of parameters for the chosen control
 #' @return A map widget to plot, or to save and expand with more features.
 #' 
-#' @details  Scale has no parameters, but ControlBar could have a \href{https://lbs.amap.com/api/jsapi-v2/documentation#control}{position}.\cr
-#' Other controls are ToolBar and HawkEye.
+#' @details  controls are ControlBar, ToolBar and Scale. \cr
+#'    \href{https://a.amap.com/jsapi/static/doc/20210906/index.html?v=2#control}{Parameters} could be position or offset.\cr
 #' @seealso  [am.init] code example
 #' @examples
-#' am.init() |> am.control("Scale")
-#'
+#' if (interactive()) {
+#'   am.init() |> am.control("Scale")
+#' }
 #' @export
 am.control <- function(id, ctype=NULL, ...) {
   method <- "addControl"
   type <- ctype
   data <- list(...)
-  #  type <- data[[1]]  # extract ctype from data
-  #  data[[1]] <- NULL
   .callJS()
 }
 
@@ -160,10 +157,10 @@ am.item <- function(id, itype, ...) {
 #'
 #' @details \emph{am.cmd} provides interaction with the map.\cr
 #' Commands are sent to the map itself, or to objects inside or outside it.\cr
-#' AMap-defined objects have predefined set of commands listed in the API.
+#' AMap built-in objects have predefined set of commands listed in the API.
 #' Commands can modify an object (setZoom), but also get data from it (getCenter).\cr
-#' amapro introduces three own commands - set, addTo, code, described in the [Introduction].
-#' @seealso  [am.init] code example and [-- Introduction --]
+#' \emph{amapro} introduces its own commands like \emph{set}, \emph{addTo} or \emph{code}, described in the [Introduction].
+#' @seealso  [am.init] code example and [Introduction]
 #'
 #' @export
 am.cmd <- function(id, cmd=NULL, target=NULL, ...) {

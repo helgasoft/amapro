@@ -7,9 +7,9 @@
 am.control(id, ctype = NULL, ...)
 }
 \arguments{
-\item{id}{amapro id or a \code{amapro} widget from \link{am.init}}
+\item{id}{\code{amapro} id or widget from \link{am.init}}
 
-\item{ctype}{A string for name of control, like 'Scale','ControlBar','ToolBar','HawkEye'.}
+\item{ctype}{A string for name of control, like 'Scale','ControlBar','ToolBar'.}
 
 \item{...}{A named list of parameters for the chosen control}
 }
@@ -20,12 +20,13 @@ A map widget to plot, or to save and expand with more features.
 Add a Control to a map.
 }
 \details{
-Scale has no parameters, but ControlBar could have a \href{https://lbs.amap.com/api/jsapi-v2/documentation#control}{position}.\cr
-Other controls are ToolBar and HawkEye.
+controls are ControlBar, ToolBar and Scale. \cr
+\href{https://a.amap.com/jsapi/static/doc/20210906/index.html?v=2#control}{Parameters} could be position or offset.\cr
 }
 \examples{
-am.init() |> am.control("Scale")
-
+if (interactive()) {
+  am.init() |> am.control("Scale")
+}
 }
 \seealso{
 \link{am.init} code example

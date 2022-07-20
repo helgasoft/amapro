@@ -1,6 +1,6 @@
 Package: amapro
 Type: Package
-Title: Thin R wrapper for mapping library 'AMap' by 'AutoNavi'
+Title: Thin R Wrapper for Mapping Library 'AMap' by 'AutoNavi'
 Date: 2022-07-15
 Version: 0.1.0
 Authors@R: c( person("Larry", "Helgason", email= "larry@helgasoft.com", role= c("aut", "cre", "cph")) )
