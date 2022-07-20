@@ -1,0 +1,7 @@
+dependencies:
+ - name: amapro
+   version: 0.1.0
+   src: js
+   script:
+      - amap.js
+      - loca.js

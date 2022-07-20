@@ -1,0 +1,132 @@
+---
+title: "Introduction to amapro"
+output: rmarkdown::html_vignette
+description: >
+  Start here if this is your first time using amapro. You'll also find information about JavaScript libraries AMap and Loca.
+vignette: >
+  %\VignetteIndexEntry{Introduction to amapro}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, echo = FALSE, message = FALSE}
+knitr::opts_chunk$set(collapse = T, comment = "#>")
+```
+
+We welcome AMap JavaScript library into the world of R. AMap is an advanced mapping library made in China and widely used there. It features 2D/3D animation, supports a multitude of layers and markers, data import, flyover playback, etc. <br />
+Library _amapro_ let you control AMap from R and Shiny. It uses AMap's native commands and parameters wrapped in a few commands of its own.
+
+# Translation
+
+AMap's documentation is in Chinese and most links here make reference to it. If you happen _not_ to know Chinese, it is convenient to set your browser to [auto-translate](https://www.howtogeek.com/407924/how-to-turn-translation-on-or-off-in-chrome/). This will help a little or a lot depending on the website/page structure. One can also copy/paste text to [Google translate](https://translate.google.com?sl=auto&tl=en).
+  
+# Installation
+
+<!-- Install **amapro** from CRAN with    <br>   
+``` install.packages("amapro") ``` <br> -->
+Install **amapro** from Github with        <br>
+``` remotes::install_github("helgasoft/amapro") ```  <br>
+Then run the following R commands     <br> 
+``` library(amapro); am.init() ``` <br>
+A pop-up dialog will ask for an API key (shows once, will not be repeated).  <br>
+API key is obtained through [registration](https://console.amap.com/dev/id/phone), expecting you to provide a Chinese phone number for the SMS verification code.  <br>
+How to get an API key if you reside out of China? 
+
+- ask a friend from China to help, or hire a local [freelancer](https://www.truelancer.com/freelancers-in-china)
+- search the web for a shared key
+- use a temporary Chinese phone number from sites like  
+   [quackr.io](https://quackr.io/temporary-numbers/china), [sms24](https://sms24.me/en/countries/cn/), [turtle-sms](https://turtle-sms.xyz),  etc. However most are probably blacklisted as the registration page shows them as _already registered_.
+- select temporarily the 'demo' option, without guarantee to work in the long run
+  
+# Shiny Demo
+
+Interactive, hands-on showcase of many library features.
+Activate with the following command: <br/>
+``` library(amapro); demo(am.shiny) ```
+
+
+# API links
+
+_amapro_ is based on version 2.0 of AMap (JSAPI v2.0). "API" auto-translates as "Reference book" in web menus.
+
+## AMap
+The base library with optional plugins. Most important links are  
+
+* [Summary](https://lbs.amap.com/api/jsapi-v2/summary/)
+* [Guide](https://lbs.amap.com/api/jsapi-v2/guide/abc/quickstart)
+* [API](https://lbs.amap.com/api/jsapi-v2/documentation)<sup>1</sup> official documentation
+* [API](https://a.amap.com/jsapi/static/doc/20210906/index.html?v=2#map)<sup>2</sup> same as <sup>1</sup>, but better auto-translation
+* [Examples](https://lbs.amap.com/demo/list/jsapi-v2) - live demos
+* [Forum](https://lbsbbs.amap.com/portal.php) - reported issues
+
+## LOCA
+AMap extension with enhanced 3D features. In _amapro_ it is invoked with a parameter ```am.init(loca=TRUE, ...)```. The documentation auto-translates well in Chrome.
+
+* [Intro](https://lbs.amap.com/api/loca-v2/intro)
+* [API](https://a.amap.com/Loca/static/loca-v2/doc/html/index.html) documentation
+
+# Commands
+
+Controlling map and items is done by sending AMap commands to them. <br>
+Example: ``` am.cmd('setAngle', 'carIcon', -90) ``` <br>
+_amapro_ uses native AMap commands and introduces these <ins>additional</ins>:
+
+* **set** - create new item
+    - with _name_: add new global JS object (_window.<name>_) outside the map <br>
+    ``` am.cmd('set', 'VectorLayer', name='e$layer1') ```
+    - without _name_:  add new item to map  <br>
+    ``` am.cmd('set', 'e$marker1', position= c(116.478, 39.998)) ```
+* **addTo** - append one existing JS object to another by name  <br>
+  ``` am.cmd('addTo', 'e$layer1', 'e$marker1') ```
+* **var** - set a JavaScript variable   <br>
+  ``` am.cmd('var', 'e$myOpacity', 0.8) ```
+* **code** - execute JavaScript code  <br>
+  ``` am.cmd('code', 'alert("I am JS");') ```
+
+AMap commands starting with **get** return data from the map or related objects. <br>
+Put the data in a Shiny input variable by setting its name in parameter **r**. <br>
+Example: ``` am.cmd('getCenter', 'map', r='inShiny1') ``` <br>
+Above command will update _input$inShiny1_ with the Lng/Lat coordinates of the map center.
+
+# Events
+
+Events could be defined for map and items. All types of instances use **on/off methods** to bind and remove events. <br>
+Events are set in attribute **on**(or **off**) as a list of lists. Each event is a separate list with event name in **e**, a JS function **f** and optionally a query **q**.  
+Example: 
+```r
+am.init(center= c(116.475, 39.997), zoom= 17,
+        on= list(list(e= 'complete', 
+                      f= "function() {alert('loaded!');}")) )
+```
+on/off events without _name_ are ignored, except for the map itself (as above example).  <br>
+Function _Shiny.setInputValue()_ can be used in JavaScript to send data back to Shiny.
+
+# Limitations
+
+- only one map is created by _am.init_ per session. It is a JS global called 'm$jmap'.
+- AMap command _addTo_ is overwritten by _amapro_ and cannot be used.
+- AMap plugins supported are ControlBar, Scale, ToolBar, MoveAnimation, MouseTool, HeatMap, GeoJSON, ElasticMarker.
+- Loca supported items are GeoJSONSource, PolygonLayer, ScatterLayer, LinkLayer, PulseLinkLayer. Loca events are not supported yet.
+- most **built-in** AMap tile layers (Satellite, Traffic, Roads) are limited to China only. However, with command _am.item('TileLayer')_, one can use any [Leaflet provider](https://leaflet-extras.github.io/leaflet-providers/preview/) for worldwide coverage.
+- AMap built-in [map layers](https://lbs.amap.com/api/jsapi-v2/guide/layers/official-layers) are [GCJ-02 coded](https://en.wikipedia.org/wiki/Restrictions_on_geographic_data_in_China) and coordinates collected on them will display incorrectly in Leaflet or other WGS-84 based maps, and vice-versa. They need to be [converted](https://lbs.amap.com/api/jsapi-v2/guide/transform/convertfrom). Conversion is available through function [convertFrom](https://lbs.amap.com/api/jsapi-v2/documentation#convertfrom).
+- AMap's ecosystem is vast, some unsupported features include:
+  BesizerCurve, MarkerCluster, HawkEye,   [IndoorMap](https://lbs.amap.com/demo/javascript-api/example/indoormap/indoormap/), 
+    [CustomLayer](https://lbs.amap.com/demo/javascript-api/example/selflayer/cus-svg),  GLCustomLayer, DistrictLayer, LayerGroup,
+ all editors like 'PolygonEditor', Webservice, Search(AMap.Autocomplete, AMap.PlaceSearch), Geocoding(AMap.Geocoder), Route planning, other services(weather, districts, etc), positioning, utilities.
+
+	
+# Tips
+
+- all named objects created in JS are [global variables](https://developer.mozilla.org/en-US/docs/Glossary/Global_object) (_window.name_). Good practice is to use a name prefix (m$) to avoid overwriting accidentally external variables.
+
+- API attributes could be set to a JS function instead of a value. Function is defined as a string starting with word "function".
+
+- usually WMS/WMTS tiles come from external servers and may present a CORS problem - browser refusal to load. One can install a small [extension in  Chrome](https://chrome.google.com/webstore/detail/allow-cors-access-control/lhobafahddgcelffkeicbaginigeejlf) or [Firefox](https://addons.mozilla.org/en-US/firefox/addon/access-control-allow-origin/) to fix this problem manually inside the browser.
+
+- AMap has several predefined [Map styles](https://lbs.amap.com/api/jsapi-v2/guide/map/map-style/). Could be set in map options with _mapStyle_.
+
+- _amapro_ silent errors are collected in the browser Console. Press key **F12** to open the dev.environment, then open tab "Console" to view them.
+
+- Chrome/Firefox extensions may interfere with map presentation (like uBlock)
+  
+  

@@ -1,0 +1,26 @@
+Package: amapro
+Type: Package
+Title: Thin R wrapper for mapping library 'AMap' by 'AutoNavi'
+Date: 2022-07-15
+Version: 0.1.0
+Authors@R: c( person("Larry", "Helgason", email= "larry@helgasoft.com", role= c("aut", "cre", "cph")) )
+Author: Larry Helgason [aut, cre, cph]
+Maintainer: Larry Helgason <larry@helgasoft.com>
+Description: Build and control interactive 2D/3D maps with R/Shiny.  Lean set of powerful commands wrapping native calls to 'AMap' ('AutoNavi').
+    Deliver rich mapping functionality with minimal overhead.
+URL: https://github.com/helgasoft/amapro/
+BugReports: https://github.com/helgasoft/amapro/issues/
+Depends: R (>= 4.1.0)
+Imports:
+  htmlwidgets,
+  shiny (>= 1.7.0),
+  tcltk (>= 4.2.0)
+Suggests:
+  knitr, rmarkdown
+License: Apache License (>= 2.0)
+Encoding: UTF-8
+LazyData: false
+Language: en-US
+VignetteBuilder: knitr
+RoxygenNote: 7.2.0
+Roxygen: list(markdown = TRUE)
