@@ -4,7 +4,7 @@
 #' 
 #' Essential information, tips and tricks
 #'
-#' @includeRmd man/info.Rmd
+#' @includeRmd vignettes/info.Rmd
 #'
 #' @name -- Introduction --
 NULL

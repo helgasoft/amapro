@@ -35,8 +35,7 @@ How to get an API key if you reside out of China?
 
 - ask a friend from China to help, or hire a local [freelancer](https://www.truelancer.com/freelancers-in-china)
 - search the web for a shared key
-- use a temporary Chinese phone number from sites like  
-   [quackr.io](https://quackr.io/temporary-numbers/china), [sms24](https://sms24.me/en/countries/cn/), [turtle-sms](https://turtle-sms.xyz),  etc. However most are probably blacklisted as the registration page shows them as _already registered_.
+- use a temporary Chinese phone number from sites like  [sms24](https://sms24.me/en/countries/cn/), [turtle-sms](https://turtle-sms.xyz),  etc. However most are probably blacklisted as the registration page shows them as _already registered_.
 - select temporarily the 'demo' option, without guarantee to work in the long run
   
 # Shiny Demo

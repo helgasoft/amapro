@@ -43,7 +43,6 @@ to get an API key if you reside out of China?
 \href{https://www.truelancer.com/freelancers-in-china}{freelancer}
 \item search the web for a shared key
 \item use a temporary Chinese phone number from sites like
-\href{https://quackr.io/temporary-numbers/china}{quackr.io},
 \href{https://sms24.me/en/countries/cn/}{sms24},
 \href{https://turtle-sms.xyz}{turtle-sms}, etc. However most are probably
 blacklisted as the registration page shows them as \emph{already
@@ -154,14 +153,14 @@ Leaflet or other WGS-84 based maps, and vice-versa. They need to be
 \href{https://lbs.amap.com/api/jsapi-v2/guide/transform/convertfrom}{converted}.
 Conversion is available through function
 \href{https://lbs.amap.com/api/jsapi-v2/documentation#convertfrom}{convertFrom}.
-\item AMap’s ecosystem is vast, some unsupported features include:
-BesizerCurve, MarkerCluster, HawkEye,
+\item AMap ecosystem is vast, some unsupported features include:
+‘BesizerCurve’, ‘MarkerCluster’, ‘HawkEye’,
 \href{https://lbs.amap.com/demo/javascript-api/example/indoormap/indoormap/}{IndoorMap},
 \href{https://lbs.amap.com/demo/javascript-api/example/selflayer/cus-svg}{CustomLayer},
-GLCustomLayer, DistrictLayer, LayerGroup, all editors like
-‘PolygonEditor’, Webservice, Search(AMap.Autocomplete,
-AMap.PlaceSearch), Geocoding(AMap.Geocoder), Route planning, other
-services(weather, districts, etc), positioning, utilities.
+‘GLCustomLayer’, ‘DistrictLayer’, ‘LayerGroup’, all editors like
+‘PolygonEditor’,‘Webservice’, ‘Search(AMap.Autocomplete,
+AMap.PlaceSearch)’, ‘Geocoding(AMap.Geocoder)’, Route planning,
+other services(weather, districts, etc.), positioning, utilities.
 }
 }
 
@@ -184,7 +183,7 @@ Could be set in map options with \emph{mapStyle}.
 key \strong{F12} to open the dev.environment, then open tab “Console” to
 view them.
 \item Chrome/Firefox extensions may interfere with map presentation (like
-uBlock)
+‘uBlock’)
 }
 }
 
