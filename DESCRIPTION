@@ -17,7 +17,7 @@ Imports:
   tcltk (>= 4.2.0)
 Suggests:
   knitr, rmarkdown
-License: Apache License (>= 2.0)
+License: Apache License (>= 2)
 Encoding: UTF-8
 LazyData: false
 Language: en-US

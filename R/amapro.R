@@ -37,8 +37,6 @@ NULL
 #' }
 #'
 #' @importFrom htmlwidgets createWidget sizingPolicy getDependency JS
-#' @importFrom tcltk tk_messageBox
-#'
 #' @export
 am.init <- function(..., width=NULL, height=NULL) {
   
@@ -57,7 +55,7 @@ am.init <- function(..., width=NULL, height=NULL) {
     detach("package:amapro", unload= TRUE)
     library(amapro)
     msg <- 'Done - amapro is now ready.\n Repeat command or refresh map if needed.'
-    tk_messageBox(type = c("ok"),
+    tcltk::tk_messageBox(type = c("ok"),
                   msg, caption = "AMap API key installation")
   }
   rm(cont)
@@ -303,30 +301,25 @@ am.proxy <- function(id) {
 }
 
 .prompt <- function() {
-  
+
   xvar <- tcltk::tclVar('demo')
   
-  tt <- tcltk::tktoplevel()
-  tcltk::tkwm.title(tt,"AMap library installation")
-  key.entry <- tcltk::tkentry(tt, textvariable=xvar)
+  tt <- tcltk::tktoplevel(bg= 'goldenrod')
+  tcltk::tkwm.title(tt, 'amapro')
+  key.entry <- tcltk::tkentry(tt, textvariable= xvar)
   
-  reset <- function()
-  {
-    tcltk::tclvalue(xvar)<-""
-  }
-  
-  reset.but <- tcltk::tkbutton(tt, text="Reset", command=reset)
-  
+  reset <- function() { tcltk::tclvalue(xvar)<-"" }
+  reset.but <- tcltk::tkbutton(tt, text="Reset", command= reset)
   submit <- function() {
     key <- tcltk::tclvalue(xvar)
     e <- parent.env(environment())
     e$key <- key
     tcltk::tkdestroy(tt)
   }
-  submit.but <- tcltk::tkbutton(tt, text="submit", command=submit)
+  submit.but <- tcltk::tkbutton(tt, text="Submit", command= submit)
   
-  tcltk::tkgrid(tcltk::tklabel(tt,text="One-time installation of library AMap (amap.js)"),columnspan=2)
-  tcltk::tkgrid(tcltk::tklabel(tt,text="Enter AMap key (or 'demo')"), key.entry, pady = 10, padx =10)
+  tcltk::tkgrid(tcltk::tklabel(tt,text="One-time installation of library AMap", background='goldenrod'), columnspan=2)
+  tcltk::tkgrid(tcltk::tklabel(tt,text="Enter AMap API key (or 'demo')", background='goldenrod'), key.entry, pady = 10, padx =10)
   tcltk::tkgrid(submit.but, reset.but)
   
   tcltk::tkwait.window(tt)
