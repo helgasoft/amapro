@@ -22,9 +22,11 @@ HTMLWidgets.widget({
         m$jmap = new AMap.Map(document.getElementById(el.id), x.opts);
         
         if (x.hasOwnProperty('loca')) {
-          if (typeof Loca==='undefined') {
-            alert('Check for Loca library and try again'); return; }
-          m$loca = new Loca.Container({ map: m$jmap });
+          if (x.loca) {
+            if (typeof Loca==='undefined') {
+              alert('Check for Loca library and try again'); return; }
+            m$loca = new Loca.Container({ map: m$jmap });
+          }
         }
         
         if (!initialized) {

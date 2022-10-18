@@ -11,11 +11,11 @@ vignette: >
 ---
 
 ```{r, echo = FALSE, message = FALSE}
-knitr::opts_chunk$set(collapse = T, comment = "#>")
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 ```
 
-We welcome AMap JavaScript library into the world of R. AMap is an advanced mapping library made in China and widely used there. It features 2D/3D animation, supports a multitude of layers and markers, data import, flyover playback, etc. <br />
-Library _amapro_ let you control AMap from R and Shiny. It uses AMap's native commands and parameters wrapped in a few commands of its own.
+We welcome JavaScript library AMap into the world of R. AMap is an advanced mapping library made in China and widely used there. It features 2D/3D animation, supports a multitude of layers and markers, data import, flyover playback, etc. <br>
+Library _amapro_ let you control AMap from R and Shiny. It uses AMap's native commands/parameters wrapped in its own few commands.
 
 # Translation
 
@@ -23,9 +23,9 @@ AMap's documentation is in Chinese and most links here make reference to it. If 
   
 # Installation
 
-<!-- Install **amapro** from CRAN with    <br>   
-``` install.packages("amapro") ``` <br> -->
-Install **amapro** from Github with        <br>
+Install **amapro** from CRAN with  <br>   
+``` install.packages("amapro") ``` <br>
+Install **amapro** from Github with   <br>
 ``` remotes::install_github("helgasoft/amapro") ```  <br>
 Then run the following R commands     <br> 
 ``` library(amapro); am.init() ``` <br>
@@ -72,7 +72,7 @@ Example: ``` am.cmd('setAngle', 'carIcon', -90) ``` <br>
 _amapro_ uses native AMap commands and introduces these <ins>additional</ins>:
 
 * **set** - create new item
-    - with _name_: add new global JS object (_window.<name>_) outside the map <br>
+    - with _name_: add new global JS object outside the map <br>
     ``` am.cmd('set', 'VectorLayer', name='e$layer1') ```
     - without _name_:  add new item to map  <br>
     ``` am.cmd('set', 'e$marker1', position= c(116.478, 39.998)) ```
@@ -80,7 +80,7 @@ _amapro_ uses native AMap commands and introduces these <ins>additional</ins>:
   ``` am.cmd('addTo', 'e$layer1', 'e$marker1') ```
 * **var** - set a JavaScript variable   <br>
   ``` am.cmd('var', 'e$myOpacity', 0.8) ```
-* **code** - execute JavaScript code  <br>
+* **code** - execute JavaScript code    <br>
   ``` am.cmd('code', 'alert("I am JS");') ```
 
 AMap commands starting with **get** return data from the map or related objects. <br>

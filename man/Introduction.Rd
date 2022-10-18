@@ -7,12 +7,12 @@
 Essential information, tips and tricks
 }
 \details{
-We welcome AMap JavaScript library into the world of R. AMap is an
+We welcome JavaScript library AMap into the world of R. AMap is an
 advanced mapping library made in China and widely used there. It
 features 2D/3D animation, supports a multitude of layers and markers,
-data import, flyover playback, etc. \if{html}{\out{<br />}} Library \emph{amapro} let you
-control AMap from R and Shiny. It uses AMap’s native commands and
-parameters wrapped in a few commands of its own.
+data import, flyover playback, etc. \if{html}{\out{<br>}} Library \emph{amapro} let you
+control AMap from R and Shiny. It uses AMap’s native commands/parameters
+wrapped in its own few commands.
 }
 \section{Translation}{
 AMap’s documentation is in Chinese and most links here make reference to
@@ -24,14 +24,9 @@ structure. One can also copy/paste text to \href{https://translate.google.com?sl
 }
 
 \section{Installation}{
-\if{html}{\out{
-<!-- Install **amapro** from CRAN with    <br>   
-``` install.packages("amapro") ``` <br> -->
-}}
-
-
-Install \strong{amapro} from Github with \if{html}{\out{<br>}}
-\code{remotes::install_github("helgasoft/amapro")} \if{html}{\out{<br>}} Then run the
+Install \strong{amapro} from CRAN with \if{html}{\out{<br>}}
+\code{install.packages("amapro")} \if{html}{\out{<br>}} Install \strong{amapro} from Github with
+\if{html}{\out{<br>}} \code{remotes::install_github("helgasoft/amapro")} \if{html}{\out{<br>}} Then run the
 following R commands \if{html}{\out{<br>}} \verb{library(amapro); am.init()} \if{html}{\out{<br>}} A pop-up
 dialog will ask for an API key (shows once, will not be repeated). \if{html}{\out{<br>}}
 API key is obtained through
@@ -95,8 +90,8 @@ AMap commands and introduces these \if{html}{\out{<ins>}}additional\if{html}{\ou
 \itemize{
 \item \strong{set} - create new item
 \itemize{
-\item with \emph{name}: add new global JS object (\emph{window.\if{html}{\out{<name>}}}) outside
-the map \if{html}{\out{<br>}} \code{am.cmd('set', 'VectorLayer', name='e$layer1')}
+\item with \emph{name}: add new global JS object outside the map \if{html}{\out{<br>}}
+\code{am.cmd('set', 'VectorLayer', name='e$layer1')}
 \item without \emph{name}: add new item to map \if{html}{\out{<br>}}
 \code{am.cmd('set', 'e$marker1', position= c(116.478, 39.998))}
 }
