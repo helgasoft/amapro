@@ -19,13 +19,13 @@ HTMLWidgets.widget({
         if (x.hasOwnProperty('debug'))
           debug = x.debug;
         
-        m$jmap = new AMap.Map(document.getElementById(el.id), x.opts);
+        window.m$jmap = new AMap.Map(document.getElementById(el.id), x.opts);
         
         if (x.hasOwnProperty('loca')) {
           if (x.loca) {
             if (typeof Loca==='undefined') {
               alert('Check for Loca library and try again'); return; }
-            m$loca = new Loca.Container({ map: m$jmap });
+            window.m$loca = new Loca.Container({ map: m$jmap });
           }
         }
         
@@ -35,16 +35,18 @@ HTMLWidgets.widget({
           //if (m$loca) setEvents?
         }
     
-        var that = this;
-        // after initialization, call any outstanding API functions (per D.Attali)
-        var numApiCalls = x['api'].length;
-        for (var i = 0; i < numApiCalls; i++) {
-          var call = x['api'][i];
-          var method = call.method;
-          delete call['method'];
-          try {
-            that[method](call);
-          } catch(err) {}
+        if (x.hasOwnProperty('api')) {
+          // after initialization, call any outstanding API functions (per D.Attali)
+          var numApiCalls = x.api.length;
+          var that = this;
+          for (var i = 0; i < numApiCalls; i++) {
+            var call = x.api[i];
+            var method = call.method;
+            delete call['method'];
+            try {
+              that[method](call);
+            } catch(err) {}
+          }
         }
 
 	    },   // end renderValue
@@ -56,10 +58,13 @@ HTMLWidgets.widget({
       },
 
       addItem: function(args) {
-        if (args.data.name)     // replace name with iname
-          delete Object.assign(args.data, {['iname']: args.data.name })['name'];
+        if (args.data.name) {    // replace name with iname
+          //delete Object.assign(args.data, {['iname']: args.data.name })['name'];
+          args.data.iname = args.data.name;  // tag as coming from addItem
+          delete args.data.name;
+        }
         args.cmd = 'set';
-        args.target = args.type;
+        args.trgt = args.type;
         cmdo(args); 
       },
 
@@ -144,7 +149,7 @@ function setEvents(adata, dname) {
 }
 
 function sval(str, args, quiet=false) {
-    if (debug) console.log(str+' => '+JSON.stringify(args) );
+    if (debug) console.log('eval('+str+')  args='+JSON.stringify(args) );
     try {
       eval(str);
     } catch(err) {
@@ -162,10 +167,10 @@ function cmdo(args) {
   // convert from string to function if any
   Object.entries(args.data).map(([k, v]) => { if (v.toString().startsWith('function')) eval("args.data."+k+" = "+v+";"); });
   
-  if (args.target=='' || args.target=='map') // !args.target || 
-    args.target = 'm$jmap';
+  if (args.trgt=='' || args.trgt=='map') // !args.target || 
+    args.trgt = 'm$jmap';
   else if (args.cmd!='set' && args.cmd!='code')
-    args.target = 'window.'+args.target;
+    args.trgt = 'window.'+args.trgt;
   tdata = '(args.data);';
   if (typeof args.data=='string') {
     //if (sval(args.data, args, true))  // valid object
@@ -199,7 +204,7 @@ function cmdo(args) {
   if (args.cmd.startsWith('get')) {     // changes .source - keep code here
     if (args.cmd.indexOf('(') >0)     // params already inside cmd
       tdata = ';';
-    args.target = 'var tmp='+args.target;
+    args.trgt = 'var tmp='+args.trgt;
     if (!args.data.f)
       args.data.f = 'function(x) {return x;}';
     sval('tefu= '+args.data.f, args, true);  // set function to apply
@@ -210,24 +215,25 @@ function cmdo(args) {
   
   if (args.cmd=='set') {
     if (dname)
-      tmp = 'window.'+dname+ '= new AMap.'+ args.target +tdata;
+      tmp = 'window.'+dname+ '= new AMap.'+ args.trgt +tdata;
     else if (args.data.iname) {   // comes from addItem
       dname = args.data.iname;    // set for events if any
-      tmp = 'window.'+dname+ '= new AMap.'+ args.target +tdata+
+      delete args.data.iname;
+      tmp = 'window.'+dname+ '= new AMap.'+ args.trgt +tdata+
         'm$jmap.add(' +dname+');';
     } 
     else {
       tdata = tdata.replace(');', '));')
-      tmp = 'm$jmap.add(new AMap.'+ args.target + tdata;
+      tmp = 'm$jmap.add(new AMap.'+ args.trgt + tdata;
     }
   } else if (args.cmd=='code') {
-    tmp = args.target;
+    tmp = args.trgt;
   } else if (args.cmd=='prop') {
-    tmp = args.target +'.'+ Object.keys(args.data)[0] + '=Object.values(args.data)[0];';
+    tmp = args.trgt +'.'+ Object.keys(args.data)[0] + '=Object.values(args.data)[0];';
   } else if (args.cmd=='var') {
-    tmp = args.target + '=args.data[0];';
+    tmp = args.trgt + '=args.data[0];';
   } else
-    tmp = args.target +'.'+ args.cmd +tdata;
+    tmp = args.trgt +'.'+ args.cmd +tdata;
 
   cmdType(tmp, args, dname);
 
@@ -241,7 +247,8 @@ function cmdType(madd, args, zname) {
     sval(madd, args); return;
   }
   
-  target = args.target.replace('window.','');   // for cleaner switch argument
+  // simplify switch argument
+  target = args.trgt.replace('window.','');   
 
   switch(target) {
 
@@ -408,24 +415,53 @@ function cmdType(madd, args, zname) {
     //if (!args.data.data) break;
     // data: geojson object OR url: 'http..'
     if (args.data.data)
-      tmp = zname+"= new Loca.GeoJSONSource(args.data); ";
+      tmp = zname+"= new Loca.GeoJSONSource({data: args.data.data}); ";
     else
       tmp = zname+"= new Loca.GeoJSONSource({url:'"+args.data.url+"'}); ";
     sval(tmp, args);
     break;
 
-  case 'PolygonLayer':
-  case 'ScatterLayer':
-  case 'LinkLayer':
+  case 'ScatterLayer':      // animation layers
   case 'PulseLinkLayer':
-  case 'LineLayer':
   case 'PulseLineLayer':
+  case 'LaserLayer':
+    
+  case 'PointLayer':      // base
+  case 'IconLayer':
+  case 'LabelsLayer':
+  case 'ZMarkerLayer':
+  case 'PrismLayer':
+  case 'LineLayer':
+  case 'LinkLayer':
+  case 'PolygonLayer':
+  case 'HeatMapLayer':
+  case 'HexagonLayer':
+  case 'GridLayer':
+    
+  case 'GltfLayer':     // undocumented
+  case 'GeoBufferSource':
+  case 'Legend':
     if (!zname) break;
     args.data.loca = m$loca;
     tmp = zname+'= new Loca.'+target+'(args.data); ';
     sval(tmp, args);
     break;
-  
+/*    
+  case 'AmbientLight':        // for newer loca.js
+  case 'DirectionalLight':
+  case 'PointLight':
+    if (!zname) break;
+    tmp = zname+'= new Loca.'+target+'(args.data); m$loca.addLight('+zname+');';
+    sval(tmp, args);
+    break;
+*/
+  case 'ambLight':
+  case 'dirLight':
+  case 'pointLight':
+    tmp = 'm$loca.'+target+' = args.data;';
+    sval(tmp, args);
+    break;
+    
   default:
     sval(madd, args);
 
@@ -465,7 +501,7 @@ if (HTMLWidgets.shinyMode) {
 
 /*
 ---------------------------------------
-Original work Copyright 2021 Larry Helgason
+Original work Copyright 2022 Larry Helgason
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

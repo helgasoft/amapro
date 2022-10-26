@@ -1,10 +1,10 @@
-# <img src="inst/figures/logo.png" width='70px' alt="" /> amapro
-
+---
+title: <img src="man/figures/logo.png" width='70px' alt="" /> amapro &nbsp; &nbsp; &nbsp; &nbsp; [![size](https://img.shields.io/github/languages/code-size/helgasoft/amapro)](https://github.com/helgasoft/amapro/releases/)
+---
 <!-- badges: start -->
 <!--
 [![R-CMD-check](https://github.com/helgasoft/amapro/workflows/R-CMD-check/badge.svg)](https://github.com/helgasoft/amapro/actions)
 [![Coveralls test coverage](https://coveralls.io/repos/github/helgasoft/amapro/badge.svg)](https://coveralls.io/r/helgasoft/echarty?branch=main)
-[![size](https://img.shields.io/github/languages/code-size/helgasoft/amapro)](https://github.com/helgasoft/amapro/releases/)
 [![website](https://img.shields.io/badge/Website-Visit-blue)](https://helgasoft.github.io/amapro)
 -->
 <!-- badges: end -->
@@ -20,7 +20,7 @@ Enjoy rich interactive maps in R and Shiny with minimal overhead!
 ## Installation
 <!--
 [![Github version](https://img.shields.io/github/v/release/helgasoft/amapro?label=github)](https://github.com/helgasoft/amapro/releases) -->
-Latest development version:
+Use latest development version for optimal experience:
 
 ``` r
 if (!requireNamespace('remotes')) install.packages('remotes')
@@ -55,6 +55,7 @@ am.item('TileLayer', tileUrl= turl) |>
 am.item('Marker', position= ctr, icon= helmet) |>
 am.cmd('set', 'InfoWindow', name='iwin', content='This is Sparta') |>
 am.cmd('open', 'iwin', 'm$jmap', ctr)   # m$jmap is the map name in JavaScript
+# ... then open in browser for best performance
 
 ```
 <!--
@@ -71,11 +72,11 @@ Now you can start building beautiful maps with R and Shiny!
 -->
 ## Demo
 
-Run with command ``` demo(am.shiny, 'amapro') ``` 
+Run with command ``` demo(am.shiny, 'amapro') ```. Demo will open in default **browser**.
 
 <br />
 <p align="center">
 <!--<a href='https://helgasoft.github.io/amapro/gallery.html' target='_blank'>-->
-<img src="inst/figures/demo1.jpg" alt="demo"/>
+<img src="man/figures/demo1.jpg" alt="demo"/>
 <br />Made with amapro. Powered by AMap.
 </p>

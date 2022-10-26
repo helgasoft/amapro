@@ -4,14 +4,14 @@
 \alias{am.cmd}
 \title{Run a command}
 \usage{
-am.cmd(id, cmd = NULL, target = NULL, ...)
+am.cmd(id, cmd = NULL, trgt = NULL, ...)
 }
 \arguments{
 \item{id}{A map widget from \link{am.init} or a proxy from \link{am.proxy}}
 
 \item{cmd}{A command name string, like 'setFitView'}
 
-\item{target}{A target's name string, or 'map' for the map itself.}
+\item{trgt}{A target's name string, or 'map' for the map itself.}
 
 \item{...}{command attributes \cr}
 }

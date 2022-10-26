@@ -48,8 +48,10 @@ am.init <- function(..., width=NULL, height=NULL) {
   if (grepl('xxxxxxxxxxxxxx', cont[2], fixed=TRUE)) {
     key <- .prompt()
     if (is.null(key)) return()
-    if (tolower(key)=='demo')
+    if (tolower(key)=='demo') {
       key <- scan('https://raw.githubusercontent.com/helgasoft/amapro/master/inst/figures/demo.txt', what='character')
+      key <- intToUtf8(rev(utf8ToInt(key)))
+    }
     cont[2] <- sub('xxxxxxxxxxxxxx', key, cont[2], fixed= TRUE)
     writeLines(cont, ffull)
     detach("package:amapro", unload= TRUE)
@@ -153,7 +155,7 @@ am.item <- function(id, itype, ...) {
 #'
 #' @param id A map widget from [am.init] or a proxy from [am.proxy]
 #' @param cmd A command name string, like 'setFitView'
-#' @param target A target's name string, or 'map' for the map itself.
+#' @param trgt A target's name string, or 'map' for the map itself.
 #' @param ... command attributes \cr
 #' @return A map or a map proxy
 #'
@@ -171,7 +173,7 @@ am.item <- function(id, itype, ...) {
 #' @seealso  [am.init] code example and [Introduction]
 #'
 #' @export
-am.cmd <- function(id, cmd=NULL, target=NULL, ...) {
+am.cmd <- function(id, cmd=NULL, trgt=NULL, ...) {
   if (missing(id))
     stop('missing map or proxy', call. = FALSE)
 
@@ -179,8 +181,8 @@ am.cmd <- function(id, cmd=NULL, target=NULL, ...) {
   if ('amapro' %in% class(id)) {
     method <- "addCmd"
     cmd <- cmd
-    if (is.null(target)) target <- 'map'
-    target <- target
+    if (is.null(trgt)) trgt <- 'map'
+    trgt <- trgt
     data <- list(...)
     tmp = .callJS()
     return(tmp)
@@ -190,7 +192,7 @@ am.cmd <- function(id, cmd=NULL, target=NULL, ...) {
   if (!'amaProxy' %in% class(id))
     stop('must pass amaProxy object', call.=FALSE)
   plist <- list(id = id$id,
-                target = target,
+                trgt = trgt,
                 cmd = cmd,
                 data = list(...)
   )
@@ -244,7 +246,7 @@ am.render <- function(wt, env=parent.frame()) {
 #' Create a proxy for an existing map in Shiny. It allows to
 #' add, merge, delete elements to a map without reloading it.
 #'
-#' @param id Target map id from the Shiny UI
+#' @param id Map id from the Shiny UI
 #' @return A proxy object to update the map
 #'
 #' @examples
@@ -265,13 +267,40 @@ am.proxy <- function(id) {
 
 
 # ------------ Utils ----
-# needed by widget init
-.preRender <- function(wt) {
 
-  ff <- getOption('amapro.font')
-  if (!is.null(ff))
-    wt$x$opts$textStyle <- list(fontFamily = ff)
-  wt
+#' Map to JSON
+#' 
+#' Convert map elements to JSON string
+#' 
+#' @param wt An \code{amapro} widget as returned by [am.init]
+#' @param json Boolean whether to return a JSON, or a \code{list}, default TRUE
+#' @param ... Additional arguments to pass to \link[jsonlite]{toJSON}
+#' @return A JSON string if \code{json} is \code{TRUE} and
+#'  a \code{list} otherwise.
+#'
+#' @details Must be invoked or chained as last command.\cr
+#'
+#' @examples
+#' am.init(viewMode= '3D', zoom= 10, pitch= 60) |>
+#'   am.control(ctype= 'ControlBar', position= 'RT') |>
+#'   am.inspect()
+#'
+#' @importFrom jsonlite toJSON
+#' @export
+am.inspect <- function(wt, json=TRUE, ...) {
+  
+  opts <- wt$x
+  
+  if (!isTRUE(json)) return(opts)
+  params <- list(...)
+  if ('pretty' %in% names(params)) 
+    opts <- jsonlite::toJSON(opts, force=TRUE, auto_unbox=TRUE, 
+                             null='null', ...)
+  else
+    opts <- jsonlite::toJSON(opts, force=TRUE, auto_unbox=TRUE, 
+                             null='null', pretty=TRUE, ...)
+  
+  return(opts)
 }
 
 .callJS <- function() {
@@ -283,7 +312,7 @@ am.proxy <- function(id) {
   # initialization of the widget, so keep track of the desired function call
   # by adding it to a list of functions that should be performed when the widget
   # is ready
-  if ('amapro' %in% class(message$id)) { #(methods::is(message$id, "amapro")) {
+  if ('amapro' %in% class(message$id)) { 
     widget <- message$id
     message$id <- NULL
     widget$x$api <- c(widget$x$api, list(message))
@@ -296,7 +325,9 @@ am.proxy <- function(id) {
     session$sendCustomMessage(method, message)
     return(message$id)
   } else {
-    stop("The `id` argument must be either an amapro htmlwidget or its ID.", call.= FALSE)
+    msg <- "The `id` argument must be either an amapro htmlwidget or its ID.\n
+          Could be also invalid AMap API-key."
+    stop(msg, call.= FALSE)
   }
 }
 
@@ -322,9 +353,28 @@ am.proxy <- function(id) {
   tcltk::tkgrid(tcltk::tklabel(tt,text="Enter AMap API key (or 'demo')", background='goldenrod'), key.entry, pady = 10, padx =10)
   tcltk::tkgrid(submit.but, reset.but)
   
+  tcltk::tcl("wm", "attributes", tt, topmost= TRUE)
   tcltk::tkwait.window(tt)
   
   if (!exists('key')) key <- NULL
   return(c(key))
 }
 
+
+# ---------------------------------------------- License -----
+#   Original work Copyright 2022 Larry Helgason
+# 
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+# 
+# http://www.apache.org/licenses/LICENSE-2.0
+# 
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#'------------------------------------------------------------
+
+  

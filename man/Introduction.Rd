@@ -7,12 +7,12 @@
 Essential information, tips and tricks
 }
 \details{
-We welcome JavaScript library AMap into the world of R. AMap is an
-advanced mapping library made in China and widely used there. It
-features 2D/3D animation, supports a multitude of layers and markers,
+Welcoming JavaScript library AMap into the world of R.
+AMap is an advanced mapping library made in China and widely used there.
+It features 2D/3D animation, supports a multitude of layers and markers,
 data import, flyover playback, etc. \if{html}{\out{<br>}} Library \emph{amapro} let you
 control AMap from R and Shiny. It uses AMap’s native commands/parameters
-wrapped in its own few commands.
+wrapped in just a few commands.
 }
 \section{Translation}{
 AMap’s documentation is in Chinese and most links here make reference to
@@ -24,24 +24,23 @@ structure. One can also copy/paste text to \href{https://translate.google.com?sl
 }
 
 \section{Installation}{
-Install \strong{amapro} from CRAN with \if{html}{\out{<br>}}
-\code{install.packages("amapro")} \if{html}{\out{<br>}} Install \strong{amapro} from Github with
-\if{html}{\out{<br>}} \code{remotes::install_github("helgasoft/amapro")} \if{html}{\out{<br>}} Then run the
-following R commands \if{html}{\out{<br>}} \verb{library(amapro); am.init()} \if{html}{\out{<br>}} A pop-up
-dialog will ask for an API key (shows once, will not be repeated). \if{html}{\out{<br>}}
-API key is obtained through
+Install \strong{amapro} from Github with
+\code{remotes::install_github("helgasoft/amapro")}
+CRAN version also available but usually outdated.
+
+Run with the following commands \if{html}{\out{<br>}} \verb{library(amapro); am.init()} \if{html}{\out{<br>}} A
+pop-up dialog will ask for an \strong{API key} (shows once, will not be
+repeated). \if{html}{\out{<br>}} API key is obtained through
 \href{https://console.amap.com/dev/id/phone}{registration}, expecting you to
-provide a Chinese phone number for the SMS verification code. \if{html}{\out{<br>}} How
-to get an API key if you reside out of China?
+provide a Chinese phone number for SMS verification. \if{html}{\out{<br>}} How to get an
+API key if you reside out of China?
 \itemize{
 \item ask a friend from China to help, or hire a local
 \href{https://www.truelancer.com/freelancers-in-china}{freelancer}
 \item search the web for a shared key
-\item use a temporary Chinese phone number from sites like
-\href{https://sms24.me/en/countries/cn/}{sms24},
-\href{https://turtle-sms.xyz}{turtle-sms}, etc. However most are probably
-blacklisted as the registration page shows them as \emph{already
-registered}.
+\item use a temporary Chinese phone number from sites like \emph{sms24.me},
+\emph{turtle-sms.xyz}, etc. However most are probably blacklisted as the
+registration page shows them as \emph{‘already registered’}.
 \item select temporarily the ‘demo’ option, without guarantee to work in
 the long run
 }
@@ -61,10 +60,8 @@ The base library with optional plugins. Most important links are
 \itemize{
 \item \href{https://lbs.amap.com/api/jsapi-v2/summary/}{Summary}
 \item \href{https://lbs.amap.com/api/jsapi-v2/guide/abc/quickstart}{Guide}
-\item \href{https://lbs.amap.com/api/jsapi-v2/documentation}{API}\if{html}{\out{<sup>}}1\if{html}{\out{</sup>}}
-official documentation
-\item \href{https://a.amap.com/jsapi/static/doc/20210906/index.html?v=2#map}{API}\if{html}{\out{<sup>}}2\if{html}{\out{</sup>}}
-same as \if{html}{\out{<sup>}}1\if{html}{\out{</sup>}}, but better auto-translation
+\item \href{https://a.amap.com/jsapi/static/doc/index.html}{API} documentation,
+good auto-translation
 \item \href{https://lbs.amap.com/demo/list/jsapi-v2}{Examples} - live demos
 \item \href{https://lbsbbs.amap.com/portal.php}{Forum} - reported issues
 }
@@ -73,8 +70,8 @@ same as \if{html}{\out{<sup>}}1\if{html}{\out{</sup>}}, but better auto-translat
 \subsection{LOCA}{
 
 AMap extension with enhanced 3D features. In \emph{amapro} it is invoked with
-a parameter \code{am.init(loca=TRUE, ...)}. The documentation auto-translates
-well in Chrome.
+a parameter - \code{am.init(loca=TRUE, ...)}. The documentation
+auto-translates well in the browser.
 \itemize{
 \item \href{https://lbs.amap.com/api/loca-v2/intro}{Intro}
 \item \href{https://a.amap.com/Loca/static/loca-v2/doc/html/index.html}{API}
@@ -84,15 +81,17 @@ documentation
 }
 
 \section{Commands}{
-Controlling map and items is done by sending AMap commands to them. \if{html}{\out{<br>}}
-Example: \code{am.cmd('setAngle', 'carIcon', -90)} \if{html}{\out{<br>}} \emph{amapro} uses native
-AMap commands and introduces these \if{html}{\out{<ins>}}additional\if{html}{\out{</ins>}}:
+Controlling map and elements is done by sending AMap commands to them.
+Commands can be chained with the pipe operator |> or \%>\% and are
+executed sequentially in the order received. \if{html}{\out{<br>}} Example:
+\code{am.cmd('setAngle', 'carIcon', -90)} \if{html}{\out{<br>}} \emph{amapro} uses native AMap
+commands and introduces these \if{html}{\out{<ins>}}additional\if{html}{\out{</ins>}}:
 \itemize{
-\item \strong{set} - create new item
+\item \strong{set} - create new element
 \itemize{
 \item with \emph{name}: add new global JS object outside the map \if{html}{\out{<br>}}
 \code{am.cmd('set', 'VectorLayer', name='e$layer1')}
-\item without \emph{name}: add new item to map \if{html}{\out{<br>}}
+\item without \emph{name}: add new element to map \if{html}{\out{<br>}}
 \code{am.cmd('set', 'e$marker1', position= c(116.478, 39.998))}
 }
 \item \strong{addTo} - append one existing JS object to another by name \if{html}{\out{<br>}}
@@ -111,7 +110,7 @@ update \emph{input$inShiny1} with the Lng/Lat coordinates of the map center.
 }
 
 \section{Events}{
-Events could be defined for map and items. All types of instances use
+Events could be defined for map and elements. All types of instances use
 \strong{on/off methods} to bind and remove events. \if{html}{\out{<br>}} Events are set in
 attribute \strong{on}(or \strong{off}) as a list of lists. Each event is a
 separate list with event name in \strong{e}, a JS function \strong{f} and
@@ -124,19 +123,19 @@ Example:
 }\if{html}{\out{</div>}}
 
 on/off events without \emph{name} are ignored, except for the map itself (as
-above example). \if{html}{\out{<br>}} Function \emph{Shiny.setInputValue()} can be used in
-JavaScript to send data back to Shiny.
+above example). \if{html}{\out{<br>}} JavaScript function \emph{Shiny.setInputValue()} can be
+used to send data back to Shiny.
 }
 
 \section{Limitations}{
 \itemize{
 \item only one map is created by \emph{am.init} per session. It is a JS global
 called ‘m$jmap’.
-\item AMap command \emph{addTo} is overwritten by \emph{amapro} and cannot be used.
-\item AMap plugins supported are ControlBar, Scale, ToolBar,
+\item AMap command
+\href{https://a.amap.com/jsapi/static/doc/index.html#controladdto}{addTo}
+is overwritten by \emph{amapro} and cannot be used.
+\item the \strong{supported AMap plugins} are: ControlBar, Scale, ToolBar,
 MoveAnimation, MouseTool, HeatMap, GeoJSON, ElasticMarker.
-\item Loca supported items are GeoJSONSource, PolygonLayer, ScatterLayer,
-LinkLayer, PulseLinkLayer. Loca events are not supported yet.
 \item most \strong{built-in} AMap tile layers (Satellite, Traffic, Roads) are
 limited to China only. However, with command \emph{am.item(‘TileLayer’)},
 one can use any \href{https://leaflet-extras.github.io/leaflet-providers/preview/}{Leaflet provider}
@@ -148,7 +147,7 @@ Leaflet or other WGS-84 based maps, and vice-versa. They need to be
 \href{https://lbs.amap.com/api/jsapi-v2/guide/transform/convertfrom}{converted}.
 Conversion is available through function
 \href{https://lbs.amap.com/api/jsapi-v2/documentation#convertfrom}{convertFrom}.
-\item AMap ecosystem is vast, some unsupported features include:
+\item AMap ecosystem is vast, \strong{unsupported features} include:
 ‘BesizerCurve’, ‘MarkerCluster’, ‘HawkEye’,
 \href{https://lbs.amap.com/demo/javascript-api/example/indoormap/indoormap/}{IndoorMap},
 \href{https://lbs.amap.com/demo/javascript-api/example/selflayer/cus-svg}{CustomLayer},
@@ -156,6 +155,12 @@ Conversion is available through function
 ‘PolygonEditor’,‘Webservice’, ‘Search(AMap.Autocomplete,
 AMap.PlaceSearch)’, ‘Geocoding(AMap.Geocoder)’, Route planning,
 other services(weather, districts, etc.), positioning, utilities.
+\item most \strong{Loca} elements are supported, but not all have been tested.
+Latest \emph{AmbientLight}, \emph{DirectionalLight} and \emph{PointLight} objects
+are not supported, but parameters \emph{ambLight}, \emph{dirLight} and
+\emph{pointLight} accomplish the same. Loca events are not supported yet.
+\item \emph{loca.js} file has several versions, the latest (bigger) one does
+not work well with the current \emph{amap.js}
 }
 }
 

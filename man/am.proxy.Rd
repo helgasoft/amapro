@@ -7,7 +7,7 @@
 am.proxy(id)
 }
 \arguments{
-\item{id}{Target map id from the Shiny UI}
+\item{id}{Map id from the Shiny UI}
 }
 \value{
 A proxy object to update the map

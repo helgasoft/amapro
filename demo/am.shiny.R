@@ -82,8 +82,7 @@ ul {
   margin: 0;
   padding: 3px;
   overflow: hidden;
-  background-color: #ddd; opacity: 0.7;
-}
+  background-color: #ddd; opacity: 0.7; }
 li { color: #092b36; opacity: 0.9;}
 li:hover {  background-color: #eee; }
 label{ float:left; }
@@ -211,15 +210,15 @@ server = function(input, output, session){
     # am.cmd('set', 'Container') - Loca.Container is set by  am.init(loca=TRUE)
     # am.cmd('viewControl.addAnimates', 'm$loca', 'm$tmp') |>  # but m$loca not instantiated yet
     am.cmd('set', 'GeoJSONSource', name='m$geoPulse', data= pfl) |>
-    am.cmd('set', 'GeoJSONSource', name='m$geo', url= geoJson3D) |>
-    am.cmd('set', 'PolygonLayer', name='m$lpl', opacity=0, # hide it
-           shininess= 10, hasSide= TRUE, cullface='back', depth= TRUE) |>
-    # use setSource before setStyle, otherwise "Cannot read property 'getDataset' of undefined"
-    am.cmd('setSource', 'm$lpl', 'm$geo') |>
-    am.cmd('setStyle', 'm$lpl', topColor='#555', sideColor= '#555', height= "function(index, feature) {
-      heit = feature.properties.height ? feature.properties.height : 1;
-      return heit;
-    }")
+    am.cmd('set', 'GeoJSONSource', name='m$geo', url= geoJson3D) #|>
+    # am.cmd('set', 'PolygonLayer', name='m$lpl', opacity=0, # hide it
+    #        shininess= 10, hasSide= TRUE, cullface='back', depth= TRUE) |>
+    # # use setSource before setStyle, otherwise "Cannot read property 'getDataset' of undefined"
+    # am.cmd('setSource', 'm$lpl', 'm$geo') |>
+    # am.cmd('setStyle', 'm$lpl', topColor='#555', sideColor= '#555', height= "function(index, feature) {
+    #   heit = feature.properties.height ? feature.properties.height : 1;
+    #   return heit;
+    # }")
   })
   
   observeEvent(input$isMarks, {
@@ -265,19 +264,19 @@ server = function(input, output, session){
         context.lineWidth = 2;"
       jdraw <- "var radius = 0;
         var draw = function () {
-          context = m$jcanvas.getContext('2d');
-            context.clearRect(0, 0, 200, 200)
-            context.globalAlpha = (context.globalAlpha - 0.01 + 1) % 1;
-            radius = (radius + 1) % 100;
+          if (m$jcanvas==undefined) return;
+          context = m$jcanvas.getContext('2d', {willReadFrequently: true});
+          context.clearRect(0, 0, 200, 200)
+          context.globalAlpha = (context.globalAlpha - 0.01 + 1) % 1;
+          radius = (radius + 1) % 100;
 
-            context.beginPath();
-            context.arc(100, 100, radius, 0, 2 * Math.PI);
-            context.fill();
-            context.stroke();
+          context.beginPath();
+          context.arc(100, 100, radius, 0, 2 * Math.PI);
+          context.fill();
+          context.stroke();
+          m$CanvasLayer.reFresh();
 
-            m$CanvasLayer.reFresh();
-
-            AMap.Util.requestAnimFrame(draw);
+          AMap.Util.requestAnimFrame(draw);
         }; draw();"
       # execute jcanvas before and jdraw after adding layer to map
       am.cmd(p, 'code', jcanvas)
@@ -328,6 +327,7 @@ server = function(input, output, session){
       am.cmd(p, 'remove', 'm$pll')
       am.cmd(p, 'clear', 'm$mmarks')
       am.cmd(p, 'close', 'm$iwin')
+      am.cmd(p, 'code', "m$jcanvas=null;")
       
       # am.cmd(p, 'animate.stop', 'm$loca')
       # am.cmd(p, 'remove', 'm$puls')
@@ -461,12 +461,21 @@ server = function(input, output, session){
   
   observeEvent(input$isLoLay, {
     if (isolate(!rv$isLoaded)) return()
+    p <- am.proxy("plot")
     if (input$isLoLay) {
-      p <- am.proxy("plot")
-      am.cmd(p, 'setOpacity', 'm$lpl', 1)
+    #  am.cmd(p, 'setOpacity', 'm$lpl', 1)   # was ok w old loca.js
+      am.cmd(p, 'set', 'PolygonLayer', name='m$lpl') #, #opacity=0, # hide it
+      #       shininess= 10, hasSide= TRUE, cullface='back', depth= TRUE)
+      # use setSource before setStyle, otherwise "Cannot read property 'getDataset' of undefined"
+      am.cmd(p, 'setSource', 'm$lpl', 'm$geo')
+      am.cmd(p, 'setStyle', 'm$lpl', topColor='#555', sideColor= '#555', height= "function(index, feature) {
+        heit = feature.properties.height ? feature.properties.height : 1;
+        return heit;
+      }")
+      
     } else {
-      p <- am.proxy("plot")
-      am.cmd(p, 'setOpacity', 'm$lpl', 0)
+    #  am.cmd(p, 'setOpacity', 'm$lpl', 0)
+      am.cmd(p, 'remove', 'm$lpl')
     }
   })
   
@@ -510,4 +519,5 @@ server = function(input, output, session){
   
 }   # end server
 
-shinyApp(ui = ui, server = server)
+#shinyApp(ui = ui, server = server)   # RStudio internal browser is NOT suitable
+shinyApp(ui = ui, server = server, options= list(launch.browser= TRUE))
