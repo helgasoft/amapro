@@ -1,6 +1,5 @@
----
-title: <img src="man/figures/logo.png" width='70px' alt="" /> amapro &nbsp; &nbsp; &nbsp; &nbsp; [![size](https://img.shields.io/github/languages/code-size/helgasoft/amapro)](https://github.com/helgasoft/amapro/releases/)
----
+# <img src="man/figures/logo.png" width='70px' alt="" /> amapro &nbsp; &nbsp; &nbsp; &nbsp; [![size](https://img.shields.io/github/languages/code-size/helgasoft/amapro)](https://github.com/helgasoft/amapro/releases/)
+
 <!-- badges: start -->
 <!--
 [![R-CMD-check](https://github.com/helgasoft/amapro/workflows/R-CMD-check/badge.svg)](https://github.com/helgasoft/amapro/actions)
