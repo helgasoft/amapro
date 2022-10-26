@@ -2,3 +2,9 @@ url: https://helgasoft.github.io/amapro/
 template:
   bootstrap: 5
   bootswatch: slate
+footer:
+  structure: 
+    right: built_with
+home:
+  sidebar:
+    structure: [links, license, community, citation, dev]

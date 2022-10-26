@@ -24,8 +24,9 @@ Convert map elements to JSON string
 Must be invoked or chained as last command.\cr
 }
 \examples{
-am.init(viewMode= '3D', zoom= 10, pitch= 60) |>
-  am.control(ctype= 'ControlBar', position= 'RT') |>
-  am.inspect()
-
+if (interactive()) {
+  am.init(viewMode= '3D', zoom= 10, pitch= 60) |>
+    am.control(ctype= 'ControlBar', position= 'RT') |>
+    am.inspect()
+}
 }
