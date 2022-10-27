@@ -1,10 +1,25 @@
 url: https://helgasoft.github.io/amapro/
 template:
   bootstrap: 5
-  bootswatch: slate
-footer:
-  structure: 
-    right: built_with
+  bootswatch: darkly
 home:
   sidebar:
     structure: [links, license, community, citation, dev]
+navbar:
+  structure:
+    left:  [intro, reference, articles, tutorials, news, gallery]
+    right: [search, twitter, github]
+  components:
+    gallery:
+      text: Gallery
+      href: articles/gallery.html
+    twitter:
+      icon: fa-twitter
+      href: http://twitter.com/echarty_R
+      aria-label: Twitter
+footer:
+  structure:
+    left: legal
+    right: built_with
+  components:
+    legal: &copy; Helgasoft, provided without **any warranty**.

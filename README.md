@@ -1,18 +1,20 @@
-# <img src="man/figures/logo.png" width='70px' alt="" /> amapro &nbsp; &nbsp; &nbsp; &nbsp; [![size](https://img.shields.io/github/languages/code-size/helgasoft/amapro)](https://github.com/helgasoft/amapro/releases/)
-
+# <img src="man/figures/logo.png" width='70px' alt="" /> amapro &nbsp; &nbsp; &nbsp; &nbsp; 
 <!-- badges: start -->
-<!--
 [![R-CMD-check](https://github.com/helgasoft/amapro/workflows/R-CMD-check/badge.svg)](https://github.com/helgasoft/amapro/actions)
-[![Coveralls test coverage](https://coveralls.io/repos/github/helgasoft/amapro/badge.svg)](https://coveralls.io/r/helgasoft/echarty?branch=main)
+[![size](https://img.shields.io/github/languages/code-size/helgasoft/amapro)](https://github.com/helgasoft/amapro/releases/)
 [![website](https://img.shields.io/badge/Website-Visit-blue)](https://helgasoft.github.io/amapro)
+<!--
+[![Coveralls test coverage](https://coveralls.io/repos/github/helgasoft/amapro/badge.svg)](https://coveralls.io/r/helgasoft/echarty?branch=main)
 -->
 <!-- badges: end -->
 <!--
 <a href='https://helgasoft.github.io/amapro'><img src="inst/figures/amapro.gallery.png" alt="amapro.gallery" /></a>
 -->
+
 A thin R wrapper around Javascript library
-[AMap](https://lbs.amap.com/demo/list/jsapi-v2).<br> Uses AMap (and Loca) v.2.0 native commands and parameters, with 
-just a few additional commands. Features easy transition 2D to/from 3D, variety of markers and layers, geoJson import, map drawing, dynamic 3D effects like flyover and trace animation, and more. <br/>
+[AMap](https://lbs.amap.com/demo/list/jsapi-v2) and its 3D plugin Loca.  
+API has eight(8) commands to enclose all AMap and Loca v.2.0 native commands and parameters.  
+Features easy transition 2D to/from 3D, variety of markers and layers, geoJson import, map manual drawing, dynamic 3D effects like flyover and trace animation, and more. <br/>
 Enjoy rich interactive maps in R and Shiny with minimal overhead!
 
 
@@ -38,7 +40,9 @@ install.packages('amapro')
 ## Examples
 
 #### Minimal
-``` library(amapro); am.init() ```
+```r
+library(amapro); am.init()
+```
 
 #### Extended
 ``` r
