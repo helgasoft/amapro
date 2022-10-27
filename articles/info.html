@@ -50,11 +50,15 @@
 <li class="active nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
+    <a class="dropdown-item" href="../articles/gallery.html">Gallery</a>
     <a class="dropdown-item" href="../articles/info.html">Introduction to amapro</a>
   </div>
 </li>
 <li class="nav-item">
   <a class="nav-link" href="../news/index.html">Changelog</a>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="../articles/gallery.html">Gallery</a>
 </li>
       </ul>
 <form class="form-inline my-2 my-lg-0" role="search">
@@ -62,6 +66,12 @@
 </form>
 
       <ul class="navbar-nav">
+<li class="nav-item">
+  <a class="external-link nav-link" href="http://twitter.com/echarty_R" aria-label="Twitter">
+    <span class="fa fa-twitter"></span>
+     
+  </a>
+</li>
 <li class="nav-item">
   <a class="external-link nav-link" href="https://github.com/helgasoft/amapro/" aria-label="github">
     <span class="fab fa fab fa-github fa-lg"></span>
@@ -82,7 +92,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Introduction to amapro</h1>
             
-            <h4 data-toc-skip class="date">2022-10-26</h4>
+            <h4 data-toc-skip class="date">2022-10-27</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/helgasoft/amapro/blob/HEAD/vignettes/info.Rmd" class="external-link"><code>vignettes/info.Rmd</code></a></small>
       <div class="d-none name"><code>info.Rmd</code></div>
@@ -91,35 +101,54 @@
     
     
 <p>Welcoming JavaScript library AMap into the world of R.<br>
-AMap is an advanced mapping library made in China and widely used there. It features 2D/3D animation, supports a multitude of layers and markers, data import, flyover playback, etc. <br> Library <em>amapro</em> let you control AMap from R and Shiny. It uses AMap’s native commands/parameters wrapped in just a few commands.</p>
+AMap is an advanced mapping library made in China and widely used there.
+It features 2D/3D animation, supports a multitude of layers and markers,
+data import, flyover playback, etc. <br> Library <em>amapro</em> let you
+control AMap from R and Shiny. It uses AMap’s native commands/parameters
+wrapped in just a few commands.</p>
 <div class="section level2">
 <h2 id="translation">Translation<a class="anchor" aria-label="anchor" href="#translation"></a>
 </h2>
-<p>AMap’s documentation is in Chinese and most links here make reference to it. If you happen <em>not</em> to know Chinese, it is convenient to set your browser to <a href="https://www.howtogeek.com/407924/how-to-turn-translation-on-or-off-in-chrome/" class="external-link">auto-translate</a>. This will help a little or a lot depending on the website/page structure. One can also copy/paste text to <a href="https://translate.google.com?sl=auto&amp;tl=en" class="external-link">Google translate</a>.</p>
+<p>AMap’s documentation is in Chinese and most links here make reference
+to it. If you happen <em>not</em> to know Chinese, it is convenient to
+set your browser to <a href="https://www.howtogeek.com/407924/how-to-turn-translation-on-or-off-in-chrome/" class="external-link">auto-translate</a>.
+This will help a little or a lot depending on the website/page
+structure. One can also copy/paste text to <a href="https://translate.google.com?sl=auto&amp;tl=en" class="external-link">Google
+translate</a>.</p>
 </div>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
 <p>Install <strong>amapro</strong> from Github with<br><code>remotes::install_github("helgasoft/amapro")</code><br>
 CRAN version also available but usually outdated.</p>
-<p>Run with the following commands <br><code><a href="https://github.com/helgasoft/amapro/" class="external-link">library(amapro); am.init()</a></code> <br> A pop-up dialog will ask for an <strong>API key</strong> (shows once, will not be repeated). <br> API key is obtained through <a href="https://console.amap.com/dev/id/phone" class="external-link">registration</a>, expecting you to provide a Chinese phone number for SMS verification. <br> How to get an API key if you reside out of China?</p>
+<p>Run with the following commands <br><code><a href="https://github.com/helgasoft/amapro/" class="external-link">library(amapro); am.init()</a></code> <br> A pop-up dialog will ask
+for an <strong>API key</strong> (shows once, will not be repeated). <br>
+API key is obtained through <a href="https://console.amap.com/dev/id/phone" class="external-link">registration</a>, expecting
+you to provide a Chinese phone number for SMS verification. <br> How to
+get an API key if you reside out of China?</p>
 <ul>
 <li>ask a friend from China to help, or hire a local <a href="https://www.truelancer.com/freelancers-in-china" class="external-link">freelancer</a>
 </li>
 <li>search the web for a shared key</li>
-<li>use a temporary Chinese phone number from sites like <em>sms24.me</em>, <em>turtle-sms.xyz</em>, etc. However most are probably blacklisted as the registration page shows them as <em>‘already registered’</em>.</li>
-<li>select temporarily the ‘demo’ option, without guarantee to work in the long run</li>
+<li>use a temporary Chinese phone number from sites like
+<em>sms24.me</em>, <em>turtle-sms.xyz</em>, etc. However most are
+probably blacklisted as the registration page shows them as <em>‘already
+registered’</em>.</li>
+<li>select temporarily the ‘demo’ option, without guarantee to work in
+the long run</li>
 </ul>
 </div>
 <div class="section level2">
 <h2 id="shiny-demo">Shiny Demo<a class="anchor" aria-label="anchor" href="#shiny-demo"></a>
 </h2>
-<p>Interactive, hands-on showcase of many library features. Activate with the following command: <br><code><a href="https://github.com/helgasoft/amapro/" class="external-link">library(amapro); demo(am.shiny)</a></code></p>
+<p>Interactive, hands-on showcase of many library features. Activate
+with the following command: <br><code><a href="https://github.com/helgasoft/amapro/" class="external-link">library(amapro); demo(am.shiny)</a></code></p>
 </div>
 <div class="section level2">
 <h2 id="api-links">API links<a class="anchor" aria-label="anchor" href="#api-links"></a>
 </h2>
-<p><em>amapro</em> is based on version 2.0 of AMap (JSAPI v2.0). “API” auto-translates as “Reference book” in web menus.</p>
+<p><em>amapro</em> is based on version 2.0 of AMap (JSAPI v2.0). “API”
+auto-translates as “Reference book” in web menus.</p>
 <div class="section level3">
 <h3 id="amap">AMap<a class="anchor" aria-label="anchor" href="#amap"></a>
 </h3>
@@ -128,28 +157,39 @@ CRAN version also available but usually outdated.</p>
 <li><a href="https://lbs.amap.com/api/jsapi-v2/summary/" class="external-link">Summary</a></li>
 <li><a href="https://lbs.amap.com/api/jsapi-v2/guide/abc/quickstart" class="external-link">Guide</a></li>
 <li>
-<a href="https://a.amap.com/jsapi/static/doc/index.html" class="external-link">API</a> documentation, good auto-translation</li>
+<a href="https://a.amap.com/jsapi/static/doc/index.html" class="external-link">API</a>
+documentation, good auto-translation</li>
 <li>
-<a href="https://lbs.amap.com/demo/list/jsapi-v2" class="external-link">Examples</a> - live demos</li>
+<a href="https://lbs.amap.com/demo/list/jsapi-v2" class="external-link">Examples</a> -
+live demos</li>
 <li>
-<a href="https://lbsbbs.amap.com/portal.php" class="external-link">Forum</a> - reported issues</li>
+<a href="https://lbsbbs.amap.com/portal.php" class="external-link">Forum</a> - reported
+issues</li>
 </ul>
 </div>
 <div class="section level3">
 <h3 id="loca">LOCA<a class="anchor" aria-label="anchor" href="#loca"></a>
 </h3>
-<p>AMap extension with enhanced 3D features. In <em>amapro</em> it is invoked with a parameter - <code>am.init(loca=TRUE, ...)</code>. The documentation auto-translates well in the browser.</p>
+<p>AMap extension with enhanced 3D features. In <em>amapro</em> it is
+invoked with a parameter - <code>am.init(loca=TRUE, ...)</code>. The
+documentation auto-translates well in the browser.</p>
 <ul>
 <li><a href="https://lbs.amap.com/api/loca-v2/intro" class="external-link">Intro</a></li>
 <li>
-<a href="https://a.amap.com/Loca/static/loca-v2/doc/html/index.html" class="external-link">API</a> documentation</li>
+<a href="https://a.amap.com/Loca/static/loca-v2/doc/html/index.html" class="external-link">API</a>
+documentation</li>
 </ul>
 </div>
 </div>
 <div class="section level2">
 <h2 id="commands">Commands<a class="anchor" aria-label="anchor" href="#commands"></a>
 </h2>
-<p>Controlling map and elements is done by sending AMap commands to them. Commands can be chained with the pipe operator |&gt; or %&gt;% and are executed sequentially in the order received. <br> Example: <code>am.cmd('setAngle', 'carIcon', -90)</code> <br><em>amapro</em> uses native AMap commands and introduces these <ins>additional</ins>:</p>
+<p>Controlling map and elements is done by sending AMap commands to
+them. Commands can be chained with the pipe operator |&gt; or %&gt;% and
+are executed sequentially in the order received. <br> Example:
+<code>am.cmd('setAngle', 'carIcon', -90)</code> <br><em>amapro</em>
+uses native AMap commands and introduces these
+<ins>additional</ins>:</p>
 <ul>
 <li>
 <strong>set</strong> - create new element
@@ -161,7 +201,8 @@ CRAN version also available but usually outdated.</p>
 </ul>
 </li>
 <li>
-<strong>addTo</strong> - append one existing JS object to another by name <br><code>am.cmd('addTo', 'e$layer1', 'e$marker1')</code>
+<strong>addTo</strong> - append one existing JS object to another by
+name <br><code>am.cmd('addTo', 'e$layer1', 'e$marker1')</code>
 </li>
 <li>
 <strong>var</strong> - set a JavaScript variable <br><code>am.cmd('var', 'e$myOpacity', 0.8)</code>
@@ -170,32 +211,66 @@ CRAN version also available but usually outdated.</p>
 <strong>code</strong> - execute JavaScript code <br><code>am.cmd('code', 'alert("I am JS");')</code>
 </li>
 </ul>
-<p>AMap commands starting with <strong>get</strong> return data from the map or related objects. <br> Put the data in a Shiny input variable by setting its name in parameter <strong>r</strong>. <br> Example: <code>am.cmd('getCenter', 'map', r='inShiny1')</code> <br> Above command will update <em>input$inShiny1</em> with the Lng/Lat coordinates of the map center.</p>
+<p>AMap commands starting with <strong>get</strong> return data from the
+map or related objects. <br> Put the data in a Shiny input variable by
+setting its name in parameter <strong>r</strong>. <br> Example:
+<code>am.cmd('getCenter', 'map', r='inShiny1')</code> <br> Above command
+will update <em>input$inShiny1</em> with the Lng/Lat coordinates of the
+map center.</p>
 </div>
 <div class="section level2">
 <h2 id="events">Events<a class="anchor" aria-label="anchor" href="#events"></a>
 </h2>
-<p>Events could be defined for map and elements. All types of instances use <strong>on/off methods</strong> to bind and remove events. <br> Events are set in attribute <strong>on</strong>(or <strong>off</strong>) as a list of lists. Each event is a separate list with event name in <strong>e</strong>, a JS function <strong>f</strong> and optionally a query <strong>q</strong>.<br>
+<p>Events could be defined for map and elements. All types of instances
+use <strong>on/off methods</strong> to bind and remove events. <br>
+Events are set in attribute <strong>on</strong>(or <strong>off</strong>)
+as a list of lists. Each event is a separate list with event name in
+<strong>e</strong>, a JS function <strong>f</strong> and optionally a
+query <strong>q</strong>.<br>
 Example:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/am.init.html">am.init</a></span><span class="op">(</span>center<span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">116.475</span>, <span class="fl">39.997</span><span class="op">)</span>, zoom<span class="op">=</span> <span class="fl">17</span>,</span>
 <span>        on<span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>e<span class="op">=</span> <span class="st">'complete'</span>, </span>
 <span>                      f<span class="op">=</span> <span class="st">"function() {alert('loaded!');}"</span><span class="op">)</span><span class="op">)</span> <span class="op">)</span></span></code></pre></div>
-<p>on/off events without <em>name</em> are ignored, except for the map itself (as above example). <br> JavaScript function <em>Shiny.setInputValue()</em> can be used to send data back to Shiny.</p>
+<p>on/off events without <em>name</em> are ignored, except for the map
+itself (as above example). <br> JavaScript function
+<em>Shiny.setInputValue()</em> can be used to send data back to
+Shiny.</p>
 </div>
 <div class="section level2">
 <h2 id="limitations">Limitations<a class="anchor" aria-label="anchor" href="#limitations"></a>
 </h2>
 <ul>
-<li>only one map is created by <em>am.init</em> per session. It is a JS global called ‘m$jmap’.</li>
-<li>AMap command <a href="https://a.amap.com/jsapi/static/doc/index.html#controladdto" class="external-link">addTo</a> is overwritten by <em>amapro</em> and cannot be used.</li>
-<li>the <strong>supported AMap plugins</strong> are: ControlBar, Scale, ToolBar, MoveAnimation, MouseTool, HeatMap, GeoJSON, ElasticMarker.</li>
-<li>most <strong>built-in</strong> AMap tile layers (Satellite, Traffic, Roads) are limited to China only. However, with command <em>am.item(‘TileLayer’)</em>, one can use any <a href="https://leaflet-extras.github.io/leaflet-providers/preview/" class="external-link">Leaflet provider</a> for worldwide coverage.</li>
-<li>AMap built-in <a href="https://lbs.amap.com/api/jsapi-v2/guide/layers/official-layers" class="external-link">map layers</a> are <a href="https://en.wikipedia.org/wiki/Restrictions_on_geographic_data_in_China" class="external-link">GCJ-02 coded</a> and coordinates collected on them will display incorrectly in Leaflet or other WGS-84 based maps, and vice-versa. They need to be <a href="https://lbs.amap.com/api/jsapi-v2/guide/transform/convertfrom" class="external-link">converted</a>. Conversion is available through function <a href="https://lbs.amap.com/api/jsapi-v2/documentation#convertfrom" class="external-link">convertFrom</a>.</li>
-<li>AMap ecosystem is vast, <strong>unsupported features</strong> include: ‘BesizerCurve’, ‘MarkerCluster’, ‘HawkEye’, <a href="https://lbs.amap.com/demo/javascript-api/example/indoormap/indoormap/" class="external-link">IndoorMap</a>, <a href="https://lbs.amap.com/demo/javascript-api/example/selflayer/cus-svg" class="external-link">CustomLayer</a>, ‘GLCustomLayer’, ‘DistrictLayer’, ‘LayerGroup’, all editors like ‘PolygonEditor’,‘Webservice’, ‘Search(AMap.Autocomplete, AMap.PlaceSearch)’, ‘Geocoding(AMap.Geocoder)’, Route planning, other services(weather, districts, etc.), positioning, utilities.</li>
-<li>most <strong>Loca</strong> elements are supported, but not all have been tested. Latest <em>AmbientLight</em>, <em>DirectionalLight</em> and <em>PointLight</em> objects are not supported, but parameters <em>ambLight</em>, <em>dirLight</em> and <em>pointLight</em> accomplish the same. Loca events are not supported yet.</li>
+<li>only one map is created by <em>am.init</em> per session. It is a JS
+global called ‘m$jmap’.</li>
+<li>AMap command <a href="https://a.amap.com/jsapi/static/doc/index.html#controladdto" class="external-link">addTo</a>
+is overwritten by <em>amapro</em> and cannot be used.</li>
+<li>the <strong>supported AMap plugins</strong> are: ControlBar, Scale,
+ToolBar, MoveAnimation, MouseTool, HeatMap, GeoJSON, ElasticMarker.</li>
+<li>most <strong>built-in</strong> AMap tile layers (Satellite, Traffic,
+Roads) are limited to China only. However, with command
+<em>am.item(‘TileLayer’)</em>, one can use any <a href="https://leaflet-extras.github.io/leaflet-providers/preview/" class="external-link">Leaflet
+provider</a> for worldwide coverage.</li>
+<li>AMap built-in <a href="https://lbs.amap.com/api/jsapi-v2/guide/layers/official-layers" class="external-link">map
+layers</a> are <a href="https://en.wikipedia.org/wiki/Restrictions_on_geographic_data_in_China" class="external-link">GCJ-02
+coded</a> and coordinates collected on them will display incorrectly in
+Leaflet or other WGS-84 based maps, and vice-versa. They need to be <a href="https://lbs.amap.com/api/jsapi-v2/guide/transform/convertfrom" class="external-link">converted</a>.
+Conversion is available through function <a href="https://lbs.amap.com/api/jsapi-v2/documentation#convertfrom" class="external-link">convertFrom</a>.</li>
+<li>AMap ecosystem is vast, <strong>unsupported features</strong>
+include: ‘BesizerCurve’, ‘MarkerCluster’, ‘HawkEye’, <a href="https://lbs.amap.com/demo/javascript-api/example/indoormap/indoormap/" class="external-link">IndoorMap</a>,
+<a href="https://lbs.amap.com/demo/javascript-api/example/selflayer/cus-svg" class="external-link">CustomLayer</a>,
+‘GLCustomLayer’, ‘DistrictLayer’, ‘LayerGroup’, all editors like
+‘PolygonEditor’,‘Webservice’, ‘Search(AMap.Autocomplete,
+AMap.PlaceSearch)’, ‘Geocoding(AMap.Geocoder)’, Route planning, other
+services(weather, districts, etc.), positioning, utilities.</li>
+<li>most <strong>Loca</strong> elements are supported, but not all have
+been tested. Latest <em>AmbientLight</em>, <em>DirectionalLight</em> and
+<em>PointLight</em> objects are not supported, but parameters
+<em>ambLight</em>, <em>dirLight</em> and <em>pointLight</em> accomplish
+the same. Loca events are not supported yet.</li>
 <li>
-<em>loca.js</em> file has several versions, the latest (bigger) one does not work well with the current <em>amap.js</em>
+<em>loca.js</em> file has several versions, the latest (bigger) one
+does not work well with the current <em>amap.js</em>
 </li>
 </ul>
 </div>
@@ -203,12 +278,23 @@ Example:</p>
 <h2 id="tips">Tips<a class="anchor" aria-label="anchor" href="#tips"></a>
 </h2>
 <ul>
-<li><p>all named objects created in JS are <a href="https://developer.mozilla.org/en-US/docs/Glossary/Global_object" class="external-link">global variables</a> (<em>window.name</em>). Good practice is to use a name prefix (m$) to avoid overwriting accidentally external variables.</p></li>
-<li><p>API attributes could be set to a JS function instead of a value. Function is defined as a string starting with word “function”.</p></li>
-<li><p>usually WMS/WMTS tiles come from external servers and may present a CORS problem - browser refusal to load. One can install a small <a href="https://chrome.google.com/webstore/detail/allow-cors-access-control/lhobafahddgcelffkeicbaginigeejlf" class="external-link">extension in Chrome</a> or <a href="https://addons.mozilla.org/en-US/firefox/addon/access-control-allow-origin/" class="external-link">Firefox</a> to fix this problem manually inside the browser.</p></li>
-<li><p>AMap has several predefined <a href="https://lbs.amap.com/api/jsapi-v2/guide/map/map-style/" class="external-link">Map styles</a>. Could be set in map options with <em>mapStyle</em>.</p></li>
-<li><p><em>amapro</em> silent errors are collected in the browser Console. Press key <strong>F12</strong> to open the dev.environment, then open tab “Console” to view them.</p></li>
-<li><p>Chrome/Firefox extensions may interfere with map presentation (like ‘uBlock’)</p></li>
+<li><p>all named objects created in JS are <a href="https://developer.mozilla.org/en-US/docs/Glossary/Global_object" class="external-link">global
+variables</a> (<em>window.name</em>). Good practice is to use a name
+prefix (m$) to avoid overwriting accidentally external
+variables.</p></li>
+<li><p>API attributes could be set to a JS function instead of a value.
+Function is defined as a string starting with word “function”.</p></li>
+<li><p>usually WMS/WMTS tiles come from external servers and may present
+a CORS problem - browser refusal to load. One can install a small <a href="https://chrome.google.com/webstore/detail/allow-cors-access-control/lhobafahddgcelffkeicbaginigeejlf" class="external-link">extension
+in Chrome</a> or <a href="https://addons.mozilla.org/en-US/firefox/addon/access-control-allow-origin/" class="external-link">Firefox</a>
+to fix this problem manually inside the browser.</p></li>
+<li><p>AMap has several predefined <a href="https://lbs.amap.com/api/jsapi-v2/guide/map/map-style/" class="external-link">Map
+styles</a>. Could be set in map options with <em>mapStyle</em>.</p></li>
+<li><p><em>amapro</em> silent errors are collected in the browser
+Console. Press key <strong>F12</strong> to open the dev.environment,
+then open tab “Console” to view them.</p></li>
+<li><p>Chrome/Firefox extensions may interfere with map presentation
+(like ‘uBlock’)</p></li>
 </ul>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -219,7 +305,9 @@ Example:</p>
 
     <footer><div class="pkgdown-footer-left">
   <p></p>
-<p>Developed by Larry Helgason.</p>
+<ol start="3" style="list-style-type: lower-alpha">
+<li>Helgasoft, provided without any warranty.</li>
+</ol>
 </div>
 
 <div class="pkgdown-footer-right">

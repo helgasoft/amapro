@@ -50,11 +50,15 @@
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
+    <a class="dropdown-item" href="articles/gallery.html">Gallery</a>
     <a class="dropdown-item" href="articles/info.html">Introduction to amapro</a>
   </div>
 </li>
 <li class="nav-item">
   <a class="nav-link" href="news/index.html">Changelog</a>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="articles/gallery.html">Gallery</a>
 </li>
       </ul>
 <form class="form-inline my-2 my-lg-0" role="search">
@@ -62,6 +66,12 @@
 </form>
 
       <ul class="navbar-nav">
+<li class="nav-item">
+  <a class="external-link nav-link" href="http://twitter.com/echarty_R" aria-label="Twitter">
+    <span class="fa fa-twitter"></span>
+     
+  </a>
+</li>
 <li class="nav-item">
   <a class="external-link nav-link" href="https://github.com/helgasoft/amapro/" aria-label="github">
     <span class="fab fa fab fa-github fa-lg"></span>
@@ -77,23 +87,21 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="section level1">
 <div class="page-header">
-<img src="logo.png" class="logo" alt=""><h1 id="-amapro---------size">
- amapro         <a href="https://github.com/helgasoft/amapro/releases/" class="external-link"><img src="https://img.shields.io/github/languages/code-size/helgasoft/amapro" alt="size"></a>
-<a class="anchor" aria-label="anchor" href="#-amapro---------size"></a>
+<img src="logo.png" class="logo" alt=""><h1 id="id_-amapro--------">
+ amapro        <a class="anchor" aria-label="anchor" href="#id_-amapro--------"></a>
 </h1>
 </div>
-<!-- badges: start --><!--
-[![R-CMD-check](https://github.com/helgasoft/amapro/workflows/R-CMD-check/badge.svg)](https://github.com/helgasoft/amapro/actions)
-[![Coveralls test coverage](https://coveralls.io/repos/github/helgasoft/amapro/badge.svg)](https://coveralls.io/r/helgasoft/echarty?branch=main)
-[![website](https://img.shields.io/badge/Website-Visit-blue)](https://helgasoft.github.io/amapro)
---><!-- badges: end --><!--
-<a href='https://helgasoft.github.io/amapro'><img src="inst/figures/amapro.gallery.png" alt="amapro.gallery" /></a>
---><p>A thin R wrapper around Javascript library <a href="https://lbs.amap.com/demo/list/jsapi-v2" class="external-link">AMap</a>.<br> Uses AMap (and Loca) v.2.0 native commands and parameters, with just a few additional commands. Features easy transition 2D to/from 3D, variety of markers and layers, geoJson import, map drawing, dynamic 3D effects like flyover and trace animation, and more. <br> Enjoy rich interactive maps in R and Shiny with minimal overhead!</p>
+<!-- badges: start -->
+
+<p>A thin R wrapper around Javascript library <a href="https://lbs.amap.com/demo/list/jsapi-v2" class="external-link">AMap</a> and its 3D plugin Loca.<br>
+API has eight(8) commands to enclose all AMap and Loca v.2.0 native commands and parameters.<br>
+Features easy transition 2D to/from 3D, variety of markers and layers, geoJson import, map manual drawing, dynamic 3D effects like flyover and trace animation, and more. <br> Enjoy rich interactive maps in R and Shiny with minimal overhead!</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
 <!--
-[![Github version](https://img.shields.io/github/v/release/helgasoft/amapro?label=github)](https://github.com/helgasoft/amapro/releases) --><p>Use latest development version for optimal experience:</p>
+[![Github version](https://img.shields.io/github/v/release/helgasoft/amapro?label=github)](https://github.com/helgasoft/amapro/releases) -->
+<p>Use latest development version for optimal experience:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">'remotes'</span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">'remotes'</span><span class="op">)</span></span>
 <span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">'helgasoft/amapro'</span><span class="op">)</span></span></code></pre></div>
@@ -113,12 +121,13 @@ install.packages('amapro')
 <div class="section level4">
 <h4 id="minimal">Minimal<a class="anchor" aria-label="anchor" href="#minimal"></a>
 </h4>
-<p><code><a href="https://github.com/helgasoft/amapro/" class="external-link">library(amapro); am.init()</a></code></p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/helgasoft/amapro/" class="external-link">amapro</a></span><span class="op">)</span>; <span class="fu"><a href="reference/am.init.html">am.init</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="extended">Extended<a class="anchor" aria-label="anchor" href="#extended"></a>
 </h4>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ctr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">22.430151</span>, <span class="fl">37.073011</span><span class="op">)</span></span>
 <span><span class="va">turl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">'http://server.arcgisonline.com/ArcGIS/rest/services/'</span>,</span>
 <span>                 <span class="st">'World_Imagery/MapServer/tile/[z]/[y]/[x]'</span><span class="op">)</span></span>
@@ -150,7 +159,10 @@ Now you can start building beautiful maps with R and Shiny!
 <h2 id="demo">Demo<a class="anchor" aria-label="anchor" href="#demo"></a>
 </h2>
 <p>Run with command <code>demo(am.shiny, 'amapro')</code>. Demo will open in default <strong>browser</strong>.</p>
-<br><p align="center"><!--<a href='https://helgasoft.github.io/amapro/gallery.html' target='_blank'>--><img src="reference/figures/demo1.jpg" alt="demo"><br>Made with amapro. Powered by AMap.</p>
+<br><p align="center">
+<!--<a href='https://helgasoft.github.io/amapro/gallery.html' target='_blank'>-->
+<img src="reference/figures/demo1.jpg" alt="demo"><br>Made with amapro. Powered by AMap.
+</p>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
@@ -178,7 +190,14 @@ Now you can start building beautiful maps with R and Shiny!
 </ul>
 </div>
 
-
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
+<ul class="list-unstyled">
+<li><a href="https://github.com/helgasoft/amapro/actions" class="external-link"><img src="https://github.com/helgasoft/amapro/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a></li>
+<li><a href="https://github.com/helgasoft/amapro/releases/" class="external-link"><img src="https://img.shields.io/github/languages/code-size/helgasoft/amapro" alt="size"></a></li>
+<li><a href="https://helgasoft.github.io/amapro"><img src="https://img.shields.io/badge/Website-Visit-blue" alt="website"></a></li>
+</ul>
+</div>
 
   </aside>
 </div>
@@ -186,7 +205,9 @@ Now you can start building beautiful maps with R and Shiny!
 
     <footer><div class="pkgdown-footer-left">
   <p></p>
-<p>Developed by Larry Helgason.</p>
+<ol start="3" style="list-style-type: lower-alpha">
+<li>Helgasoft, provided without any warranty.</li>
+</ol>
 </div>
 
 <div class="pkgdown-footer-right">
