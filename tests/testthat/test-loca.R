@@ -16,38 +16,44 @@ test_that("amap GeoJSON", {
     )))
   tile2 <- 'https://{a,b,c}.tile.openstreetmap.org/[z]/[x]/[y].png'
   
-  p <- am.init( #center= c(2.303985,48.856950), zoom=6, loca=TRUE) |>
-    loca= TRUE, viewMode= '3D',
-    center= c(2.288930,48.859023), zoom= 16, pitch= 60) |>
-    am.control('ControlBar', position= 'RT') |> 
-    am.item('TileLayer', name='tileLay', tileUrl= tile2, zooms= c(3, 20) ) |>
-    am.item('GeoJSON', name= 'mygjson', geoJSON= gjson) # |> am.inspect()
+  if (interactive()) {
+    p <- am.init( #center= c(2.303985,48.856950), zoom=6, loca=TRUE) |>
+      loca= TRUE, viewMode= '3D',
+      center= c(2.288930,48.859023), zoom= 16, pitch= 60) |>
+      am.control('ControlBar', position= 'RT') |> 
+      am.item('TileLayer', name='tileLay', tileUrl= tile2, zooms= c(3, 20) ) |>
+      am.item('GeoJSON', name= 'mygjson', geoJSON= gjson) # |> am.inspect()
 
-  expect_equal(p$x$opts$viewMode, '3D')
-  expect_equal(p$x$api[[3]]$data$name, 'mygjson')
-  expect_equal(p$x$api[[3]]$data$geoJSON$features[[1]]$geometry$type, 'Polygon')
+    expect_equal(p$x$opts$viewMode, '3D')
+    expect_equal(p$x$api[[3]]$data$name, 'mygjson')
+    expect_equal(p$x$api[[3]]$data$geoJSON$features[[1]]$geometry$type, 'Polygon')
+  }
+  else expect_equal(1,1)
 })
 
 test_that("loca GeoJSONSource scatter", {
   #' from https://lbs.amap.com/demo/loca-v2/demos/cat-scatter/sz-road
-  p <-
-  am.init(loca= TRUE, 
-        viewMode= '3D', zoom= 11.7, pitch= 40,
-        mapStyle= 'amap://styles/dark', showLabel= FALSE,
-        center= c(113.9719963, 22.5807295) ) |>
-  am.control('ControlBar', position= 'RT') |> 
-  am.cmd('set', 'GeoJSONSource', name='m$geo',
-         url='https://a.amap.com/Loca/static/loca-v2/demos/mock_data/sz_road_F.json') |>
-  am.cmd('set', 'ScatterLayer', name='m$red', opacity=1, zIndex= 113,
-         visible= TRUE, zooms= c(2, 22) ) |>
-  am.cmd('setSource', 'm$red', 'm$geo') |>
-  am.cmd('setStyle', 'm$red', unit= 'meter', borderWidth= 0,
-         size= c(1000, 1000),
-         texture= 'https://a.amap.com/Loca/static/loca-v2/demos/images/breath_red.png',
-         duration= 1000,
-         animate= TRUE) |> am.cmd('animate.start', 'm$loca')
-  expect_equal(p$x$api[[6]]$method, 'addCmd')
-  expect_true(p$x$opts$loca)
+  if (interactive()) {
+    p <-
+    am.init(loca= TRUE, 
+          viewMode= '3D', zoom= 11.7, pitch= 40,
+          mapStyle= 'amap://styles/dark', showLabel= FALSE,
+          center= c(113.9719963, 22.5807295) ) |>
+    am.control('ControlBar', position= 'RT') |> 
+    am.cmd('set', 'GeoJSONSource', name='m$geo',
+           url='https://a.amap.com/Loca/static/loca-v2/demos/mock_data/sz_road_F.json') |>
+    am.cmd('set', 'ScatterLayer', name='m$red', opacity=1, zIndex= 113,
+           visible= TRUE, zooms= c(2, 22) ) |>
+    am.cmd('setSource', 'm$red', 'm$geo') |>
+    am.cmd('setStyle', 'm$red', unit= 'meter', borderWidth= 0,
+           size= c(1000, 1000),
+           texture= 'https://a.amap.com/Loca/static/loca-v2/demos/images/breath_red.png',
+           duration= 1000,
+           animate= TRUE) |> am.cmd('animate.start', 'm$loca')
+    expect_equal(p$x$api[[6]]$method, 'addCmd')
+    expect_true(p$x$opts$loca)
+  }
+  else expect_equal(1,1)
 })
 
 test_that("loca PolygonLayer with lights", {
@@ -106,7 +112,8 @@ test_that("loca PolygonLayer with lights", {
           }")
   )
   
-  p <- am.init(loca= TRUE,
+  if (interactive()) {
+    p <- am.init(loca= TRUE,
           viewMode= '3D', pitch= 40, showLabel= TRUE, showBuildingBlock= FALSE,
           on= onEvents,
           mapStyle= 'amap://styles/dark', 
@@ -135,6 +142,8 @@ test_that("loca PolygonLayer with lights", {
     # am.cmd('set','pointLight', color= 'rgb(100,100,100)',  position= c(2.328007,46.86992, 2000),
     #       intensity= 3, distance= 50000)
   
-  expect_equal(p$x$api[[10]]$trgt, 'dirLight')
-  expect_true(grepl('m$poly.queryFeature', p$x$opts$on[[2]]$f, fixed=TRUE))
+    expect_equal(p$x$api[[10]]$trgt, 'dirLight')
+    expect_true(grepl('m$poly.queryFeature', p$x$opts$on[[2]]$f, fixed=TRUE))
+  }
+  else expect_equal(1,1)
 })

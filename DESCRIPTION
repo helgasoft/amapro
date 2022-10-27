@@ -16,7 +16,6 @@ Imports:
   htmlwidgets,
   shiny (>= 1.7.0),
   tcltk (>= 4.1.0),
-  shiny (>= 1.7.0),
   jsonlite
 Suggests:
   rmarkdown,

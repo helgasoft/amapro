@@ -22,8 +22,8 @@ See [Geojson](https://a.amap.com/jsapi/static/doc/index.html#geojson) in Amap do
 
 ![](media/geojson.jpg)
 
-```r
-
+```{r echo=FALSE}
+if (interactive()) {
 glnglat <- list(c(2.290412,48.863673),c(2.292779,48.862115),c(2.288930,48.859023),c(2.289799,48.860950),c(2.290633,48.861634),c(2.289015,48.861835),c(2.287414,48.860088),c(2.286171,48.860614),c(2.287397,48.862586))
 gjson <- list(type= "FeatureCollection", features= list(
   list(type= "Feature", properties= list(id="44", name="Trocadero"), 
@@ -38,6 +38,8 @@ am.init(
   am.control('ControlBar', position= 'RT') |> 
   am.item('TileLayer', name='tileLay', tileUrl= tile2, zooms= c(3, 20) ) |>
   am.item('GeoJSON', name= 'mygjson', geoJSON= gjson)
+
+}
 ```
 
 ### Loca PolygonLayer
@@ -49,7 +51,7 @@ See [PolygonLayer](https://a.amap.com/Loca/static/loca-v2/doc/html/index.html#po
 
 
 
-```r
+```{r echo=FALSE}
 tile4 <- 'https://{a,b,c,d}.basemaps.cartocdn.com/dark_all/[z]/[x]/[y].png'
 
 # https://writingjavascript.com/scaling-values-between-two-ranges
@@ -102,6 +104,7 @@ onEvents <- list(
     }")
 )
 
+if (interactive()) {
 library(amapro)
 am.init(loca= TRUE,
      viewMode= '3D', pitch= 40, showLabel= TRUE, showBuildingBlock= FALSE,
@@ -124,7 +127,7 @@ am.init(loca= TRUE,
   am.cmd('code', jscala) |>
   am.cmd('setStyle', 'm$poly',
          altitude= 0,
-         topColor= "function(i, f) { m$sc= new scaler(1,20,0,8); return m$colors[Math.round(m$sc.scale(f.properties.h))]; }",
+         topColor= "function(i, f) { m$sc= new scaler(1,20,0,8); return m$colors[Math.round(m$sc.scale(f.properties.h))]; }", 
          sideTopColor= "function(i, f) { m$sc= new scaler(1,20,0,8); return m$colors[Math.round(m$sc.scale(f.properties.h))]; }",
          sideBottomColor= "function(i, f) { m$sc= new scaler(1,20,0,8); return m$colors[Math.round(m$sc.scale(f.properties.h))]; }",
          height= "function(i, f) { m$sc= new scaler(1,18,0,4000); return 4000-m$sc.scale(f.properties.h); }") |>
@@ -132,8 +135,10 @@ am.init(loca= TRUE,
   am.cmd('set','ambLight', intensity= 0.9, color= '#fff') |>
   am.cmd('set','dirLight', intensity= 1, color= '#fff', position= c(1,-1, 0), target= c(0,0,0))
   
-# am.cmd('set','pointLight', color= 'rgb(100,100,100)',  position= c(2.328007,46.86992, 2000),
-#       intensity= 3, distance= 50000)
+  # am.cmd('set','pointLight', color= 'rgb(100,100,100)',  position= c(2.328007,46.86992, 2000),
+  #       intensity= 3, distance= 50000)
+
+}
 ```
 
 More to come...
