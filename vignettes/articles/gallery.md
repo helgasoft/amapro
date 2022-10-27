@@ -1,18 +1,4 @@
----
-title: "Gallery"
-description: A collection of examples with source code.
-toc: false
-output:
-  html_document:
-    toc_float: false
-    code_folding: hide
-editor_options: 
-  chunk_output_type: console
----
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo= FALSE, collapse= TRUE, comment= "#>")
-```
+## Gallery
 
 A collection of examples with source code.
 
@@ -20,9 +6,10 @@ A collection of examples with source code.
 Map with a simple geojson code displayed.
 See [Geojson](https://a.amap.com/jsapi/static/doc/index.html#geojson) in Amap documentation.
 
-![](media/geojson.jpg)
+<img src='media/geojson.jpg' alt='geojson' />
+<details><summary>🔻 View code</summary>
 
-```{r echo=FALSE}
+```r
 if (interactive()) {
 glnglat <- list(c(2.290412,48.863673),c(2.292779,48.862115),c(2.288930,48.859023),c(2.289799,48.860950),c(2.290633,48.861634),c(2.289015,48.861835),c(2.287414,48.860088),c(2.286171,48.860614),c(2.287397,48.862586))
 gjson <- list(type= "FeatureCollection", features= list(
@@ -41,17 +28,18 @@ am.init(
 
 }
 ```
+</details>
+<br />  
 
 ### Loca PolygonLayer
 Interactive 3D polygons on map, data from external _geojson_ file.
 With colors by value, lighting and tooltips.  
 See [PolygonLayer](https://a.amap.com/Loca/static/loca-v2/doc/html/index.html#polygonlayer) in Loca documentation.  
   
-![](media/poly3D.light.jpg)
+<img src='media/poly3D.light.jpg' alt='poly3D' />
+<details><summary>🔻 View code</summary>
 
-
-
-```{r echo=FALSE}
+```r
 tile4 <- 'https://{a,b,c,d}.basemaps.cartocdn.com/dark_all/[z]/[x]/[y].png'
 
 # https://writingjavascript.com/scaling-values-between-two-ranges
@@ -140,5 +128,7 @@ am.init(loca= TRUE,
 
 }
 ```
+</details>
+<br />  
 
 More to come...

@@ -2,9 +2,12 @@
 #'
   
 test_that("amap without loca", {
-  p <- am.init(viewMode= '3D')
-  expect_null(p$x$opts$loca)
-  expect_equal(p$x$opts$viewMode, '3D')
+  if (interactive()) {
+    p <- am.init(viewMode= '3D')
+    expect_null(p$x$opts$loca)
+    expect_equal(p$x$opts$viewMode, '3D')
+  }
+  else expect_equal(1,1)
 })
 
 test_that("amap GeoJSON", {

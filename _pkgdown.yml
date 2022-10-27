@@ -22,4 +22,4 @@ footer:
     left: legal
     right: built_with
   components:
-    legal: (c) Helgasoft, provided without any warranty.
+    legal: \(c\) Helgasoft, provided without any warranty.
