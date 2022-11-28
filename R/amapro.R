@@ -118,7 +118,7 @@ am.init <- function(..., width=NULL, height=NULL) {
 #' @export
 am.control <- function(id, ctype=NULL, ...) {
   method <- "addControl"
-  type <- ctype
+  #type <- ctype
   data <- list(...)
   .callJS()
 }
@@ -143,7 +143,7 @@ am.control <- function(id, ctype=NULL, ...) {
 #' @export
 am.item <- function(id, itype, ...) {
   method <- "addItem"
-  type <- itype
+  #type <- itype
   data <- list(...)
   .callJS()
 }

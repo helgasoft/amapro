@@ -1,16 +1,16 @@
-#'  most are working examples, could be displayed
+#'  most are working examples, could be displayed in browser (avoid RStudio)
 #'
   
-test_that("amap without loca", {
-  if (interactive()) {
-    p <- am.init(viewMode= '3D')
-    expect_null(p$x$opts$loca)
-    expect_equal(p$x$opts$viewMode, '3D')
-  }
-  else expect_equal(1,1)
-})
+# test_that("amap without loca", {
+#   if (interactive()) {
+#     p <- am.init(viewMode= '3D')
+#     expect_null(p$x$opts$loca)
+#     expect_equal(p$x$opts$viewMode, '3D')
+#   }
+#   else expect_equal(1,1)
+# })
 
-test_that("amap GeoJSON", {
+test_that("amap GeoJSON without loca", {
   
   glnglat <- list(c(2.290412,48.863673),c(2.292779,48.862115),c(2.288930,48.859023),c(2.289799,48.860950),c(2.290633,48.861634),c(2.289015,48.861835),c(2.287414,48.860088),c(2.286171,48.860614),c(2.287397,48.862586))
   gjson <- list(type= "FeatureCollection", features= list(
@@ -20,8 +20,7 @@ test_that("amap GeoJSON", {
   tile2 <- 'https://{a,b,c}.tile.openstreetmap.org/[z]/[x]/[y].png'
   
   if (interactive()) {
-    p <- am.init( #center= c(2.303985,48.856950), zoom=6, loca=TRUE) |>
-      loca= TRUE, viewMode= '3D',
+    p <- am.init( viewMode= '3D',
       center= c(2.288930,48.859023), zoom= 16, pitch= 60) |>
       am.control('ControlBar', position= 'RT') |> 
       am.item('TileLayer', name='tileLay', tileUrl= tile2, zooms= c(3, 20) ) |>
@@ -43,10 +42,10 @@ test_that("loca GeoJSONSource scatter", {
           mapStyle= 'amap://styles/dark', showLabel= FALSE,
           center= c(113.9719963, 22.5807295) ) |>
     am.control('ControlBar', position= 'RT') |> 
-    am.cmd('set', 'GeoJSONSource', name='m$geo',
-           url='https://a.amap.com/Loca/static/loca-v2/demos/mock_data/sz_road_F.json') |>
-    am.cmd('set', 'ScatterLayer', name='m$red', opacity=1, zIndex= 113,
-           visible= TRUE, zooms= c(2, 22) ) |>
+    am.item('GeoJSONSource', name='m$geo',
+             url='https://a.amap.com/Loca/static/loca-v2/demos/mock_data/sz_road_F.json') |>
+    am.item('ScatterLayer', name='m$red', opacity=1, zIndex= 113,
+             visible= TRUE, zooms= c(2, 22) ) |>
     am.cmd('setSource', 'm$red', 'm$geo') |>
     am.cmd('setStyle', 'm$red', unit= 'meter', borderWidth= 0,
            size= c(1000, 1000),
@@ -114,6 +113,7 @@ test_that("loca PolygonLayer with lights", {
               m$txt.hide();
           }")
   )
+  jsColor <- "function(i, f) { m$sc= new scaler(1,20,0,8); return m$colors[Math.round(m$sc.scale(f.properties.h))]; }"
   
   if (interactive()) {
     p <- am.init(loca= TRUE,
@@ -123,7 +123,6 @@ test_that("loca PolygonLayer with lights", {
           zoom= 11, center= c(2.328007,48.86992) ) |>  #Paris
     am.control('ControlBar', position= 'RT') |> 
     am.item('TileLayer', name='tileLay', tileUrl= tile4, zooms= c(3, 20) ) |>
-    am.item('GeoJSONSource', name= 'm$gjson', data=pageo) |>
     am.item('Text', name= 'm$txt', text= 'markup', anchor= 'center', 
             draggable= TRUE, cursor= 'pointer', angle= 0, visible= TRUE, offset= c(0, -40)
             ,style= list(padding= '5px 10px', `margin-bottom`= '1rem', `border-radius`= '.25rem',
@@ -131,14 +130,12 @@ test_that("loca PolygonLayer with lights", {
                          `box-shadow`= '0 2px 6px 0 rgba(255, 255, 255, .3)',
                          `text-align`= 'center', `font-size`= '16px', color= '#fff')
     ) |>
-    am.cmd('set','PolygonLayer', name='m$poly', opacity=0.5) |> 
+    am.item('GeoJSONSource', name= 'm$gjson', data=pageo) |>
+    am.item('PolygonLayer', name='m$poly', opacity=0.5) |> 
     am.cmd('setSource', 'm$poly', 'm$gjson') |>
     am.cmd('code', jscala) |>
     am.cmd('setStyle', 'm$poly',
-           altitude= 0,
-           topColor= "function(i, f) { m$sc= new scaler(1,20,0,8); return m$colors[Math.round(m$sc.scale(f.properties.h))]; }",
-           sideTopColor= "function(i, f) { m$sc= new scaler(1,20,0,8); return m$colors[Math.round(m$sc.scale(f.properties.h))]; }",
-           sideBottomColor= "function(i, f) { m$sc= new scaler(1,20,0,8); return m$colors[Math.round(m$sc.scale(f.properties.h))]; }",
+           topColor= jsColor, sideTopColor= jsColor, sideBottomColor= jsColor,
            height= "function(i, f) { m$sc= new scaler(1,18,0,4000); return 4000-m$sc.scale(f.properties.h); }") |>
     am.cmd('set','ambLight', intensity= 0.9, color= '#fff') |>
     am.cmd('set','dirLight', intensity= 1, color= '#fff', position= c(1,-1, 0), target= c(0,0,0))

@@ -53,7 +53,7 @@ HTMLWidgets.widget({
 
       addControl: function(args) {
         tdat = (typeof args.data=='object' && args.data.length==0) ? '' : 'args.data';
-        tmp = 'm$jmap.addControl(new AMap.'+ args.type +'('+tdat+'));';
+        tmp = 'm$jmap.addControl(new AMap.'+ args.ctype +'('+tdat+'));';
         sval(tmp, args);
       },
 
@@ -64,7 +64,7 @@ HTMLWidgets.widget({
           delete args.data.name;
         }
         args.cmd = 'set';
-        args.trgt = args.type;
+        args.trgt = args.itype;
         cmdo(args); 
       },
 

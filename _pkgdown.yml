@@ -4,7 +4,7 @@ template:
   bootswatch: darkly
 home:
   sidebar:
-    structure: [links, license, community, citation, dev]
+    structure: [links, license, community, dev]
 navbar:
   structure:
     left:  [intro, reference, articles, tutorials, news, gallery]
@@ -22,4 +22,4 @@ footer:
     left: legal
     right: built_with
   components:
-    legal: \(C\) Helgasoft, provided without any warranty.
+    legal: \(c\) Helgasoft

@@ -1,8 +1,8 @@
 Package: amapro
 Type: Package
 Title: Thin Wrapper for Mapping Library 'AMap' by 'AutoNavi'
-Date: 2022-10-20
-Version: 0.1.2
+Date: 2022-11-09
+Version: 0.1.2.02
 Authors@R: c( person("Larry", "Helgason", email= "larry@helgasoft.com", role= c("aut", "cre", "cph")) )
 Author: Larry Helgason [aut, cre, cph]
 Maintainer: Larry Helgason <larry@helgasoft.com>

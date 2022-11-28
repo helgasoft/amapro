@@ -41,8 +41,8 @@ API key if you reside out of China?
 \item use a temporary Chinese phone number from sites like \emph{sms24.me},
 \emph{turtle-sms.xyz}, etc. However most are probably blacklisted as the
 registration page shows them as \emph{‘already registered’}.
-\item select temporarily the ‘demo’ option, without guarantee to work in
-the long run
+\item select temporarily the ‘demo’ option, without guarantee to work in the
+long run
 }
 }
 
@@ -142,8 +142,8 @@ one can use any \href{https://leaflet-extras.github.io/leaflet-providers/preview
 for worldwide coverage.
 \item AMap built-in \href{https://lbs.amap.com/api/jsapi-v2/guide/layers/official-layers}{map layers}
 are \href{https://en.wikipedia.org/wiki/Restrictions_on_geographic_data_in_China}{GCJ-02 coded}
-and coordinates collected on them will display incorrectly in
-Leaflet or other WGS-84 based maps, and vice-versa. They need to be
+and coordinates collected on them will display incorrectly in Leaflet
+or other WGS-84 based maps, and vice-versa. They need to be
 \href{https://lbs.amap.com/api/jsapi-v2/guide/transform/convertfrom}{converted}.
 Conversion is available through function
 \href{https://lbs.amap.com/api/jsapi-v2/documentation#convertfrom}{convertFrom}.
@@ -153,14 +153,14 @@ Conversion is available through function
 \href{https://lbs.amap.com/demo/javascript-api/example/selflayer/cus-svg}{CustomLayer},
 ‘GLCustomLayer’, ‘DistrictLayer’, ‘LayerGroup’, all editors like
 ‘PolygonEditor’,‘Webservice’, ‘Search(AMap.Autocomplete,
-AMap.PlaceSearch)’, ‘Geocoding(AMap.Geocoder)’, Route planning,
-other services(weather, districts, etc.), positioning, utilities.
+AMap.PlaceSearch)’, ‘Geocoding(AMap.Geocoder)’, Route planning, other
+services(weather, districts, etc.), positioning, utilities.
 \item most \strong{Loca} elements are supported, but not all have been tested.
-Latest \emph{AmbientLight}, \emph{DirectionalLight} and \emph{PointLight} objects
-are not supported, but parameters \emph{ambLight}, \emph{dirLight} and
-\emph{pointLight} accomplish the same. Loca events are not supported yet.
-\item \emph{loca.js} file has several versions, the latest (bigger) one does
-not work well with the current \emph{amap.js}
+Latest \emph{AmbientLight}, \emph{DirectionalLight} and \emph{PointLight} objects are
+not supported, but parameters \emph{ambLight}, \emph{dirLight} and \emph{pointLight}
+accomplish the same. Loca events are not supported yet.
+\item \emph{loca.js} file has several versions, the latest (bigger) one does not
+work well with the current \emph{amap.js}
 }
 }
 
@@ -177,11 +177,11 @@ CORS problem - browser refusal to load. One can install a small
 or
 \href{https://addons.mozilla.org/en-US/firefox/addon/access-control-allow-origin/}{Firefox}
 to fix this problem manually inside the browser.
-\item AMap has several predefined \href{https://lbs.amap.com/api/jsapi-v2/guide/map/map-style/}{Map styles}.
-Could be set in map options with \emph{mapStyle}.
-\item \emph{amapro} silent errors are collected in the browser Console. Press
-key \strong{F12} to open the dev.environment, then open tab “Console” to
-view them.
+\item AMap has several predefined \href{https://lbs.amap.com/api/jsapi-v2/guide/map/map-style/}{Map styles}. Could
+be set in map options with \emph{mapStyle}.
+\item \emph{amapro} silent errors are collected in the browser Console. Press key
+\strong{F12} to open the dev.environment, then open tab “Console” to view
+them.
 \item Chrome/Firefox extensions may interfere with map presentation (like
 ‘uBlock’)
 }

@@ -1,4 +1,4 @@
-# amapro (development version 0.1.2)
+# amapro (development version 0.1.2.02)
 * upgrade amap.js to v.2.0.5.10
 * tested with latest loca.js - many errors, kept older file
 * fixed: Loca load at am.init, key popup to be topmost
