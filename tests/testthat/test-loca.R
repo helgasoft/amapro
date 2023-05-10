@@ -1,14 +1,5 @@
 #'  most are working examples, could be displayed in browser (avoid RStudio)
 #'
-  
-# test_that("amap without loca", {
-#   if (interactive()) {
-#     p <- am.init(viewMode= '3D')
-#     expect_null(p$x$opts$loca)
-#     expect_equal(p$x$opts$viewMode, '3D')
-#   }
-#   else expect_equal(1,1)
-# })
 
 test_that("amap GeoJSON without loca", {
   
@@ -19,43 +10,39 @@ test_that("amap GeoJSON without loca", {
     )))
   tile2 <- 'https://{a,b,c}.tile.openstreetmap.org/[z]/[x]/[y].png'
   
-  if (interactive()) {
-    p <- am.init( viewMode= '3D',
-      center= c(2.288930,48.859023), zoom= 16, pitch= 60) |>
-      am.control('ControlBar', position= 'RT') |> 
-      am.item('TileLayer', name='tileLay', tileUrl= tile2, zooms= c(3, 20) ) |>
-      am.item('GeoJSON', name= 'mygjson', geoJSON= gjson) # |> am.inspect()
+  p <- am.init( viewMode= '3D',
+    center= c(2.288930,48.859023), zoom= 16, pitch= 60) |>
+    am.control('ControlBar', position= 'RT') |> 
+    am.item('TileLayer', name='tileLay', tileUrl= tile2, zooms= c(3, 20) ) |>
+    am.item('GeoJSON', name= 'mygjson', geoJSON= gjson) # |> am.inspect()
 
-    expect_equal(p$x$opts$viewMode, '3D')
-    expect_equal(p$x$api[[3]]$data$name, 'mygjson')
-    expect_equal(p$x$api[[3]]$data$geoJSON$features[[1]]$geometry$type, 'Polygon')
-  }
-  else expect_equal(1,1)
+  expect_null(p$x$opts$loca)
+  expect_equal(p$x$opts$viewMode, '3D')
+  expect_equal(p$x$api[[3]]$data$name, 'mygjson')
+  expect_equal(p$x$api[[3]]$data$geoJSON$features[[1]]$geometry$type, 'Polygon')
 })
 
 test_that("loca GeoJSONSource scatter", {
   #' from https://lbs.amap.com/demo/loca-v2/demos/cat-scatter/sz-road
-  if (interactive()) {
-    p <-
-    am.init(loca= TRUE, 
-          viewMode= '3D', zoom= 11.7, pitch= 40,
-          mapStyle= 'amap://styles/dark', showLabel= FALSE,
-          center= c(113.9719963, 22.5807295) ) |>
-    am.control('ControlBar', position= 'RT') |> 
-    am.item('GeoJSONSource', name='m$geo',
-             url='https://a.amap.com/Loca/static/loca-v2/demos/mock_data/sz_road_F.json') |>
-    am.item('ScatterLayer', name='m$red', opacity=1, zIndex= 113,
-             visible= TRUE, zooms= c(2, 22) ) |>
-    am.cmd('setSource', 'm$red', 'm$geo') |>
-    am.cmd('setStyle', 'm$red', unit= 'meter', borderWidth= 0,
-           size= c(1000, 1000),
-           texture= 'https://a.amap.com/Loca/static/loca-v2/demos/images/breath_red.png',
-           duration= 1000,
-           animate= TRUE) |> am.cmd('animate.start', 'm$loca')
-    expect_equal(p$x$api[[6]]$method, 'addCmd')
-    expect_true(p$x$opts$loca)
-  }
-  else expect_equal(1,1)
+  p <-
+  am.init(loca= TRUE, 
+        viewMode= '3D', zoom= 11.7, pitch= 40,
+        mapStyle= 'amap://styles/dark', showLabel= FALSE,
+        center= c(113.9719963, 22.5807295) ) |>
+  am.control('ControlBar', position= 'RT') |> 
+  am.item('GeoJSONSource', name='m$geo',
+           url='https://a.amap.com/Loca/static/loca-v2/demos/mock_data/sz_road_F.json') |>
+  am.item('ScatterLayer', name='m$red', opacity=1, zIndex= 113,
+           visible= TRUE, zooms= c(2, 22) ) |>
+  am.cmd('setSource', 'm$red', 'm$geo') |>
+  am.cmd('setStyle', 'm$red', unit= 'meter', borderWidth= 0,
+         size= c(1000, 1000),
+         texture= 'https://a.amap.com/Loca/static/loca-v2/demos/images/breath_red.png',
+         duration= 1000,
+         animate= TRUE) |> am.cmd('animate.start', 'm$loca')
+  
+  expect_true(p$x$opts$loca)
+  expect_equal(p$x$api[[6]]$method, 'addCmd')
 })
 
 test_that("loca PolygonLayer with lights", {
@@ -115,35 +102,44 @@ test_that("loca PolygonLayer with lights", {
   )
   jsColor <- "function(i, f) { m$sc= new scaler(1,20,0,8); return m$colors[Math.round(m$sc.scale(f.properties.h))]; }"
   
-  if (interactive()) {
-    p <- am.init(loca= TRUE,
-          viewMode= '3D', pitch= 40, showLabel= TRUE, showBuildingBlock= FALSE,
-          on= onEvents,
-          mapStyle= 'amap://styles/dark', 
-          zoom= 11, center= c(2.328007,48.86992) ) |>  #Paris
-    am.control('ControlBar', position= 'RT') |> 
-    am.item('TileLayer', name='tileLay', tileUrl= tile4, zooms= c(3, 20) ) |>
-    am.item('Text', name= 'm$txt', text= 'markup', anchor= 'center', 
-            draggable= TRUE, cursor= 'pointer', angle= 0, visible= TRUE, offset= c(0, -40)
-            ,style= list(padding= '5px 10px', `margin-bottom`= '1rem', `border-radius`= '.25rem',
-                         `background-color`= 'rgba(0,0,0,0.5)', `border-width`= 0,
-                         `box-shadow`= '0 2px 6px 0 rgba(255, 255, 255, .3)',
-                         `text-align`= 'center', `font-size`= '16px', color= '#fff')
-    ) |>
-    am.item('GeoJSONSource', name= 'm$gjson', data=pageo) |>
-    am.item('PolygonLayer', name='m$poly', opacity=0.5) |> 
-    am.cmd('setSource', 'm$poly', 'm$gjson') |>
-    am.cmd('code', jscala) |>
-    am.cmd('setStyle', 'm$poly',
-           topColor= jsColor, sideTopColor= jsColor, sideBottomColor= jsColor,
-           height= "function(i, f) { m$sc= new scaler(1,18,0,4000); return 4000-m$sc.scale(f.properties.h); }") |>
-    am.cmd('set','ambLight', intensity= 0.9, color= '#fff') |>
-    am.cmd('set','dirLight', intensity= 1, color= '#fff', position= c(1,-1, 0), target= c(0,0,0))
-    # am.cmd('set','pointLight', color= 'rgb(100,100,100)',  position= c(2.328007,46.86992, 2000),
-    #       intensity= 3, distance= 50000)
-  
-    expect_equal(p$x$api[[10]]$trgt, 'dirLight')
-    expect_true(grepl('m$poly.queryFeature', p$x$opts$on[[2]]$f, fixed=TRUE))
-  }
-  else expect_equal(1,1)
+  p <- am.init(loca= TRUE,
+        viewMode= '3D', pitch= 40, showLabel= TRUE, showBuildingBlock= FALSE,
+        on= onEvents,
+        mapStyle= 'amap://styles/dark', 
+        zoom= 11, center= c(2.328007,48.86992) ) |>  #Paris
+  am.control('ControlBar', position= 'RT') |> 
+  am.item('TileLayer', name='tileLay', tileUrl= tile4, zooms= c(3, 20) ) |>
+  am.item('Text', name= 'm$txt', text= 'markup', anchor= 'center', 
+          draggable= TRUE, cursor= 'pointer', angle= 0, visible= TRUE, offset= c(0, -40)
+          ,style= list(padding= '5px 10px', `margin-bottom`= '1rem', `border-radius`= '.25rem',
+                       `background-color`= 'rgba(0,0,0,0.5)', `border-width`= 0,
+                       `box-shadow`= '0 2px 6px 0 rgba(255, 255, 255, .3)',
+                       `text-align`= 'center', `font-size`= '16px', color= '#fff')
+  ) |>
+  am.item('GeoJSONSource', name= 'm$gjson', data=pageo) |>
+  am.item('PolygonLayer', name='m$poly', opacity=0.5) |> 
+  am.cmd('setSource', 'm$poly', 'm$gjson') |>
+  am.cmd('code', jscala) |>
+  am.cmd('setStyle', 'm$poly',
+         topColor= jsColor, sideTopColor= jsColor, sideBottomColor= jsColor,
+         height= "function(i, f) { m$sc= new scaler(1,18,0,4000); return 4000-m$sc.scale(f.properties.h); }") |>
+  am.cmd('set','ambLight', intensity= 0.9, color= '#fff') |>
+  am.cmd('set','dirLight', intensity= 1, color= '#fff', position= c(1,-1, 0), target= c(0,0,0))
+  # am.cmd('set','pointLight', color= 'rgb(100,100,100)',  position= c(2.328007,46.86992, 2000),
+  #       intensity= 3, distance= 50000)
+
+  expect_equal(p$x$api[[10]]$trgt, 'dirLight')
+  expect_true(grepl('m$poly.queryFeature', p$x$opts$on[[2]]$f, fixed=TRUE))
+})
+
+
+test_that("amap jsonlite", {
+  p <- am.init(viewMode= '3D', zoom= 10, pitch= 60) |>
+    am.control(ctype= 'ControlBar', position= 'RT') |>
+    am.inspect()
+
+  expect_type(p, 'character')
+  expect_s3_class(p, 'json')
+  expect_true(grepl('"viewMode": "3D"', p, fixed=TRUE))
+  expect_true(grepl('"ctype": "ControlBar"', p, fixed=TRUE))
 })

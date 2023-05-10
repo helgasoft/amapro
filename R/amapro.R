@@ -46,19 +46,21 @@ am.init <- function(..., width=NULL, height=NULL) {
     stop("Missing AMap library file 'amap.js'. Installation invalid.", call.=FALSE)
   cont <- suppressWarnings(readLines(ffull))
   if (grepl('xxxxxxxxxxxxxx', cont[2], fixed=TRUE)) {
-    key <- .prompt()
-    if (is.null(key)) return()
-    if (tolower(key)=='demo') {
-      key <- scan('https://raw.githubusercontent.com/helgasoft/amapro/master/inst/figures/demo.txt', what='character')
-      key <- intToUtf8(rev(utf8ToInt(key)))
+    if (interactive()) {
+      key <- .prompt()
+      if (is.null(key)) return()
+      if (tolower(key)=='demo') {
+        key <- scan('https://raw.githubusercontent.com/helgasoft/amapro/master/inst/figures/demo.txt', what='character')
+        key <- intToUtf8(rev(utf8ToInt(key)))
+      }
+      cont[2] <- sub('xxxxxxxxxxxxxx', key, cont[2], fixed= TRUE)
+      writeLines(cont, ffull)
+      detach("package:amapro", unload= TRUE)
+      library(amapro)
+      msg <- 'Done - amapro is now ready.\n Repeat command or restart Shiny app.'
+      tcltk::tk_messageBox(type = c("ok"),
+                    msg, caption = "AMap API key installation")
     }
-    cont[2] <- sub('xxxxxxxxxxxxxx', key, cont[2], fixed= TRUE)
-    writeLines(cont, ffull)
-    detach("package:amapro", unload= TRUE)
-    library(amapro)
-    msg <- 'Done - amapro is now ready.\n Repeat command or refresh map if needed.'
-    tcltk::tk_messageBox(type = c("ok"),
-                  msg, caption = "AMap API key installation")
   }
   rm(cont)
   
@@ -118,7 +120,6 @@ am.init <- function(..., width=NULL, height=NULL) {
 #' @export
 am.control <- function(id, ctype=NULL, ...) {
   method <- "addControl"
-  #type <- ctype
   data <- list(...)
   .callJS()
 }
@@ -143,7 +144,6 @@ am.control <- function(id, ctype=NULL, ...) {
 #' @export
 am.item <- function(id, itype, ...) {
   method <- "addItem"
-  #type <- itype
   data <- list(...)
   .callJS()
 }
@@ -286,7 +286,6 @@ am.proxy <- function(id) {
 #'     am.control(ctype= 'ControlBar', position= 'RT') |>
 #'     am.inspect()
 #' }
-#' @importFrom jsonlite toJSON
 #' @export
 am.inspect <- function(wt, json=TRUE, ...) {
   
@@ -355,6 +354,7 @@ am.inspect <- function(wt, json=TRUE, ...) {
   tcltk::tkgrid(submit.but, reset.but)
   
   tcltk::tcl("wm", "attributes", tt, topmost= TRUE)
+  tcltk::tkraise(tt)
   tcltk::tkwait.window(tt)
   
   if (!exists('key')) key <- NULL

@@ -99,32 +99,33 @@ ui = fluidPage(
   
   fluidRow(column(12, align= "center", 'amapro demo')),
   fluidRow(
-    column(12, div(style='margin-bottom:15px;', am.output("plot", height='600px')) )),
+    column(12, div(style= 'margin-bottom:15px;', 
+                   am.output("plot", height='70vh')) )),
   fluidRow(
-    column(2, checkboxInput('isIcon', 'Replace Icon', value=FALSE)),
-    column(2, checkboxInput("isMarks", "Marks", value=FALSE)),
+    column(1, checkboxInput('isIcon', 'Icon', value=FALSE)),
+    column(1, checkboxInput("isMarks", "Marks", value=FALSE)),
     column(2, checkboxInput('isHeat', 'Heatmap', value=FALSE)),
     column(2, checkboxInput('isCar', 'Start/Stop Car', value=FALSE)),
-    column(3, checkboxInput('isLoLay', 'Loca 3D', value=FALSE), " + ",
-              actionButton('btnFly', '\U1F985 Flyover', title='\u2714 3D to enable, pan map to restart'))
+    column(1, checkboxInput('isLoLay', 'Loca 3D', value=FALSE)),
+    column(4, '+ ',actionButton('btnFly', '\U1F985 Flyover', title='\u2714 3D to enable, pan map to restart'))
   ),
   fluidRow(
-    column(2, HTML("<b>Layers</b>")),
-    column(2, checkboxInput('isTile', 'Base', value=FALSE)),
+    column(1, HTML("<b>Layers</b>")),
+    column(1, checkboxInput('isTile', 'Base', value=FALSE)),
     column(2, checkboxInput('isWms', 'WMS', value=FALSE)),
     column(2, checkboxInput('isOver', 'Overay', value=FALSE))
   ),
   fluidRow(
-    column(7, HTML("Use <b>mouse</b> to "), 
+    column(5, HTML("Use <b>mouse</b> to "), 
            #div( style="display: inline; padding-left:50px;"),
            actionButton("isCircles", "Draw"), " multiple circles, then ", 
            actionButton("isCstop", "Remove All")),
-    column(5, div("\u25BA Right-click map for context menu"),
-              div("\u25BA Hover over the red polygon for tooltip") )),
+    column(6, div("\u25BA Right-click map for context menu"),
+              div("\u25BA Hover above red polygon for tooltip") )),
   fluidRow(
-    column(3, textInput('getsom',getcmd, value='getCenter', width='200px', placeholder='get command for map')),
+    column(2, textInput('getsom',getcmd, value='getCenter', width='200px', placeholder='get command for map')),
     column(1, br(), actionButton("goLL", "Run")),
-    column(3, br(), div( style="display: inline; padding-left:30px;"),
+    column(2, br(), div( style="display: inline; padding-left:30px;"),
            actionButton("getit", "GetLayers") ),
     column(2, br(), actionButton("info", label=tags$img(src ="https://img.icons8.com/metro/2x/info.png", alt='Help', width= '30')) ) ),
   fluidRow( column(12, textOutput('out1')  ))
@@ -169,7 +170,7 @@ server = function(input, output, session){
     ) |>
     
     am.item('Text', name='gjText', 
-            text='GeoJSON', position= glnglat[[1]], #c(2.289799, 48.860950),
+            text='GeoJSON', position= glnglat[[1]], offset= c(5,10),
             style=list(color='yellow', `background-color`='transparent',
                        `font-size`='20px', `border-width`=0 ) ) |>
     am.item('GeoJSON', name= 'mygjson', geoJSON= gjson,
@@ -456,7 +457,7 @@ server = function(input, output, session){
   })
   
   observeEvent(input$result1, {
-    output$out1 <- renderText({ input$result1 }) 
+    output$out1 <- renderPrint({ input$result1 }) 
   })
   
   observeEvent(input$isLoLay, {
@@ -519,5 +520,4 @@ server = function(input, output, session){
   
 }   # end server
 
-#shinyApp(ui = ui, server = server)   # RStudio internal browser is NOT suitable
 shinyApp(ui = ui, server = server, options= list(launch.browser= TRUE))

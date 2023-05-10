@@ -1,8 +1,8 @@
 Package: amapro
 Type: Package
-Title: Thin Wrapper for Mapping Library 'AMap' by 'AutoNavi'
-Date: 2022-11-09
-Version: 0.1.2.02
+Title: Thin Wrapper for Mapping Library 'AMap'
+Date: 2023-04-14
+Version: 0.1.2
 Authors@R: c( person("Larry", "Helgason", email= "larry@helgasoft.com", role= c("aut", "cre", "cph")) )
 Author: Larry Helgason [aut, cre, cph]
 Maintainer: Larry Helgason <larry@helgasoft.com>
@@ -14,10 +14,10 @@ BugReports: https://github.com/helgasoft/amapro/issues/
 Depends: R (>= 4.1.0)
 Imports:
   htmlwidgets,
-  shiny (>= 1.7.0),
-  tcltk (>= 4.1.0),
-  jsonlite
+  tcltk (>= 4.1.0)
 Suggests:
+  shiny (>= 1.7.0),
+  jsonlite,
   rmarkdown,
   knitr,
   testthat (>= 3.0.0)
@@ -26,5 +26,5 @@ Encoding: UTF-8
 LazyData: false
 Language: en-US
 VignetteBuilder: knitr
-RoxygenNote: 7.2.1
+RoxygenNote: 7.2.3
 Roxygen: list(markdown = TRUE)
