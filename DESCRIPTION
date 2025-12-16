@@ -1,8 +1,8 @@
 Package: amapro
 Type: Package
 Title: Thin Wrapper for Mapping Library 'AMap'
-Date: 2023-04-14
-Version: 0.1.2
+Date: 2025-12-14
+Version: 0.1.4
 Authors@R: c( person("Larry", "Helgason", email= "larry@helgasoft.com", role= c("aut", "cre", "cph")) )
 Author: Larry Helgason [aut, cre, cph]
 Maintainer: Larry Helgason <larry@helgasoft.com>
@@ -26,5 +26,5 @@ Encoding: UTF-8
 LazyData: false
 Language: en-US
 VignetteBuilder: knitr
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.3
 Roxygen: list(markdown = TRUE)

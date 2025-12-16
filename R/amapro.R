@@ -154,9 +154,12 @@ am.item <- function(id, itype, ...) {
 #' Execute a command on a target element
 #'
 #' @param id A map widget from [am.init] or a proxy from [am.proxy]
-#' @param cmd A command name string, like 'setFitView'
+#' @param cmd AMap command name string, like 'setFitView', 'setMapStyle', etc.
 #' @param trgt A target's name string, or 'map' for the map itself.
-#' @param ... command attributes \cr
+#' @param ... command attributes from AMap API. \cr
+#'   For AMap commands starting with 'get' there are two _amapro_ attributes 'f' and 'r'.\cr
+#'   'f' is an optional JS function to manipulate the data received, \cr
+#'   'r' is the name of the Shiny variable receiving the data
 #' @return A map or a map proxy
 #'
 #' @details \emph{am.cmd} provides interaction with the map.\cr
@@ -167,8 +170,14 @@ am.item <- function(id, itype, ...) {
 #' 
 #' @examples
 #' if (interactive()) {
+#'   # 'position' and 'content' are InfoWindow parameters from AMap API
 #'   am.init() |> 
 #'   am.cmd('set', 'InfoWindow', position=c(116.6, 40), content='Beijing')
+#'   
+#'   am.proxy("plot") |>
+#'     am.cmd('getLayers', 'map',
+#'            f= 'function(yy) { return yy.map(x => { return x.CLASS_NAME;}); }',
+#'            r= 'result1')
 #' }
 #' @seealso  [am.init] code example and [Introduction]
 #'

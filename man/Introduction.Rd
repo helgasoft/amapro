@@ -60,10 +60,9 @@ The base library with optional plugins. Most important links are
 \itemize{
 \item \href{https://lbs.amap.com/api/jsapi-v2/summary/}{Summary}
 \item \href{https://lbs.amap.com/api/jsapi-v2/guide/abc/quickstart}{Guide}
-\item \href{https://a.amap.com/jsapi/static/doc/index.html}{API} documentation,
-good auto-translation
+\item \href{https://lbs.amap.com/api/javascript-api-v2/documentation}{API}
+documentation, good auto-translation
 \item \href{https://lbs.amap.com/demo/list/jsapi-v2}{Examples} - live demos
-\item \href{https://lbsbbs.amap.com/portal.php}{Forum} - reported issues
 }
 }
 
@@ -76,6 +75,7 @@ auto-translates well in the browser.
 \item \href{https://lbs.amap.com/api/loca-v2/intro}{Intro}
 \item \href{https://a.amap.com/Loca/static/loca-v2/doc/html/index.html}{API}
 documentation
+\item \href{https://lbs.amap.com/demo/loca-v2/demos/}{Examples} - live demos
 }
 }
 }
@@ -102,9 +102,9 @@ commands and introduces these \if{html}{\out{<ins>}}additional\if{html}{\out{</i
 \code{am.cmd('code', 'alert("I am JS");')}
 }
 
-AMap commands starting with \strong{get} return data from the map or related
-objects. \if{html}{\out{<br>}} Put the data in a Shiny input variable by setting its name
-in parameter \strong{r}. \if{html}{\out{<br>}} Example:
+AMap commands starting with ‘\strong{get}’ return data from the map or
+related objects. Put the data in a Shiny input variable by setting its
+name in parameter \strong{r}. \if{html}{\out{<br>}} Example:
 \code{am.cmd('getCenter', 'map', r='inShiny1')} \if{html}{\out{<br>}} Above command will
 update \emph{input$inShiny1} with the Lng/Lat coordinates of the map center.
 }
@@ -134,8 +134,6 @@ called ‘m$jmap’.
 \item AMap command
 \href{https://a.amap.com/jsapi/static/doc/index.html#controladdto}{addTo}
 is overwritten by \emph{amapro} and cannot be used.
-\item the \strong{supported AMap plugins} are: ControlBar, Scale, ToolBar,
-MoveAnimation, MouseTool, HeatMap, GeoJSON, ElasticMarker.
 \item most \strong{built-in} AMap tile layers (Satellite, Traffic, Roads) are
 limited to China only. However, with command \emph{am.item(‘TileLayer’)},
 one can use any \href{https://leaflet-extras.github.io/leaflet-providers/preview/}{Leaflet provider}
@@ -147,7 +145,9 @@ or other WGS-84 based maps, and vice-versa. They need to be
 \href{https://lbs.amap.com/api/jsapi-v2/guide/transform/convertfrom}{converted}.
 Conversion is available through function
 \href{https://lbs.amap.com/api/jsapi-v2/documentation#convertfrom}{convertFrom}.
-\item AMap ecosystem is vast, \strong{unsupported features} include:
+\item the \strong{supported AMap plugins} are: ControlBar, Scale, ToolBar,
+MoveAnimation, MouseTool, HeatMap, GeoJSON, ElasticMarker.
+\item AMap ecosystem is vast, \strong{unsupported} features and plugins include:
 ‘BesizerCurve’, ‘MarkerCluster’, ‘HawkEye’,
 \href{https://lbs.amap.com/demo/javascript-api/example/indoormap/indoormap/}{IndoorMap},
 \href{https://lbs.amap.com/demo/javascript-api/example/selflayer/cus-svg}{CustomLayer},
@@ -158,9 +158,8 @@ services(weather, districts, etc.), positioning, utilities.
 \item most \strong{Loca} elements are supported, but not all have been tested.
 Latest \emph{AmbientLight}, \emph{DirectionalLight} and \emph{PointLight} objects are
 not supported, but parameters \emph{ambLight}, \emph{dirLight} and \emph{pointLight}
-accomplish the same. Loca events are not supported yet.
-\item \emph{loca.js} file has several versions, the latest (bigger) one does not
-work well with the current \emph{amap.js}
+accomplish the same.
+\item Loca events are not supported yet.
 }
 }
 
@@ -182,6 +181,8 @@ be set in map options with \emph{mapStyle}.
 \item \emph{amapro} silent errors are collected in the browser Console. Press key
 \strong{F12} to open the dev.environment, then open tab “Console” to view
 them.
+\item \emph{am.init} has a \emph{debug} (boolean) parameter, results are displayed in
+the browser Console
 \item Chrome/Firefox extensions may interfere with map presentation (like
 ‘uBlock’)
 }

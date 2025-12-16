@@ -55,15 +55,15 @@ The base library with optional plugins. Most important links are
 
 * [Summary](https://lbs.amap.com/api/jsapi-v2/summary/)
 * [Guide](https://lbs.amap.com/api/jsapi-v2/guide/abc/quickstart)
-* [API](https://a.amap.com/jsapi/static/doc/index.html) documentation, good auto-translation
+* [API](https://lbs.amap.com/api/javascript-api-v2/documentation) documentation, good auto-translation
 * [Examples](https://lbs.amap.com/demo/list/jsapi-v2) - live demos
-* [Forum](https://lbsbbs.amap.com/portal.php) - reported issues
 
 ## LOCA
 AMap extension with enhanced 3D features. In _amapro_ it is invoked with a parameter -  ```am.init(loca=TRUE, ...)```. The documentation auto-translates well in the browser.
 
 * [Intro](https://lbs.amap.com/api/loca-v2/intro)
 * [API](https://a.amap.com/Loca/static/loca-v2/doc/html/index.html) documentation
+* [Examples](https://lbs.amap.com/demo/loca-v2/demos/) - live demos
 
 # Commands
 
@@ -83,7 +83,7 @@ _amapro_ uses native AMap commands and introduces these <ins>additional</ins>:
 * **code** - execute JavaScript code    <br>
   ``` am.cmd('code', 'alert("I am JS");') ```
 
-AMap commands starting with **get** return data from the map or related objects. <br>
+AMap commands starting with '**get**' return data from the map or related objects. 
 Put the data in a Shiny input variable by setting its name in parameter **r**. <br>
 Example: ``` am.cmd('getCenter', 'map', r='inShiny1') ``` <br>
 Above command will update _input$inShiny1_ with the Lng/Lat coordinates of the map center.
@@ -105,15 +105,15 @@ JavaScript function _Shiny.setInputValue()_ can be used to send data back to Shi
 
 - only one map is created by _am.init_ per session. It is a JS global called 'm$jmap'.
 - AMap command [addTo](https://a.amap.com/jsapi/static/doc/index.html#controladdto) is overwritten by _amapro_ and cannot be used.
-- the **supported AMap plugins** are: ControlBar, Scale, ToolBar, MoveAnimation, MouseTool, HeatMap, GeoJSON, ElasticMarker.
 - most **built-in** AMap tile layers (Satellite, Traffic, Roads) are limited to China only. However, with command _am.item('TileLayer')_, one can use any [Leaflet provider](https://leaflet-extras.github.io/leaflet-providers/preview/) for worldwide coverage.
 - AMap built-in [map layers](https://lbs.amap.com/api/jsapi-v2/guide/layers/official-layers) are [GCJ-02 coded](https://en.wikipedia.org/wiki/Restrictions_on_geographic_data_in_China) and coordinates collected on them will display incorrectly in Leaflet or other WGS-84 based maps, and vice-versa. They need to be [converted](https://lbs.amap.com/api/jsapi-v2/guide/transform/convertfrom). Conversion is available through function [convertFrom](https://lbs.amap.com/api/jsapi-v2/documentation#convertfrom).
-- AMap ecosystem is vast, **unsupported features** include:
-  'BesizerCurve', 'MarkerCluster', 'HawkEye',   [IndoorMap](https://lbs.amap.com/demo/javascript-api/example/indoormap/indoormap/), 
+- the **supported AMap plugins** are: ControlBar, Scale, ToolBar, MoveAnimation, MouseTool, HeatMap, GeoJSON, ElasticMarker.
+- AMap ecosystem is vast, **unsupported** features and plugins include:
+  'BesizerCurve', 'MarkerCluster', 'HawkEye',  [IndoorMap](https://lbs.amap.com/demo/javascript-api/example/indoormap/indoormap/), 
     [CustomLayer](https://lbs.amap.com/demo/javascript-api/example/selflayer/cus-svg),  'GLCustomLayer', 'DistrictLayer', 'LayerGroup',
  all editors like 'PolygonEditor','Webservice', 'Search(AMap.Autocomplete, AMap.PlaceSearch)', 'Geocoding(AMap.Geocoder)', Route planning, other services(weather, districts, etc.), positioning, utilities.
-- most **Loca** elements are supported, but not all have been tested. Latest _AmbientLight_, _DirectionalLight_ and _PointLight_ objects are not supported, but parameters _ambLight_, _dirLight_ and _pointLight_ accomplish the same. Loca events are not supported yet.
-- _loca.js_ file has several versions, the latest (bigger) one does not work well with the current _amap.js_ 
+- most **Loca** elements are supported, but not all have been tested. Latest _AmbientLight_, _DirectionalLight_ and _PointLight_ objects are not supported, but parameters _ambLight_, _dirLight_ and _pointLight_ accomplish the same.
+- Loca events are not supported yet.
 
 	
 # Tips
@@ -127,6 +127,8 @@ JavaScript function _Shiny.setInputValue()_ can be used to send data back to Shi
 - AMap has several predefined [Map styles](https://lbs.amap.com/api/jsapi-v2/guide/map/map-style/). Could be set in map options with _mapStyle_.
 
 - _amapro_ silent errors are collected in the browser Console. Press key **F12** to open the dev.environment, then open tab "Console" to view them.
+
+- _am.init_ has a _debug_ (boolean) parameter, results are displayed in the browser Console
 
 - Chrome/Firefox extensions may interfere with map presentation (like 'uBlock')
   

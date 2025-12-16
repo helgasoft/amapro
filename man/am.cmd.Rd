@@ -9,11 +9,14 @@ am.cmd(id, cmd = NULL, trgt = NULL, ...)
 \arguments{
 \item{id}{A map widget from \link{am.init} or a proxy from \link{am.proxy}}
 
-\item{cmd}{A command name string, like 'setFitView'}
+\item{cmd}{AMap command name string, like 'setFitView', 'setMapStyle', etc.}
 
 \item{trgt}{A target's name string, or 'map' for the map itself.}
 
-\item{...}{command attributes \cr}
+\item{...}{command attributes from AMap API. \cr
+For AMap commands starting with 'get' there are two \emph{amapro} attributes 'f' and 'r'.\cr
+'f' is an optional JS function to manipulate the data received, \cr
+'r' is the name of the Shiny variable receiving the data}
 }
 \value{
 A map or a map proxy
@@ -30,8 +33,14 @@ Commands can modify an object (setZoom), but also get data from it (getCenter).\
 }
 \examples{
 if (interactive()) {
+  # 'position' and 'content' are InfoWindow parameters from AMap API
   am.init() |> 
   am.cmd('set', 'InfoWindow', position=c(116.6, 40), content='Beijing')
+  
+  am.proxy("plot") |>
+    am.cmd('getLayers', 'map',
+           f= 'function(yy) { return yy.map(x => { return x.CLASS_NAME;}); }',
+           r= 'result1')
 }
 }
 \seealso{

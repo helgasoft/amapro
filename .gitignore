@@ -2,7 +2,7 @@
 .Rhistory
 .RData
 .Ruserdata
-
+..Rcheck
 /doc/
 /Meta/
 cran-comments.md

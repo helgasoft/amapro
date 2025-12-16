@@ -148,19 +148,37 @@ function setEvents(adata, dname) {
   }
 }
 
+const getCircularReplacer = () => {   // for stringify
+  const seen = new WeakSet();
+  return (key, value) => {
+    if (typeof value === 'object' && value !== null) {
+      if (seen.has(value)) {
+        return; // returns undefined, which removes the key from the JSON output
+      }
+      seen.add(value);
+    }
+    return value;
+  };
+};
+
 function sval(str, args, quiet=false) {
-    if (debug) console.log('eval('+str+')  args='+JSON.stringify(args) );
     try {
       eval(str);
+      if (debug && !quiet) {
+        tmp = JSON.stringify(args, getCircularReplacer());
+        console.log('eval('+str+')  args='+tmp );
+      }
     } catch(err) {
-      if (!quiet) console.log('sval:'+str+' \n '+ err.message);
+      console.log('error:'+str+' \n '+ err.message);
       return false;
     }
     return true;
 }
 
-function cmdo(args) { 
-  if (args.cmd=='addTo') args.cmd = 'add';  // do not use AMap own cmd addTo(map) 
+function cmdo(args) {
+  // from addItem or addCmd
+  if (args.cmd=='addTo') args.cmd = 'add';  // do not use AMap own cmd addTo(map)
+  ww = '';  //'window.';
   args = setPrelims(args);
   dname = args.data.name;
   if (dname) delete args.data.name;
@@ -170,7 +188,7 @@ function cmdo(args) {
   if (args.trgt=='' || args.trgt=='map') // !args.target || 
     args.trgt = 'm$jmap';
   else if (args.cmd!='set' && args.cmd!='code')
-    args.trgt = 'window.'+args.trgt;
+    args.trgt = ww + args.trgt;    // redundant?
   tdata = '(args.data);';
   if (typeof args.data=='string') {
     //if (sval(args.data, args, true))  // valid object
@@ -178,7 +196,9 @@ function cmdo(args) {
   }
   if (Object.values(args.data) && !Object.keys(args.data).some(isNaN))   // unnamed only
 	  args.data = Object.values(args.data);
-	if (typeof args.data=='object' && args.data.length) {  // args.data like [1,2]
+  // console.log(args.data);  // show Object
+  
+	if (typeof args.data=='object' && Array.isArray(args.data)) { //args.data.length) {  // [1,2..]
     tdata = '(';
     // if object valid, set one unnamed variable or a string
     args.data.map(x => {
@@ -190,6 +210,7 @@ function cmdo(args) {
       }
       tdata = tdata + tmp + ',';
     });
+    if (tdata=='(') tdata= '(z';   // becomes '();' for clean(), hide()..
     tdata = tdata.replace(/.$/, ');');
   } 
   else
@@ -215,13 +236,16 @@ function cmdo(args) {
   
   if (args.cmd=='set') {
     if (dname)
-      tmp = 'window.'+dname+ '= new AMap.'+ args.trgt +tdata;
+      tmp = ww +dname+ '= new AMap.'+ args.trgt +tdata;
     else if (args.data.iname) {   // comes from addItem
       dname = args.data.iname;    // set for events if any
       delete args.data.iname;
-      tmp = 'window.'+dname+ '= new AMap.'+ args.trgt +tdata+
+      tmp = ww +dname+ '= new AMap.'+ args.trgt +tdata+
         'm$jmap.add(' +dname+');';
-    } 
+    }
+//    else if (args.trgt=='m$loca') {
+//      tmp = ww '+args.name+ '= new Loca.'+ ...
+//    }
     else {
       tdata = tdata.replace(');', '));')
       tmp = 'm$jmap.add(new AMap.'+ args.trgt + tdata;
@@ -252,6 +276,7 @@ function cmdType(madd, args, zname) {
 
   switch(target) {
 
+  // case 'HawkEye':    // plugin not included in our amap.js
   case 'Polyline':
   case 'Icon':
   case 'Circle':
@@ -264,13 +289,26 @@ function cmdType(madd, args, zname) {
   case 'ElasticMarker':
   case 'InfoWindow':
   case 'ImageLayer':
+  // case 'VideoLayer':    // only v.1.4
   case 'VectorLayer':
   case 'LabelsLayer':
-  case 'GeoJSON':
   case 'convertFrom':
       sval(madd, args);
       break;
-    
+
+  case 'GeoJSON':
+      if (!args.data.getPolygon)   // set default getPolygon function
+          args.data.getPolygon= function(geojson, lnglats) {
+            //var area = AMap.GeometryUtil.ringArea(lnglats[0]); console.log(area);
+            params = Object.assign({}, args.data);
+            delete params['geoJSON'];
+            params.path = lnglats;
+            return new AMap.Polygon(params);
+            //  {path: lnglats, fillOpacity: 0.3, strokeWeight:2, strokeColor:'magenta', fillColor:'red', zIndex:15}); 
+          }
+      sval(madd, args);
+      break;
+
   case 'Marker':
     if (!args.data.icon) {
       args.data.icon = 'https://a.amap.com/jsapi_demos/static/demo-center/icons/poi-marker-default.png';
@@ -312,22 +350,33 @@ function cmdType(madd, args, zname) {
   case 'RoadNet':
   case 'Traffic':
   case 'Flexible':
+    
+  // 3 LOCA TileLayers
+  // case 'MapboxVectorTileLayer':   // plugin:  https://lbs.amap.com/demo/javascript-api-v2/example/thirdlayer/mvt-layer
   case 'WMS':
   case 'WMTS':
     if (zname) {
       if (eval("typeof "+zname+"=='undefined'"))
-        tmp = "window."+zname+"= new AMap.TileLayer."+
-                target+"(args.data); "
+        tmp = ww +zname+ "= new AMap.TileLayer."+target+"(args.data); "
       else tmp=''    // name exists already
       tmp = tmp + zname+'.setMap(m$jmap);'
-    } else {
+    } 
+    else {
       vname = 'm$' + target.toLowerCase();
-      tmp = 'var '+vname+'= new AMap.TileLayer.'+target+'(args.data); ' +
+      tmp = ww +vname +'= new AMap.TileLayer.'+target+'(args.data); ' +
         vname+'.setMap(m$jmap);';
     }
     sval(tmp, args);
     break;
 
+
+  case '3DTilesLayer':      // https://lbs.amap.com/demo/javascript-api-v2/example/selflayer/3dtileslayer
+    // needs plugin=AMap.3DTilesLayer  + GLTFLoader.117.min.js + three.117.js
+    args.data.map = m$jmap;
+    tmp = ww +zname+ "= new AMap.TileLayer['"+target+"'](args.data); "
+    sval(tmp, args);
+    break;
+    
   case 'HeatMap':
     if (args.data.ddd) {   // R dislikes '3d' name
       args.data['3d'] = args.data.ddd;  delete args.data.ddd;
@@ -342,19 +391,14 @@ function cmdType(madd, args, zname) {
     delete args.data.pnts;
     tmp = '';
     if (eval("typeof "+zname+"=='undefined'")) {
-      tmp = "window."+zname+"= new AMap."+target+"(m$jmap, args.data); ";
+      tmp = ww +zname+ "= new AMap."+target+"(m$jmap, args.data); ";
       tmp = tmp + zname + ".setDataSet({"+dastr+", max:100}); "
     }
     //tmp = tmp + zname+".show();"
     sval(tmp, args);
     break;
-
-  case '3DTilesLayer':
-    tmp = 'm$'+target+"= new AMap['"+target+"'](m$jmap, args.data);";
-    sval(tmp, args);
-    break;
     
-  case 'Buildings':
+  case 'Buildings':       // 3D buildings inside China only
   case 'MapboxVectorTileLayer':
     name = 'm$'+target;
     tmp = name+'= new AMap.'+target+'(args.data); '+name+'.setMap(m$jmap);';
@@ -365,7 +409,7 @@ function cmdType(madd, args, zname) {
     // tmp == 'm$jmap.add(new AMap.LayerGroup([layer1,layer2]));'
     name = 'm$'+target;
     tmp = tmp.replace('m$jmap.add(', name+'= ').replace('));', '); '+name+'.setMap(m$jmap);');
-    console.log(target+': '+tmp)
+    //console.log(target+': '+tmp)
     sval(tmp, args);
     break;
     
@@ -391,7 +435,7 @@ function cmdType(madd, args, zname) {
       window.m$mousetool = new AMap.MouseTool(m$jmap);
       window.m$mousetool.on('draw', function(e){ overlays.push(e.obj); }) 
     }
-    tmp = 'window.m$mousetool.'+args.cmd+'(args.data);';
+    tmp = ww + 'm$mousetool.'+args.cmd+'(args.data);';
     sval(tmp, args); 
     break;
 
@@ -402,22 +446,24 @@ function cmdType(madd, args, zname) {
     sval(madd, args);
     break;
     
-  // Loca elements ---------------------------------------
+    
+
+    
+  // LOCA elements ---------------------------------------
   
   case 'Container':
     if (zname) break;  // unique name m$loca
-    tmp = "window.m$loca = new Loca.Container({ map: m$jmap });"
+    tmp = ww + 'm$loca = new Loca.Container({ map: m$jmap });'
     sval(tmp, args);
     break;
     
   case 'GeoJSONSource':
     if (!zname) break;
-    //if (!args.data.data) break;
     // data: geojson object OR url: 'http..'
     if (args.data.data)
-      tmp = zname+"= new Loca.GeoJSONSource({data: args.data.data}); ";
+      tmp = zname + '= new Loca.GeoJSONSource({data: args.data.data}); ';
     else
-      tmp = zname+"= new Loca.GeoJSONSource({url:'"+args.data.url+"'}); ";
+      tmp = zname + "= new Loca.GeoJSONSource({url:'"+args.data.url+"'}); ";
     sval(tmp, args);
     break;
 
@@ -425,6 +471,7 @@ function cmdType(madd, args, zname) {
   case 'PulseLinkLayer':
   case 'PulseLineLayer':
   case 'LaserLayer':
+  case 'MapboxVectorTileLayer':
     
   case 'PointLayer':      // base
   case 'IconLayer':
@@ -441,9 +488,12 @@ function cmdType(madd, args, zname) {
   case 'GltfLayer':     // undocumented
   case 'GeoBufferSource':
   case 'Legend':
+  case 'ViewControl':  // see https://lbs.amap.com/demo/loca-v2/demos/cat-view-control/view-control
     if (!zname) break;
-    args.data.loca = m$loca;
-    tmp = zname+'= new Loca.'+target+'(args.data); ';
+    if (Array.isArray(args.data)) dd= args.data.length;
+    else dd= Object.keys(args.data).length;
+    dd = dd==0 ? '{}' : 'args.data';    // handles empty option
+    tmp = zname+'= new Loca.'+target+'('+dd+'); ';
     sval(tmp, args);
     break;
 /*    
@@ -451,10 +501,11 @@ function cmdType(madd, args, zname) {
   case 'DirectionalLight':
   case 'PointLight':
     if (!zname) break;
-    tmp = zname+'= new Loca.'+target+'(args.data); m$loca.addLight('+zname+');';
+    tmp = ww +zname+ '= new Loca.'+target+'(args.data); m$loca.addLight('+zname+');';
     sval(tmp, args);
     break;
 */
+  case 'Dat':         // see https://lbs.amap.com/demo/loca-v2/demos/cat-polygon/bj-airport
   case 'ambLight':
   case 'dirLight':
   case 'pointLight':
@@ -501,7 +552,7 @@ if (HTMLWidgets.shinyMode) {
 
 /*
 ---------------------------------------
-Original work Copyright 2022 Larry Helgason
+Original work Copyright 2022-2025 Larry Helgason
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
