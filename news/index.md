@@ -2,6 +2,8 @@
 
 ## amapro 0.1.4 latest in development
 
+CRAN release: 2026-01-28
+
 - fixed Demo: updated WMTS link, added PulseLinkLayer, etc.
 - upgraded amap.js to v.2.0.6.4 and loca.js to v.2.0.14
 
