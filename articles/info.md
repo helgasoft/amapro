@@ -110,6 +110,7 @@ and optionally a query **q**.
 Example:
 
 ``` r
+
 am.init(center= c(116.475, 39.997), zoom= 17,
         on= list(list(e= 'complete', 
                       f= "function() {alert('loaded!');}")) )

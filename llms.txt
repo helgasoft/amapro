@@ -15,6 +15,7 @@ Enjoy rich interactive maps in R and Shiny with minimal overhead!
 Use latest development version for optimal experience:
 
 ``` r
+
 if (!requireNamespace('remotes')) install.packages('remotes')
 remotes::install_github('helgasoft/amapro')
 ```
@@ -24,12 +25,14 @@ remotes::install_github('helgasoft/amapro')
 #### Minimal
 
 ``` r
+
 library(amapro); am.init()
 ```
 
 #### Extended
 
 ``` r
+
 ctr <- c(22.430151, 37.073011)
 turl <- paste0('http://server.arcgisonline.com/ArcGIS/rest/services/',
                  'World_Imagery/MapServer/tile/[z]/[y]/[x]')

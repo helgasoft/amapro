@@ -7,7 +7,7 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/helgasoft/amapro/blob/v.0.1.4/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/helgasoft/amapro/blob/v0.1.5/DESCRIPTION)
 
 Helgason L (2026). *amapro: Thin Wrapper for Mapping Library 'AMap'*. R
 package version 0.1.4, <https://github.com/helgasoft/amapro/>.

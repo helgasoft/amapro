@@ -11,6 +11,7 @@ Amap documentation.
 ![](media/geojson.jpg)
 
 ``` r
+
 if (interactive()) {
 glnglat <- list(c(2.290412,48.863673),c(2.292779,48.862115),c(2.288930,48.859023),c(2.289799,48.860950),c(2.290633,48.861634),c(2.289015,48.861835),c(2.287414,48.860088),c(2.286171,48.860614),c(2.287397,48.862586))
 gjson <- list(type= "FeatureCollection", features= list(
@@ -41,6 +42,7 @@ in Loca documentation.
 ![](media/poly3D.light.jpg)
 
 ``` r
+
 tile4 <- 'https://{a,b,c,d}.basemaps.cartocdn.com/dark_all/[z]/[x]/[y].png'
 
 # https://writingjavascript.com/scaling-values-between-two-ranges
