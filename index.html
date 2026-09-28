@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Thin Wrapper for Mapping Library AMap • amapro</title>
+<title>Thin Wrapper for Mapping Library AMap(Gaode) • amapro</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png">
 <link rel="icon" type="”image/svg+xml”" href="favicon.svg">
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
@@ -15,7 +15,7 @@
 <link href="deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
 <script src="deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Thin Wrapper for Mapping Library AMap">
+<script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Thin Wrapper for Mapping Library AMap(Gaode)">
 <meta name="description" content="Build and control interactive 2D and 3D maps with R/Shiny. Lean set of powerful commands wrapping native calls to AMap &lt;https://lbs.amap.com/api/jsapi-v2/summary/&gt;. Deliver rich mapping functionality with minimal overhead.">
 <meta property="og:description" content="Build and control interactive 2D and 3D maps with R/Shiny. Lean set of powerful commands wrapping native calls to AMap &lt;https://lbs.amap.com/api/jsapi-v2/summary/&gt;. Deliver rich mapping functionality with minimal overhead.">
 <meta property="og:image" content="https://helgasoft.github.io/amapro/logo.png">
@@ -28,7 +28,7 @@
 
     <a class="navbar-brand me-2" href="index.html">amapro</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.5</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -104,24 +104,27 @@ install.packages('amapro')
 <h4 id="extended">Extended<a class="anchor" aria-label="anchor" href="#extended"></a>
 </h4>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">ctr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">22.430151</span>, <span class="fl">37.073011</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">center</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">22.430151</span>, <span class="fl">37.073011</span><span class="op">)</span></span>
 <span><span class="va">turl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">'http://server.arcgisonline.com/ArcGIS/rest/services/'</span>,</span>
 <span>                 <span class="st">'World_Imagery/MapServer/tile/[z]/[y]/[x]'</span><span class="op">)</span></span>
 <span><span class="va">helmet</span> <span class="op">&lt;-</span> <span class="st">'https://upload.wikimedia.org/wikipedia/commons/9/9d/Ancient_Greek_helmet.png'</span></span>
 <span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/helgasoft/amapro/" class="external-link">amapro</a></span><span class="op">)</span></span>
-<span><span class="fu"><a href="reference/am.init.html">am.init</a></span><span class="op">(</span>viewMode<span class="op">=</span> <span class="st">'3D'</span>, center<span class="op">=</span> <span class="va">ctr</span>, zoom<span class="op">=</span> <span class="fl">10</span>, pitch<span class="op">=</span> <span class="fl">60</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span><span class="fu"><a href="reference/am.init.html">am.init</a></span><span class="op">(</span>viewMode<span class="op">=</span> <span class="st">'3D'</span>, center<span class="op">=</span> <span class="va">center</span>, zoom<span class="op">=</span> <span class="fl">10</span>, pitch<span class="op">=</span> <span class="fl">60</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span><span class="fu"><a href="reference/am.control.html">am.control</a></span><span class="op">(</span>ctype<span class="op">=</span> <span class="st">'ControlBar'</span>, position<span class="op">=</span> <span class="st">'RT'</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span><span class="fu"><a href="reference/am.item.html">am.item</a></span><span class="op">(</span><span class="st">'TileLayer'</span>, tileUrl<span class="op">=</span> <span class="va">turl</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span><span class="fu"><a href="reference/am.item.html">am.item</a></span><span class="op">(</span><span class="st">'Marker'</span>, position<span class="op">=</span> <span class="va">ctr</span>, icon<span class="op">=</span> <span class="va">helmet</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span><span class="fu"><a href="reference/am.cmd.html">am.cmd</a></span><span class="op">(</span><span class="st">'set'</span>, <span class="st">'InfoWindow'</span>, name<span class="op">=</span><span class="st">'iwin'</span>, content<span class="op">=</span><span class="st">'This is Sparta'</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span><span class="fu"><a href="reference/am.cmd.html">am.cmd</a></span><span class="op">(</span><span class="st">'open'</span>, <span class="st">'iwin'</span>, <span class="st">'m$jmap'</span>, <span class="va">ctr</span><span class="op">)</span>   <span class="co"># m$jmap is the map name in JavaScript</span></span>
+<span><span class="fu"><a href="reference/am.item.html">am.item</a></span><span class="op">(</span><span class="st">'Marker'</span>, name<span class="op">=</span><span class="st">'m$mark1'</span>, position<span class="op">=</span> <span class="va">center</span>, icon<span class="op">=</span> <span class="va">helmet</span>, </span>
+<span>  on<span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>    <span class="co"># list of events handled with JavaScript</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>e<span class="op">=</span><span class="st">'click'</span>, f<span class="op">=</span><span class="st">"function(e) { alert('Sparta coordinates: ' + e.lnglat);}"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span><span class="fu"><a href="reference/am.cmd.html">am.cmd</a></span><span class="op">(</span><span class="st">'set'</span>, <span class="st">'InfoWindow'</span>, name<span class="op">=</span><span class="st">'m$iwin'</span>, content<span class="op">=</span><span class="st">'This is Sparta'</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span><span class="fu"><a href="reference/am.cmd.html">am.cmd</a></span><span class="op">(</span><span class="st">'open'</span>, <span class="st">'m$iwin'</span>, <span class="st">'m$jmap'</span>, <span class="va">center</span><span class="op">)</span>   <span class="co"># m$jmap is the map name in JavaScript</span></span>
 <span><span class="co"># ... then open in browser for best performance</span></span></code></pre></div>
 <!--
 ## Get started
 
 The [**WEBSITE**](https://helgasoft.github.io/amapro/) has a gallery with code and tutorials.
-<br /> The package has plenty of [**code
+<br> The package has plenty of [**code
 examples**](https://github.com/helgasoft/amapro/blob/main/R/examples.R)
 included. Type
 **?ec.examples** in the RStudio Console, then copy/paste any code from Help to

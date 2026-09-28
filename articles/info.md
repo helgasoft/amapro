@@ -33,7 +33,7 @@ provide a Chinese phone number for SMS verification.
 How to get an API key if you reside out of China?
 
 - ask a friend from China to help, or hire a local
-  [freelancer](https://www.truelancer.com/freelancers-in-china)
+  [freelancer](https://www.freelancer.com/freelancers/china)
 - search the web for a shared key
 - use a temporary Chinese phone number from sites like *sms24.me*,
   *turtle-sms.xyz*, etc. However most are probably blacklisted as the
@@ -58,8 +58,12 @@ The base library with optional plugins. Most important links are
 
 - [Summary](https://lbs.amap.com/api/jsapi-v2/summary/)
 - [Guide](https://lbs.amap.com/api/jsapi-v2/guide/abc/quickstart)
-- [API](https://lbs.amap.com/api/javascript-api-v2/documentation)
-  documentation, good auto-translation
+- Chinese [API
+  documentation](https://lbs.amap.com/api/javascript-api-v2/documentation)
+  with good auto-translation
+- English [API
+  documentation](https://a.amap.com/jsapi/static/doc/index.html) , not
+  recent/complete
 - [Examples](https://lbs.amap.com/demo/list/jsapi-v2) - live demos
 
 ### LOCA
@@ -69,8 +73,8 @@ a parameter - `am.init(loca=TRUE, ...)`. The documentation
 auto-translates well in the browser.
 
 - [Intro](https://lbs.amap.com/api/loca-v2/intro)
-- [API](https://a.amap.com/Loca/static/loca-v2/doc/html/index.html)
-  documentation
+- Loca [API
+  documentation](https://a.amap.com/Loca/static/loca-v2/doc/html/index.html)
 - [Examples](https://lbs.amap.com/demo/loca-v2/demos/) - live demos
 
 ## Commands
@@ -152,11 +156,8 @@ back to Shiny.
   ‘PolygonEditor’,‘Webservice’, ‘Search(AMap.Autocomplete,
   AMap.PlaceSearch)’, ‘Geocoding(AMap.Geocoder)’, Route planning, other
   services(weather, districts, etc.), positioning, utilities.
-- most **Loca** elements are supported, but not all have been tested.
-  Latest *AmbientLight*, *DirectionalLight* and *PointLight* objects are
-  not supported, but parameters *ambLight*, *dirLight* and *pointLight*
-  accomplish the same.
-- Loca events are not supported yet.
+- most **Loca elements** are supported, but not all have been tested.
+- **Loca events** are not supported yet.
 
 ## Tips
 
@@ -171,7 +172,7 @@ back to Shiny.
 - usually WMS/WMTS tiles come from external servers and may present a
   CORS problem - browser refusal to load. One can install a small
   [extension in
-  Chrome](https://chrome.google.com/webstore/detail/allow-cors-access-control/lhobafahddgcelffkeicbaginigeejlf)
+  Chrome](https://chromewebstore.google.com/detail/allow-cors-access-control/lhobafahddgcelffkeicbaginigeejlf)
   or
   [Firefox](https://addons.mozilla.org/en-US/firefox/addon/access-control-allow-origin/)
   to fix this problem manually inside the browser.

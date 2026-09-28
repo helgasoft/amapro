@@ -30,7 +30,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">amapro</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.5</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -70,9 +70,9 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Introduction to amapro</h1>
             
-            <h4 data-toc-skip class="date">2026-09-27</h4>
+            <h4 data-toc-skip class="date">2026-09-28</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/helgasoft/amapro/blob/v0.1.5/vignettes/info.Rmd" class="external-link"><code>vignettes/info.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/helgasoft/amapro/blob/master/vignettes/info.Rmd" class="external-link"><code>vignettes/info.Rmd</code></a></small>
       <div class="d-none name"><code>info.Rmd</code></div>
     </div>
 
@@ -105,7 +105,7 @@ API key is obtained through <a href="https://console.amap.com/dev/id/phone" clas
 you to provide a Chinese phone number for SMS verification. <br> How to
 get an API key if you reside out of China?</p>
 <ul>
-<li>ask a friend from China to help, or hire a local <a href="https://www.truelancer.com/freelancers-in-china" class="external-link">freelancer</a>
+<li>ask a friend from China to help, or hire a local <a href="https://www.freelancer.com/freelancers/china" class="external-link">freelancer</a>
 </li>
 <li>search the web for a shared key</li>
 <li>use a temporary Chinese phone number from sites like
@@ -134,9 +134,11 @@ auto-translates as “Reference book” in web menus.</p>
 <ul>
 <li><a href="https://lbs.amap.com/api/jsapi-v2/summary/" class="external-link">Summary</a></li>
 <li><a href="https://lbs.amap.com/api/jsapi-v2/guide/abc/quickstart" class="external-link">Guide</a></li>
-<li>
-<a href="https://lbs.amap.com/api/javascript-api-v2/documentation" class="external-link">API</a>
-documentation, good auto-translation</li>
+<li>Chinese <a href="https://lbs.amap.com/api/javascript-api-v2/documentation" class="external-link">API
+documentation</a> with good auto-translation</li>
+<li>English
+<a href="https://a.amap.com/jsapi/static/doc/index.html" target="_blank" class="external-link">API
+documentation</a> , not recent/complete</li>
 <li>
 <a href="https://lbs.amap.com/demo/list/jsapi-v2" class="external-link">Examples</a> -
 live demos</li>
@@ -150,9 +152,10 @@ invoked with a parameter - <code>am.init(loca=TRUE, ...)</code>. The
 documentation auto-translates well in the browser.</p>
 <ul>
 <li><a href="https://lbs.amap.com/api/loca-v2/intro" class="external-link">Intro</a></li>
-<li>
-<a href="https://a.amap.com/Loca/static/loca-v2/doc/html/index.html" class="external-link">API</a>
-documentation</li>
+<li>Loca
+<a href="https://a.amap.com/Loca/static/loca-v2/doc/html/index.html" target="_blank" class="external-link">API
+documentation</a>
+</li>
 <li>
 <a href="https://lbs.amap.com/demo/loca-v2/demos/" class="external-link">Examples</a> -
 live demos</li>
@@ -221,7 +224,8 @@ Shiny.</p>
 <ul>
 <li>only one map is created by <em>am.init</em> per session. It is a JS
 global called ‘m$jmap’.</li>
-<li>AMap command <a href="https://a.amap.com/jsapi/static/doc/index.html#controladdto" class="external-link">addTo</a>
+<li>AMap command
+<a href="https://a.amap.com/jsapi/static/doc/index.html#controladdto" target="_blank" class="external-link">addTo</a>
 is overwritten by <em>amapro</em> and cannot be used.</li>
 <li>most <strong>built-in</strong> AMap tile layers (Satellite, Traffic,
 Roads) are limited to China only. However, with command
@@ -241,12 +245,10 @@ plugins include: ‘BesizerCurve’, ‘MarkerCluster’, ‘HawkEye’, <a href
 ‘PolygonEditor’,‘Webservice’, ‘Search(AMap.Autocomplete,
 AMap.PlaceSearch)’, ‘Geocoding(AMap.Geocoder)’, Route planning, other
 services(weather, districts, etc.), positioning, utilities.</li>
-<li>most <strong>Loca</strong> elements are supported, but not all have
-been tested. Latest <em>AmbientLight</em>, <em>DirectionalLight</em> and
-<em>PointLight</em> objects are not supported, but parameters
-<em>ambLight</em>, <em>dirLight</em> and <em>pointLight</em> accomplish
-the same.</li>
-<li>Loca events are not supported yet.</li>
+<li>most <strong>Loca elements</strong> are supported, but not all have
+been tested.</li>
+<li>
+<strong>Loca events</strong> are not supported yet.</li>
 </ul>
 </div>
 <div class="section level2">
@@ -260,7 +262,7 @@ variables.</p></li>
 <li><p>API attributes could be set to a JS function instead of a value.
 Function is defined as a string starting with word “function”.</p></li>
 <li><p>usually WMS/WMTS tiles come from external servers and may present
-a CORS problem - browser refusal to load. One can install a small <a href="https://chrome.google.com/webstore/detail/allow-cors-access-control/lhobafahddgcelffkeicbaginigeejlf" class="external-link">extension
+a CORS problem - browser refusal to load. One can install a small <a href="https://chromewebstore.google.com/detail/allow-cors-access-control/lhobafahddgcelffkeicbaginigeejlf" class="external-link">extension
 in Chrome</a> or <a href="https://addons.mozilla.org/en-US/firefox/addon/access-control-allow-origin/" class="external-link">Firefox</a>
 to fix this problem manually inside the browser.</p></li>
 <li><p>AMap has several predefined <a href="https://lbs.amap.com/api/jsapi-v2/guide/map/map-style/" class="external-link">Map

@@ -33,18 +33,21 @@ library(amapro); am.init()
 
 ``` r
 
-ctr <- c(22.430151, 37.073011)
+center <- c(22.430151, 37.073011)
 turl <- paste0('http://server.arcgisonline.com/ArcGIS/rest/services/',
                  'World_Imagery/MapServer/tile/[z]/[y]/[x]')
 helmet <- 'https://upload.wikimedia.org/wikipedia/commons/9/9d/Ancient_Greek_helmet.png'
 
 library(amapro)
-am.init(viewMode= '3D', center= ctr, zoom= 10, pitch= 60) |>
+am.init(viewMode= '3D', center= center, zoom= 10, pitch= 60) |>
 am.control(ctype= 'ControlBar', position= 'RT') |>
 am.item('TileLayer', tileUrl= turl) |>
-am.item('Marker', position= ctr, icon= helmet) |>
-am.cmd('set', 'InfoWindow', name='iwin', content='This is Sparta') |>
-am.cmd('open', 'iwin', 'm$jmap', ctr)   # m$jmap is the map name in JavaScript
+am.item('Marker', name='m$mark1', position= center, icon= helmet, 
+  on= list(    # list of events handled with JavaScript
+    list(e='click', f="function(e) { alert('Sparta coordinates: ' + e.lnglat);}"))
+) |>
+am.cmd('set', 'InfoWindow', name='m$iwin', content='This is Sparta') |>
+am.cmd('open', 'm$iwin', 'm$jmap', center)   # m$jmap is the map name in JavaScript
 # ... then open in browser for best performance
 ```
 
