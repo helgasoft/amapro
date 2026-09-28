@@ -1,7 +1,8 @@
-# amapro 0.1.4   latest in development
+# amapro 0.1.5   latest in development
 
-* fixed Demo: updated WMTS link, added PulseLinkLayer, etc.
-* upgraded amap.js to v.2.0.6.4 and loca.js to v.2.0.14
+* fixed Demo: updated WMTS link, added PulseLinkLayer, Wikimedia links, etc.
+* upgraded amap.js to v.2.0.6.5 and loca.js to v.2.0.14
+* fixed CORS issue by adding arrondissments.geojson
 
 # amapro 0.1.2
 

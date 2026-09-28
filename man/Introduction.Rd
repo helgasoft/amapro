@@ -36,7 +36,7 @@ provide a Chinese phone number for SMS verification. \if{html}{\out{<br>}} How t
 API key if you reside out of China?
 \itemize{
 \item ask a friend from China to help, or hire a local
-\href{https://www.truelancer.com/freelancers-in-china}{freelancer}
+\href{https://www.freelancer.com/freelancers/china}{freelancer}
 \item search the web for a shared key
 \item use a temporary Chinese phone number from sites like \emph{sms24.me},
 \emph{turtle-sms.xyz}, etc. However most are probably blacklisted as the
@@ -48,7 +48,7 @@ long run
 
 \section{Shiny Demo}{
 Interactive, hands-on showcase of many library features. Activate with
-the following command: \if{html}{\out{<br/>}} \verb{library(amapro); demo(am.shiny)}
+the following command: \if{html}{\out{<br>}} \verb{library(amapro); demo(am.shiny)}
 }
 
 \section{API links}{
@@ -60,8 +60,11 @@ The base library with optional plugins. Most important links are
 \itemize{
 \item \href{https://lbs.amap.com/api/jsapi-v2/summary/}{Summary}
 \item \href{https://lbs.amap.com/api/jsapi-v2/guide/abc/quickstart}{Guide}
-\item \href{https://lbs.amap.com/api/javascript-api-v2/documentation}{API}
-documentation, good auto-translation
+\item Chinese \href{https://lbs.amap.com/api/javascript-api-v2/documentation}{API documentation}
+with good auto-translation
+\item English
+\if{html}{\out{<a href="https://a.amap.com/jsapi/static/doc/index.html" target="_blank">}}API
+documentation\if{html}{\out{</a>}} , not recent/complete
 \item \href{https://lbs.amap.com/demo/list/jsapi-v2}{Examples} - live demos
 }
 }
@@ -73,8 +76,9 @@ a parameter - \code{am.init(loca=TRUE, ...)}. The documentation
 auto-translates well in the browser.
 \itemize{
 \item \href{https://lbs.amap.com/api/loca-v2/intro}{Intro}
-\item \href{https://a.amap.com/Loca/static/loca-v2/doc/html/index.html}{API}
-documentation
+\item Loca
+\if{html}{\out{<a href="https://a.amap.com/Loca/static/loca-v2/doc/html/index.html" target="_blank">}}API
+documentation\if{html}{\out{</a>}}
 \item \href{https://lbs.amap.com/demo/loca-v2/demos/}{Examples} - live demos
 }
 }
@@ -132,7 +136,7 @@ used to send data back to Shiny.
 \item only one map is created by \emph{am.init} per session. It is a JS global
 called ‘m$jmap’.
 \item AMap command
-\href{https://a.amap.com/jsapi/static/doc/index.html#controladdto}{addTo}
+\if{html}{\out{<a href="https://a.amap.com/jsapi/static/doc/index.html#controladdto" target="_blank">}}addTo\if{html}{\out{</a>}}
 is overwritten by \emph{amapro} and cannot be used.
 \item most \strong{built-in} AMap tile layers (Satellite, Traffic, Roads) are
 limited to China only. However, with command \emph{am.item(‘TileLayer’)},
@@ -155,11 +159,8 @@ MoveAnimation, MouseTool, HeatMap, GeoJSON, ElasticMarker.
 ‘PolygonEditor’,‘Webservice’, ‘Search(AMap.Autocomplete,
 AMap.PlaceSearch)’, ‘Geocoding(AMap.Geocoder)’, Route planning, other
 services(weather, districts, etc.), positioning, utilities.
-\item most \strong{Loca} elements are supported, but not all have been tested.
-Latest \emph{AmbientLight}, \emph{DirectionalLight} and \emph{PointLight} objects are
-not supported, but parameters \emph{ambLight}, \emph{dirLight} and \emph{pointLight}
-accomplish the same.
-\item Loca events are not supported yet.
+\item most \strong{Loca elements} are supported, but not all have been tested.
+\item \strong{Loca events} are not supported yet.
 }
 }
 
@@ -172,7 +173,7 @@ overwriting accidentally external variables.
 Function is defined as a string starting with word “function”.
 \item usually WMS/WMTS tiles come from external servers and may present a
 CORS problem - browser refusal to load. One can install a small
-\href{https://chrome.google.com/webstore/detail/allow-cors-access-control/lhobafahddgcelffkeicbaginigeejlf}{extension in Chrome}
+\href{https://chromewebstore.google.com/detail/allow-cors-access-control/lhobafahddgcelffkeicbaginigeejlf}{extension in Chrome}
 or
 \href{https://addons.mozilla.org/en-US/firefox/addon/access-control-allow-origin/}{Firefox}
 to fix this problem manually inside the browser.

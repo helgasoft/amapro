@@ -4,7 +4,7 @@
 [![size](https://img.shields.io/github/languages/code-size/helgasoft/amapro)](https://github.com/helgasoft/amapro/releases/)
 [![website](https://img.shields.io/badge/Website-Visit-blue)](https://helgasoft.github.io/amapro/)
 <!--
-[![Coveralls test coverage](https://coveralls.io/repos/github/helgasoft/amapro/badge.svg)](https://coveralls.io/r/helgasoft/echarty?branch=main)
+[![Coveralls test coverage](https://coveralls.io/repos/github/helgasoft/amapro/badge.svg)](https://coveralls.io/r/helgasoft/amapro?branch=main)
 -->
 <!-- badges: end -->
 <!--
@@ -14,7 +14,7 @@
 A thin R wrapper around Javascript library
 [AMap](https://lbs.amap.com/demo/list/jsapi-v2) and its 3D plugin [Loca](https://lbs.amap.com/demo/loca-v2/demos/).  
 API has eight(8) commands to enclose all AMap and Loca v.2.0 native commands and parameters.  
-Features easy transition 2D to/from 3D, variety of markers and layers, geoJson import, map manual drawing, dynamic 3D effects like flyover and trace animation, and more. <br/>
+Features easy transition 2D to/from 3D, variety of markers and layers, geoJson import, map manual drawing, dynamic 3D effects like flyover and trace animation, and more. <br>
 Enjoy rich interactive maps in R and Shiny with minimal overhead!
 
 
@@ -46,18 +46,21 @@ library(amapro); am.init()
 
 #### Extended
 ``` r
-ctr <- c(22.430151, 37.073011)
+center <- c(22.430151, 37.073011)
 turl <- paste0('http://server.arcgisonline.com/ArcGIS/rest/services/',
                  'World_Imagery/MapServer/tile/[z]/[y]/[x]')
 helmet <- 'https://upload.wikimedia.org/wikipedia/commons/9/9d/Ancient_Greek_helmet.png'
 
 library(amapro)
-am.init(viewMode= '3D', center= ctr, zoom= 10, pitch= 60) |>
+am.init(viewMode= '3D', center= center, zoom= 10, pitch= 60) |>
 am.control(ctype= 'ControlBar', position= 'RT') |>
 am.item('TileLayer', tileUrl= turl) |>
-am.item('Marker', position= ctr, icon= helmet) |>
-am.cmd('set', 'InfoWindow', name='iwin', content='This is Sparta') |>
-am.cmd('open', 'iwin', 'm$jmap', ctr)   # m$jmap is the map name in JavaScript
+am.item('Marker', name='m$mark1', position= center, icon= helmet, 
+  on= list(    # list of events handled with JavaScript
+    list(e='click', f="function(e) { alert('Sparta coordinates: ' + e.lnglat);}"))
+) |>
+am.cmd('set', 'InfoWindow', name='m$iwin', content='This is Sparta') |>
+am.cmd('open', 'm$iwin', 'm$jmap', center)   # m$jmap is the map name in JavaScript
 # ... then open in browser for best performance
 
 ```
@@ -65,7 +68,7 @@ am.cmd('open', 'iwin', 'm$jmap', ctr)   # m$jmap is the map name in JavaScript
 ## Get started
 
 The [**WEBSITE**](https://helgasoft.github.io/amapro/) has a gallery with code and tutorials.  
-<br /> The package has plenty of [**code
+<br> The package has plenty of [**code
 examples**](https://github.com/helgasoft/amapro/blob/main/R/examples.R)
 included. Type
 **?ec.examples** in the RStudio Console, then copy/paste any code from Help to
@@ -77,9 +80,9 @@ Now you can start building beautiful maps with R and Shiny!
 
 Run with command ``` demo(am.shiny, 'amapro') ```. Demo will open in default **browser**.
 
-<br />
+<br>
 <p align="center">
 <!--<a href='https://helgasoft.github.io/amapro/gallery.html' target='_blank'>-->
 <img src="man/figures/demo1.jpg" alt="demo"/>
-<br />Made with amapro. Powered by AMap.
+<br>Made with amapro. Powered by AMap.
 </p>

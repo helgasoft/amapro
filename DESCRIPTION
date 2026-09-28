@@ -1,8 +1,8 @@
 Package: amapro
 Type: Package
-Title: Thin Wrapper for Mapping Library 'AMap'
-Date: 2025-12-14
-Version: 0.1.4
+Title: Thin Wrapper for Mapping Library 'AMap'('Gaode')
+Date: 2026-09-24
+Version: 0.1.5
 Authors@R: c( person("Larry", "Helgason", email= "larry@helgasoft.com", role= c("aut", "cre", "cph")) )
 Author: Larry Helgason [aut, cre, cph]
 Maintainer: Larry Helgason <larry@helgasoft.com>
@@ -17,6 +17,8 @@ Imports:
   tcltk (>= 4.1.0)
 Suggests:
   shiny (>= 1.7.0),
+  shinyjs,
+  shinythemes,
   jsonlite,
   rmarkdown,
   knitr,
@@ -26,5 +28,5 @@ Encoding: UTF-8
 LazyData: false
 Language: en-US
 VignetteBuilder: knitr
-RoxygenNote: 7.3.3
 Roxygen: list(markdown = TRUE)
+Config/roxygen2/version: 8.0.0

@@ -34,7 +34,10 @@ A pop-up dialog will ask for an **API key** (shows once, will not be repeated). 
 API key is obtained through [registration](https://console.amap.com/dev/id/phone), expecting you to provide a Chinese phone number for SMS verification.  <br>
 How to get an API key if you reside out of China? 
 
-- ask a friend from China to help, or hire a local [freelancer](https://www.truelancer.com/freelancers-in-china)
+- ask a friend from China to help, or hire a local 
+```{r, echo=FALSE, results='asis'}
+cat("[freelancer](https://www.freelancer.com/freelancers/china)")
+```
 - search the web for a shared key
 - use a temporary Chinese phone number from sites like _sms24.me_, _turtle-sms.xyz_,  etc. However most are probably blacklisted as the registration page shows them as _'already registered'_.
 - select temporarily the 'demo' option, without guarantee to work in the long run
@@ -42,7 +45,7 @@ How to get an API key if you reside out of China?
 # Shiny Demo
 
 Interactive, hands-on showcase of many library features.
-Activate with the following command: <br/>
+Activate with the following command: <br>
 ``` library(amapro); demo(am.shiny) ```
 
 
@@ -55,14 +58,30 @@ The base library with optional plugins. Most important links are
 
 * [Summary](https://lbs.amap.com/api/jsapi-v2/summary/)
 * [Guide](https://lbs.amap.com/api/jsapi-v2/guide/abc/quickstart)
-* [API](https://lbs.amap.com/api/javascript-api-v2/documentation) documentation, good auto-translation
+* Chinese [API documentation](https://lbs.amap.com/api/javascript-api-v2/documentation) with good auto-translation
+* English 
+```{r, echo=FALSE, results='asis'}
+part1 <- "ht"
+part2 <- "tps://a.amap"
+part3 <- ".com/jsapi/static/doc/index.html"
+cat(sprintf('<a href="%s%s%s" target="_blank">API documentation</a>', part1, part2, part3))
+#  cat("[API documentation](https://a.amap.com/jsapi/static/doc/index.html)")
+```
+, not recent/complete
 * [Examples](https://lbs.amap.com/demo/list/jsapi-v2) - live demos
 
 ## LOCA
 AMap extension with enhanced 3D features. In _amapro_ it is invoked with a parameter -  ```am.init(loca=TRUE, ...)```. The documentation auto-translates well in the browser.
 
 * [Intro](https://lbs.amap.com/api/loca-v2/intro)
-* [API](https://a.amap.com/Loca/static/loca-v2/doc/html/index.html) documentation
+* Loca 
+```{r, echo=FALSE, results='asis'}
+part1 <- "ht"
+part2 <- "tps://a.amap"
+part3 <- ".com/Loca/static/loca-v2/doc/html/index.html"
+cat(sprintf('<a href="%s%s%s" target="_blank">API documentation</a>', part1, part2, part3))
+#   cat("[API documentation](https://a.amap.com/Loca/static/loca-v2/doc/html/index.html)")
+```
 * [Examples](https://lbs.amap.com/demo/loca-v2/demos/) - live demos
 
 # Commands
@@ -104,7 +123,16 @@ JavaScript function _Shiny.setInputValue()_ can be used to send data back to Shi
 # Limitations
 
 - only one map is created by _am.init_ per session. It is a JS global called 'm$jmap'.
-- AMap command [addTo](https://a.amap.com/jsapi/static/doc/index.html#controladdto) is overwritten by _amapro_ and cannot be used.
+- AMap command 
+```{r, echo=FALSE, results='asis'}
+# Build the URL by splitting the structure apart
+part1 <- "ht"
+part2 <- "tps://a.amap"
+part3 <- ".com/jsapi/static/doc/index.html#controladdto"
+cat(sprintf('<a href="%s%s%s" target="_blank">addTo</a>', part1, part2, part3))
+#cat("[addTo](https://a.amap.com/jsapi/static/doc/index.html#controladdto)")
+```
+ is overwritten by _amapro_ and cannot be used.
 - most **built-in** AMap tile layers (Satellite, Traffic, Roads) are limited to China only. However, with command _am.item('TileLayer')_, one can use any [Leaflet provider](https://leaflet-extras.github.io/leaflet-providers/preview/) for worldwide coverage.
 - AMap built-in [map layers](https://lbs.amap.com/api/jsapi-v2/guide/layers/official-layers) are [GCJ-02 coded](https://en.wikipedia.org/wiki/Restrictions_on_geographic_data_in_China) and coordinates collected on them will display incorrectly in Leaflet or other WGS-84 based maps, and vice-versa. They need to be [converted](https://lbs.amap.com/api/jsapi-v2/guide/transform/convertfrom). Conversion is available through function [convertFrom](https://lbs.amap.com/api/jsapi-v2/documentation#convertfrom).
 - the **supported AMap plugins** are: ControlBar, Scale, ToolBar, MoveAnimation, MouseTool, HeatMap, GeoJSON, ElasticMarker.
@@ -112,8 +140,8 @@ JavaScript function _Shiny.setInputValue()_ can be used to send data back to Shi
   'BesizerCurve', 'MarkerCluster', 'HawkEye',  [IndoorMap](https://lbs.amap.com/demo/javascript-api/example/indoormap/indoormap/), 
     [CustomLayer](https://lbs.amap.com/demo/javascript-api/example/selflayer/cus-svg),  'GLCustomLayer', 'DistrictLayer', 'LayerGroup',
  all editors like 'PolygonEditor','Webservice', 'Search(AMap.Autocomplete, AMap.PlaceSearch)', 'Geocoding(AMap.Geocoder)', Route planning, other services(weather, districts, etc.), positioning, utilities.
-- most **Loca** elements are supported, but not all have been tested. Latest _AmbientLight_, _DirectionalLight_ and _PointLight_ objects are not supported, but parameters _ambLight_, _dirLight_ and _pointLight_ accomplish the same.
-- Loca events are not supported yet.
+- most **Loca elements** are supported, but not all have been tested.
+- **Loca events** are not supported yet.
 
 	
 # Tips
@@ -122,7 +150,7 @@ JavaScript function _Shiny.setInputValue()_ can be used to send data back to Shi
 
 - API attributes could be set to a JS function instead of a value. Function is defined as a string starting with word "function".
 
-- usually WMS/WMTS tiles come from external servers and may present a CORS problem - browser refusal to load. One can install a small [extension in  Chrome](https://chrome.google.com/webstore/detail/allow-cors-access-control/lhobafahddgcelffkeicbaginigeejlf) or [Firefox](https://addons.mozilla.org/en-US/firefox/addon/access-control-allow-origin/) to fix this problem manually inside the browser.
+- usually WMS/WMTS tiles come from external servers and may present a CORS problem - browser refusal to load. One can install a small [extension in  Chrome](https://chromewebstore.google.com/detail/allow-cors-access-control/lhobafahddgcelffkeicbaginigeejlf) or [Firefox](https://addons.mozilla.org/en-US/firefox/addon/access-control-allow-origin/) to fix this problem manually inside the browser.
 
 - AMap has several predefined [Map styles](https://lbs.amap.com/api/jsapi-v2/guide/map/map-style/). Could be set in map options with _mapStyle_.
 

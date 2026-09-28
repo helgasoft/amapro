@@ -9,8 +9,8 @@ dbg <- TRUE
 tile1 <- 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/[z]/[y]/[x]'
 tile2 <- 'https://{a,b,c}.tile.openstreetmap.org/[z]/[x]/[y].png'
 pulsed <-'https://a.amap.com/Loca/static/static/orange.png'
-labMark <- 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/IE_road_sign_W-101.svg/64px-IE_road_sign_W-101.svg.png'
-pary <-  'https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Blason_paris_75.svg/436px-Blason_paris_75.svg.png'
+labMark <- 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/IE_road_sign_W-101.svg/60px-IE_road_sign_W-101.svg.png'
+pary <-  'https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Blason_paris_75.svg/330px-Blason_paris_75.svg.png'
 bfish <- 'https://upload.wikimedia.org/wikipedia/commons/3/34/BlueFish3.png'
 mark1 <- 'https://upload.wikimedia.org/wikipedia/commons/3/3c/Map_marker_icon_%E2%80%93_Nicolas_Mollet_%E2%80%93_Parking_Bicycle_%E2%80%93_Transportation_%E2%80%93_Default.png'    
 mark2 <- 'https://upload.wikimedia.org/wikipedia/commons/2/2e/Map_marker_icon_%E2%80%93_Nicolas_Mollet_%E2%80%93_Bike_rising_%E2%80%93_Sports_%E2%80%93_Default.png'
@@ -87,7 +87,7 @@ li:hover {  background-color: #eee; }
 label{ float:left; }
 #btnFly {padding:4px;}
 a {color:cyan; text-decoration:underline;}"
-getcmd <- HTML(paste('Run AMap', tags$a( #style= "color:lightblue; text-decoration:underline;", 
+getcmd <- HTML(paste('Run AMap', tags$a(  
           href="https://a.amap.com/jsapi/static/doc/index.html#map", "get commands", target='_blank')))
 
 # ------ UI ------
@@ -101,7 +101,7 @@ ui = fluidPage(
     tags$script(carAnim),
     tags$style(HTML(CM.style)) ),
   
-  fluidRow(column(12, align="center", span('amapro demo',style="color:gold") )),
+  fluidRow(column(12, align="center", span('amapro demo', style="color:gold") )),
   fluidRow(
     column(12, div(style= 'margin-bottom:15px;', am.output("plot", height='70vh')) )),
   fluidRow(

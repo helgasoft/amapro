@@ -372,7 +372,7 @@ am.inspect <- function(wt, json=TRUE, ...) {
 
 
 # ---------------------------------------------- License -----
-#   Original work Copyright 2022 Larry Helgason
+#   Original work Copyright 2022-2027 Larry Helgason
 # 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.

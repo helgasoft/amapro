@@ -49,7 +49,8 @@ test_that("loca PolygonLayer with lights", {
   # https://lbs.amap.com/demo/loca-v2/demos/cat-polygon/hz-gn
   # https://lbs.amap.com/demo/loca-v2/demos/cat-view-control/lights
   
-  tile4 <- 'https://{a,b,c,d}.basemaps.cartocdn.com/dark_all/[z]/[x]/[y].png'
+  #tile4 <- 'https://{a,b,c,d}.basemaps.cartocdn.com/dark_all/[z]/[x]/[y].png'  # API key
+  tile4 <- 'https://{a,b,c}.tile.openstreetmap.org/[z]/[x]/[y].png'
   
   # https://writingjavascript.com/scaling-values-between-two-ranges
   jscala <- "window.scaler = class Scaler {
@@ -71,7 +72,9 @@ test_that("loca PolygonLayer with lights", {
   }; 
   window.m$colors = ['#FFF8B4', '#D3F299', '#9FE084', '#5ACA70', '#00AF53', '#00873A', '#006B31', '#004835', '#003829'].reverse();
   "
-  pageo <- jsonlite::read_json('https://opendata.paris.fr/explore/dataset/arrondissements/download/?format=geojson&lang=fr')
+  #pageo <- jsonlite::read_json('https://opendata.paris.fr/explore/dataset/arrondissements/download/?format=geojson&lang=fr')  # CORS
+  json_path <- system.file("figures", "arrondissements.geojson", package = "amapro")
+  pageo <- jsonlite::read_json(json_path)
   for(i in 1:20) pageo$features[[i]]$properties$h <- i
   onEvents <- list(
     list(e= 'click', f="function() {
@@ -105,7 +108,7 @@ test_that("loca PolygonLayer with lights", {
   p <- am.init(loca= TRUE,
         viewMode= '3D', pitch= 40, showLabel= TRUE, showBuildingBlock= FALSE,
         on= onEvents,
-        mapStyle= 'amap://styles/dark', 
+        #mapStyle= 'amap://styles/dark', 
         zoom= 11, center= c(2.328007,48.86992) ) |>  #Paris
   am.control('ControlBar', position= 'RT') |> 
   am.item('TileLayer', name='tileLay', tileUrl= tile4, zooms= c(3, 20) ) |>
@@ -116,8 +119,9 @@ test_that("loca PolygonLayer with lights", {
                        `box-shadow`= '0 2px 6px 0 rgba(255, 255, 255, .3)',
                        `text-align`= 'center', `font-size`= '16px', color= '#fff')
   ) |>
-  am.item('GeoJSONSource', name= 'm$gjson', data=pageo) |>
-  am.item('PolygonLayer', name='m$poly', opacity=0.5) |> 
+  am.item('GeoJSONSource', name= 'm$gjson', data= pageo) |>
+  am.item('PolygonLayer', name='m$poly', opacity= 0.5) |> 
+  am.cmd('code', "m$loca.add(m$poly);") |>
   am.cmd('setSource', 'm$poly', 'm$gjson') |>
   am.cmd('code', jscala) |>
   am.cmd('setStyle', 'm$poly',
@@ -128,7 +132,7 @@ test_that("loca PolygonLayer with lights", {
   # am.cmd('set','pointLight', color= 'rgb(100,100,100)',  position= c(2.328007,46.86992, 2000),
   #       intensity= 3, distance= 50000)
 
-  expect_equal(p$x$api[[10]]$trgt, 'dirLight')
+  expect_equal(p$x$api[[11]]$trgt, 'dirLight')
   expect_true(grepl('m$poly.queryFeature', p$x$opts$on[[2]]$f, fixed=TRUE))
 })
 
