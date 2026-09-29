@@ -2,8 +2,6 @@
 
 ### All vignettes
 
-- [Gallery](https://helgasoft.github.io/amapro/articles/gallery.md):
-
 - [Introduction to
   amapro](https://helgasoft.github.io/amapro/articles/info.md):
 

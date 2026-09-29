@@ -21,25 +21,23 @@ translate](https://translate.google.com?sl=auto&tl=en).
 
 Install **amapro** from Github with  
 `remotes::install_github("helgasoft/amapro")`  
-CRAN version also available but usually outdated.
+CRAN version also available but could be outdated.
 
 Run with the following commands  
 [`library(amapro); am.init()`](https://github.com/helgasoft/amapro/)  
-A pop-up dialog will ask for an **API key** (shows once, will not be
-repeated).  
-API key is obtained through
+A temporary API key is used automatically. However there is no assurance
+that it will be operational in the long run.  
+API key is normally obtained through
 [registration](https://console.amap.com/dev/id/phone), expecting you to
 provide a Chinese phone number for SMS verification.  
 How to get an API key if you reside out of China?
 
 - ask a friend from China to help, or hire a local
   [freelancer](https://www.freelancer.com/freelancers/china)
-- search the web for a shared key
 - use a temporary Chinese phone number from sites like *sms24.me*,
   *turtle-sms.xyz*, etc. However most are probably blacklisted as the
   registration page shows them as *‘already registered’*.
-- select temporarily the ‘demo’ option, without guarantee to work in the
-  long run
+- search the web for a shared key
 
 ## Shiny Demo
 

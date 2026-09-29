@@ -5,7 +5,7 @@ First command to build a map
 ## Usage
 
 ``` r
-am.init(..., width = NULL, height = NULL)
+am.init(..., width = NULL, height = NULL, key = NULL)
 ```
 
 ## Arguments
@@ -20,6 +20,10 @@ am.init(..., width = NULL, height = NULL)
 - width, height:
 
   A valid CSS unit (like `'100%'`)
+
+- key:
+
+  A valid AMap key, 32 characters string, see Introduction
 
 ## Value
 

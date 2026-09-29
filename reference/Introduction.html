@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">amapro</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.6</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -18,8 +18,7 @@
       <ul class="navbar-nav me-auto"><li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
-  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/gallery.html">Gallery</a></li>
-    <li><a class="dropdown-item" href="../articles/info.html">Introduction to amapro</a></li>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/info.html">Introduction to amapro</a></li>
   </ul></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
 <li class="nav-item"><a class="nav-link" href="../articles/gallery.html">Gallery</a></li>
@@ -66,20 +65,18 @@ structure. One can also copy/paste text to <a href="https://translate.google.com
     <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a></h2>
     <p>Install <strong>amapro</strong> from Github with
 <code>remotes::install_github("helgasoft/amapro")</code>
-CRAN version also available but usually outdated.</p>
+CRAN version also available but could be outdated.</p>
 <p>Run with the following commands <br><code>library(amapro); am.init()</code> <br> A
-pop-up dialog will ask for an <strong>API key</strong> (shows once, will not be
-repeated). <br> API key is obtained through
-<a href="https://console.amap.com/dev/id/phone" class="external-link">registration</a>, expecting you to
-provide a Chinese phone number for SMS verification. <br> How to get an
-API key if you reside out of China?</p><ul><li><p>ask a friend from China to help, or hire a local
+temporary API key is used automatically. However there is no assurance
+that it will be operational in the long run.<br> API key is normally
+obtained through <a href="https://console.amap.com/dev/id/phone" class="external-link">registration</a>,
+expecting you to provide a Chinese phone number for SMS verification.
+<br> How to get an API key if you reside out of China?</p><ul><li><p>ask a friend from China to help, or hire a local
 <a href="https://www.freelancer.com/freelancers/china" class="external-link">freelancer</a></p></li>
-<li><p>search the web for a shared key</p></li>
 <li><p>use a temporary Chinese phone number from sites like <em>sms24.me</em>,
 <em>turtle-sms.xyz</em>, etc. However most are probably blacklisted as the
 registration page shows them as <em>‘already registered’</em>.</p></li>
-<li><p>select temporarily the ‘demo’ option, without guarantee to work in the
-long run</p></li>
+<li><p>search the web for a shared key</p></li>
 </ul></div>
     <div class="section level2">
     <h2 id="shiny-demo">Shiny Demo<a class="anchor" aria-label="anchor" href="#shiny-demo"></a></h2>

@@ -1,6 +1,11 @@
 # Changelog
 
-## amapro 0.1.5 latest in development
+## amapro 0.1.6 latest in development
+
+- added parameter ‘key’ in am.init(), removed tcltk dependency and key
+  popup dialog
+
+## amapro 0.1.5 on CRAN
 
 CRAN release: 2026-09-27
 
