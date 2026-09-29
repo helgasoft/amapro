@@ -26,23 +26,21 @@ structure. One can also copy/paste text to \href{https://translate.google.com?sl
 \section{Installation}{
 Install \strong{amapro} from Github with
 \code{remotes::install_github("helgasoft/amapro")}
-CRAN version also available but usually outdated.
+CRAN version also available but could be outdated.
 
 Run with the following commands \if{html}{\out{<br>}} \verb{library(amapro); am.init()} \if{html}{\out{<br>}} A
-pop-up dialog will ask for an \strong{API key} (shows once, will not be
-repeated). \if{html}{\out{<br>}} API key is obtained through
-\href{https://console.amap.com/dev/id/phone}{registration}, expecting you to
-provide a Chinese phone number for SMS verification. \if{html}{\out{<br>}} How to get an
-API key if you reside out of China?
+temporary API key is used automatically. However there is no assurance
+that it will be operational in the long run.\if{html}{\out{<br>}} API key is normally
+obtained through \href{https://console.amap.com/dev/id/phone}{registration},
+expecting you to provide a Chinese phone number for SMS verification.
+\if{html}{\out{<br>}} How to get an API key if you reside out of China?
 \itemize{
 \item ask a friend from China to help, or hire a local
 \href{https://www.freelancer.com/freelancers/china}{freelancer}
-\item search the web for a shared key
 \item use a temporary Chinese phone number from sites like \emph{sms24.me},
 \emph{turtle-sms.xyz}, etc. However most are probably blacklisted as the
 registration page shows them as \emph{‘already registered’}.
-\item select temporarily the ‘demo’ option, without guarantee to work in the
-long run
+\item search the web for a shared key
 }
 }
 

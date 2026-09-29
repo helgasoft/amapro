@@ -1,8 +1,8 @@
 Package: amapro
 Type: Package
 Title: Thin Wrapper for Mapping Library 'AMap'('Gaode')
-Date: 2026-09-24
-Version: 0.1.5
+Date: 2026-09-28
+Version: 0.1.6
 Authors@R: c( person("Larry", "Helgason", email= "larry@helgasoft.com", role= c("aut", "cre", "cph")) )
 Author: Larry Helgason [aut, cre, cph]
 Maintainer: Larry Helgason <larry@helgasoft.com>
@@ -14,9 +14,8 @@ BugReports: https://github.com/helgasoft/amapro/issues/
 Depends: R (>= 4.1.0)
 Imports:
   htmlwidgets,
-  tcltk (>= 4.1.0)
+  shiny (>= 1.7.0)
 Suggests:
-  shiny (>= 1.7.0),
   shinyjs,
   shinythemes,
   jsonlite,

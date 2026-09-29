@@ -26,21 +26,20 @@ AMap's documentation is in Chinese and most links here make reference to it. If 
 
 Install **amapro** from Github with  
 ``` remotes::install_github("helgasoft/amapro") ```  
-CRAN version also available but usually outdated.  
+CRAN version also available but could be outdated.  
 
 Run with the following commands     <br> 
 ``` library(amapro); am.init() ``` <br>
-A pop-up dialog will ask for an **API key** (shows once, will not be repeated).  <br>
-API key is obtained through [registration](https://console.amap.com/dev/id/phone), expecting you to provide a Chinese phone number for SMS verification.  <br>
+A temporary API key is used automatically. However there is no assurance that it will be operational in the long run.<br>
+API key is normally obtained through [registration](https://console.amap.com/dev/id/phone), expecting you to provide a Chinese phone number for SMS verification.  <br>
 How to get an API key if you reside out of China? 
 
 - ask a friend from China to help, or hire a local 
 ```{r, echo=FALSE, results='asis'}
 cat("[freelancer](https://www.freelancer.com/freelancers/china)")
 ```
-- search the web for a shared key
 - use a temporary Chinese phone number from sites like _sms24.me_, _turtle-sms.xyz_,  etc. However most are probably blacklisted as the registration page shows them as _'already registered'_.
-- select temporarily the 'demo' option, without guarantee to work in the long run
+- search the web for a shared key
   
 # Shiny Demo
 

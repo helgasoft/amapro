@@ -1,4 +1,8 @@
-# amapro 0.1.5   latest in development
+# amapro 0.1.6   latest in development
+
+* added parameter 'key' in am.init(), removed tcltk dependency and key popup dialog
+
+# amapro 0.1.5   on CRAN
 
 * fixed Demo: updated WMTS link, added PulseLinkLayer, Wikimedia links, etc.
 * upgraded amap.js to v.2.0.6.5 and loca.js to v.2.0.14

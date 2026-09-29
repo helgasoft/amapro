@@ -16,6 +16,7 @@ NULL
 #' @param ... attributes of map, see \href{https://lbs.amap.com/api/jsapi-v2/documentation#map}{here}.\cr
 #'   Additional attribute _loca_(boolean) is to add a Loca.Container to the map.
 #' @param width,height A valid CSS unit (like \code{'100\%'})
+#' @param key A valid AMap key, 32 characters string, see [Introduction]
 #' @return A widget to plot, or to store and expand with more features
 #'
 #' @details  Command \emph{am.init} creates a widget with \code{\link[htmlwidgets]{createWidget}}, then adds features to it.\cr
@@ -38,32 +39,36 @@ NULL
 #'
 #' @importFrom htmlwidgets createWidget sizingPolicy getDependency JS
 #' @export
-am.init <- function(..., width=NULL, height=NULL) {
+am.init <- function(..., width=NULL, height=NULL, key=NULL) {
   
   path <- system.file('js', package = 'amapro')
   ffull <- paste0(path, '/amap.js')
   if (!file.exists(ffull)) 
     stop("Missing AMap library file 'amap.js'. Installation invalid.", call.=FALSE)
   cont <- suppressWarnings(readLines(ffull))
-  if (grepl('xxxxxxxxxxxxxx', cont[2], fixed=TRUE)) {
-    if (interactive()) {
-      key <- .prompt()
-      if (is.null(key)) return()
-      if (tolower(key)=='demo') {
-        key <- scan('https://raw.githubusercontent.com/helgasoft/amapro/master/inst/figures/demo.txt', what='character')
-        key <- intToUtf8(rev(utf8ToInt(key)))
-      }
-      cont[2] <- sub('xxxxxxxxxxxxxx', key, cont[2], fixed= TRUE)
-      writeLines(cont, ffull)
-      detach("package:amapro", unload= TRUE)
-      library(amapro)
-      msg <- 'Done - amapro is now ready.\n Repeat command or restart Shiny app.'
-      tcltk::tk_messageBox(type = c("ok"),
-                    msg, caption = "AMap API key installation")
+  isXXX <- grepl('xxxxxxxxxxxxxx', cont[2], fixed=TRUE)
+  
+  Xreplace <- \(kkey) {
+    cont[2] <<- sub('xxxxxxxxxxxxxx', kkey, cont[2], fixed= TRUE)
+    writeLines(cont, ffull)
+    detach("package:amapro", unload= TRUE)
+    library(amapro)
+    cat('\nKey applied, amapro is now ready.'); # Repeat command or restart Shiny app.
+  }
+  if (!is.null(key)) {
+    stopifnot('invalid key length, 32 chars expected'= nchar(key)==32)
+    if (isXXX) Xreplace(key)
+    else cat('\nA key exists already. To replace it, reinstall amapro and run am.init again')
+  } 
+  else {
+    if (isXXX) {
+      key <- scan('https://raw.githubusercontent.com/helgasoft/amapro/master/inst/figures/demo.txt', what='character')
+      key <- intToUtf8(rev(utf8ToInt(key)))
+      Xreplace(key)
     }
   }
   rm(cont)
-  
+
   opts <- list(...)
   elementId <- if (is.null(opts$elementId)) NULL else opts$elementId
   # debug - to display JS objects info in browser console and map mesh

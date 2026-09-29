@@ -4,13 +4,15 @@
 \alias{am.init}
 \title{Map Initialization}
 \usage{
-am.init(..., width = NULL, height = NULL)
+am.init(..., width = NULL, height = NULL, key = NULL)
 }
 \arguments{
 \item{...}{attributes of map, see \href{https://lbs.amap.com/api/jsapi-v2/documentation#map}{here}.\cr
 Additional attribute \emph{loca}(boolean) is to add a Loca.Container to the map.}
 
 \item{width, height}{A valid CSS unit (like \code{'100\%'})}
+
+\item{key}{A valid AMap key, 32 characters string, see \link{Introduction}}
 }
 \value{
 A widget to plot, or to store and expand with more features
